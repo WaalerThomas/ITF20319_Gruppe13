@@ -23,11 +23,17 @@ public class MainWindow extends JFrame {
         // Initialize the pages
         LoginPage loginPage = new LoginPage(this);
         CreateUserPage createUserPage = new CreateUserPage(this);
+        LoginBruker loginBruker = new LoginBruker(this);
+        LoginGuide loginGuide = new LoginGuide(this);
+        LeggTilOmvisning leggTilOmvisning = new LeggTilOmvisning(this);
 
         // Add pages to the mainPanel, with a unique name
         // Need to add the mainPanel from the pages
         mainPanel.add(loginPage.getMainPanel(), "LoginPage");
         mainPanel.add(createUserPage.getMainPanel(), "CreateUserPage");
+        mainPanel.add(loginBruker.getMainPanel(), "LoginBruker");
+        mainPanel.add(loginGuide.getMainPanel(), "LoginGuide");
+        mainPanel.add(leggTilOmvisning.getMainPanel(), "leggTilOmvisning");
     }
 
     public void setPage(String name) {
