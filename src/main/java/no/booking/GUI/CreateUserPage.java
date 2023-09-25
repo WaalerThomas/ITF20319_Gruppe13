@@ -1,4 +1,4 @@
-package org.example;
+package no.booking.GUI;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -54,7 +54,7 @@ public class CreateUserPage implements UIPageInterface {
         mainPanel.setLayout(new GridLayoutManager(5, 3, new Insets(0, 0, 0, 0), -1, -1));
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(7, 1, new Insets(10, 10, 10, 10), -1, -1));
-        panel1.setBackground(new Color(-2959913));
+        panel1.setBackground(new Color(-4275773));
         mainPanel.add(panel1, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         brukerNavn = new JLabel();
         brukerNavn.setBackground(new Color(-2959913));

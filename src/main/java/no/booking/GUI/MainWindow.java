@@ -1,4 +1,4 @@
-package org.example;
+package no.booking.GUI;
 
 import javax.swing.*;
 import java.awt.*;

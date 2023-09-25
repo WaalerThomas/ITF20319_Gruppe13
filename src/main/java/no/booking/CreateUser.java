@@ -1,4 +1,4 @@
-package org.example;
+package no.booking;
 
 public class CreateUser {
     static boolean createUser () {

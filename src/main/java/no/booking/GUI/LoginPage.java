@@ -1,4 +1,4 @@
-package org.example;
+package no.booking.GUI;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -38,7 +38,6 @@ public class LoginPage implements UIPageInterface {
                 mainWindow.setPage("CreateUserPage");
             }
         });
-
     }
 
     @Override

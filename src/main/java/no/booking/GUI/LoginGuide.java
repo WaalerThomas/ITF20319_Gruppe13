@@ -1,4 +1,4 @@
-package org.example;
+package no.booking.GUI;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -8,13 +8,20 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class LoginBruker implements UIPageInterface {
+public class LoginGuide implements UIPageInterface {
     private JPanel mainPanel;
-    private JLabel velkommenBrukerLabel;
     private JButton cancelBtn;
+    private JLabel velkommenGuideLabel;
+    private JButton leggTilOmvisningButton;
 
 
-    public LoginBruker(MainWindow mainWindow) {
+    public LoginGuide(MainWindow mainWindow) {
+        leggTilOmvisningButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                mainWindow.setPage("leggTilOmvisning");
+            }
+        });
         cancelBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -44,13 +51,19 @@ public class LoginBruker implements UIPageInterface {
      */
     private void $$$setupUI$$$() {
         mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
-        velkommenBrukerLabel = new JLabel();
-        velkommenBrukerLabel.setText("Velkommen bruker");
-        mainPanel.add(velkommenBrukerLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mainPanel.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
         cancelBtn = new JButton();
         cancelBtn.setText("Logg ut");
         mainPanel.add(cancelBtn, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        leggTilOmvisningButton = new JButton();
+        leggTilOmvisningButton.setText("Legg til omvisning");
+        mainPanel.add(leggTilOmvisningButton, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        velkommenGuideLabel = new JLabel();
+        velkommenGuideLabel.setEnabled(true);
+        velkommenGuideLabel.setText("Velkommen Guide");
+        velkommenGuideLabel.setVerticalAlignment(0);
+        velkommenGuideLabel.setVerticalTextPosition(0);
+        mainPanel.add(velkommenGuideLabel, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
@@ -59,4 +72,5 @@ public class LoginBruker implements UIPageInterface {
     public JComponent $$$getRootComponent$$$() {
         return mainPanel;
     }
+
 }
