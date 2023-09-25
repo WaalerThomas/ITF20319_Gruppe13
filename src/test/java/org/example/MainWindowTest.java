@@ -7,10 +7,21 @@ class MainWindowTest {
 
     @Test
     void checksIfGuideCanMakeBooking() {
+        assertFalse(true);
     }
 
     @Test
     void checksIfNewUserCanMakeUserAccount() {
+        assertFalse(true);
+    }
+
+    @Test
+    void checksIfEmailIsValid() {
+        assertFalse(true);
+    }
+
+    @Test
+    void checksIfPhoneNumberIsValid() {
         assertFalse(true);
     }
 
