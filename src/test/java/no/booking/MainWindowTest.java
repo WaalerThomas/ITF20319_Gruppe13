@@ -16,14 +16,21 @@ class MainWindowTest {
     }
 
     @Test
-    void checksIfEmailIsValid() {
+    void checksIfUserNameIsValid() {
         assertFalse(true);
     }
 
     @Test
-    void checksIfPhoneNumberIsValid() {
+    void checksIfPasswordIsValid() {
         assertFalse(true);
     }
+
+    @Test
+    void checksIfEmailIsValid() {
+        assertFalse(true);
+    }
+
+
 
 
   
