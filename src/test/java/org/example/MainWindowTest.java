@@ -6,14 +6,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class MainWindowTest {
 
     @Test
-    void sjekkerOmGuideLeggerTilOmvisning() {
+    void checksIfGuideCanMakeBooking() {
     }
 
     @Test
-    void sjekkeOmNyBrukerKanLageEnBruker() {
+    void checksIfNewUserCanMakeUserAccount() {
         assertFalse(true);
-
-
     }
 
 
