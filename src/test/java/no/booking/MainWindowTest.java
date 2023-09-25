@@ -1,4 +1,4 @@
-package org.example;
+package no.booking;
 
 import org.junit.jupiter.api.Test;
 
