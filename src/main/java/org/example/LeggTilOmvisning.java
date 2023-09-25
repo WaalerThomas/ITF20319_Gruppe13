@@ -8,8 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 import java.util.Locale;
+import java.util.stream.Stream;
 
 public class LeggTilOmvisning implements UIPageInterface {
 
@@ -17,6 +17,14 @@ public class LeggTilOmvisning implements UIPageInterface {
     private JLabel leggTilOmvisning;
     private JPanel mainPanel;
     private JComboBox comboBox1;
+    private JLabel velgLand;
+    private JComboBox comboBox2;
+    private JLabel velgBy;
+    private JLabel beskrivelse;
+    private JLabel pris;
+    private JTextField textField1;
+    private JButton leggTil;
+    private JTextPane textPane1;
 
 
     public LeggTilOmvisning(MainWindow mainWindow) {
@@ -26,8 +34,24 @@ public class LeggTilOmvisning implements UIPageInterface {
                 mainWindow.setPage("LoginGuide");
             }
         });
+
+        // Legger til listen med alle land i DropDown meny
+        for (String country: getAllCountries()) {
+            comboBox1.addItem(country);
+        }
     }
 
+    // Genererer liste med land
+    public String[] getAllCountries() {
+        String[] countries = new String[Locale.getISOCountries().length];
+        String[] countryCodes = Locale.getISOCountries();
+        for (int i = 0; i < countryCodes.length; i++) {
+            Locale obj = new Locale("", countryCodes[i]);
+            countries[i] = obj.getDisplayCountry();
+        }
+        countries = Stream.of(countries).sorted().toArray(String[]::new);
+        return countries;
+    }
 
     @Override
     public JPanel getMainPanel() {
