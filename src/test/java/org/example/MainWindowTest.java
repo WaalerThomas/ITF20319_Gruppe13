@@ -11,6 +11,8 @@ class MainWindowTest {
 
     @Test
     void sjekkeOmNyBrukerKanLageEnBruker() {
+        assertFalse(true);
+
 
     }
 
