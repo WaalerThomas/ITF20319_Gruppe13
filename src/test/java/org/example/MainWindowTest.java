@@ -7,7 +7,13 @@ class MainWindowTest {
 
     @Test
     void sjekkerOmGuideLeggerTilOmvisning() {
-        
     }
+
+    @Test
+    void sjekkeOmNyBrukerKanLageEnBruker() {
+
+    }
+
+
   
 }
