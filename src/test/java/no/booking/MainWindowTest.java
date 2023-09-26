@@ -56,7 +56,22 @@ class MainWindowTest {
     }
 
     @Test
-    void cheksIfUserCanPostPosts() {
+    void checksIfUserCanPostPosts() {
+        assertEquals(false, true);
+    }
+
+    @Test
+    void checksIfAdminHasAccessToUserAccounts() {
+        assertEquals(false, true);
+    }
+
+    @Test
+    void checksIfAdminCanMakeChangesInUserAccounts() {
+        assertEquals(false, true);
+    }
+
+    @Test
+    void checksIfUserCanReceiveMessagesFromGuides() {
         assertEquals(false, true);
     }
 
