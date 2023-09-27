@@ -21,10 +21,9 @@ class MainWindowTest {
 
     @Test
     void checksIfUserNameLengthIsValid() {
-
-        List<String> randomBrukernavn = Arrays.asList("Admin1643545", "Bruker13453453", "Guide124553");
-        for(String brukerNavn:randomBrukernavn) {
-            if (brukerNavn.length() >=12){
+        List<String> randomBrukernavn = Arrays.asList("Admin1645345", "Bruker13453453", "Guide123434553");
+        for (String brukerNavn:randomBrukernavn) {
+            if (brukerNavn.length()>12) {
                 throw new RuntimeException("Username is too long");
             }
         }
