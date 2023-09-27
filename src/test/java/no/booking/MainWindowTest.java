@@ -2,6 +2,10 @@ package no.booking;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 class MainWindowTest {
 
@@ -16,8 +20,12 @@ class MainWindowTest {
     }
 
     @Test
-    void checksIfUserNameIsValid() {
-        assertEquals(false, true);
+    void checksIfUserNameLengthIsValid() {
+        List<String> randomBrukernavn = Arrays.asList("Admin1643545", "Bruker13453453", "Guide12");
+        CreateUser createUser = new CreateUser();
+        for(String brukerNavn:randomBrukernavn) {
+            createUser.validateLengthOfUserName(brukerNavn);
+        }
     }
 
     @Test
