@@ -27,10 +27,16 @@ entity TourTimes {
 entity Bookings {
     *tourTime_ID: integer <<FK>>
     *user_ID: integer <<FK>>
+    --
+    *adult_count: integer
+    *child_count: integer
+    *infant_count: integer
+    *cost: integer
 }
 
 Users ||--o{ Tours
 Tours ||--o{ TourTimes
 Bookings }o--|{ TourTimes
+Bookings }o--|| Users
 
 @enduml
