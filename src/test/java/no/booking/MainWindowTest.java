@@ -21,26 +21,12 @@ class MainWindowTest {
 
     @Test
     void checksIfUserNameLengthIsValid() {
-        List<String> randomBrukernavn = Arrays.asList("Admin1645345", "Bruker13453453", "Guide123434553");
-        for (String brukerNavn:randomBrukernavn) {
-            if (brukerNavn.length()>12) {
-                throw new RuntimeException("Username is too long");
-            }
-        }
+        assertEquals(false, true);
     }
 
     @Test
     void checksIfUserNameAlreadyExist(){
-        //tanken her er at det skal inneholde en liste med alle brukernavn
-        //de som skal lage brukernavn skriver inn brukernavnet
-        //prosjektet sammenligner brukernavnet som har blitt skrevet med brukernavn som eksisterer
-        List<String> randomBrukernavn = Arrays.asList("User123", "Admin123", "Guide123");
-        List<String> expectedUserNames = Arrays.asList("User321", "Admin321", "Guide321");
-        for (String bruker: randomBrukernavn) {
-            for (String expect:expectedUserNames) {
-                assertEquals(expect, bruker);
-            }
-        }
+        assertEquals(false, true);
     }
 
     @Test
