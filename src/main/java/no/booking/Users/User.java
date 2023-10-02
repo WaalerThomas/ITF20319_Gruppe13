@@ -1,4 +1,4 @@
-package no.Users;
+package no.booking.Users;
 
 public class User {
 
