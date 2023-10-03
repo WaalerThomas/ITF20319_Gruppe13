@@ -1,32 +1,32 @@
 @startuml
 skinparam linetype ortho
 
-entity Users {
-    *user_ID: integer <<Generated>>
+entity users {
+    *id: integer <<Generated>>
     --
     *name: varchar(50)
 }
 
-entity Tours {
-    *tour_ID: integer <<Generated>>
+entity tours {
+    *id: integer <<Generated>>
     --
-    *user_ID: integer <<FK>>
+    *user_id: integer <<FK>>
     *title: varchar(100)
 
     *meet_point: varchar(100)
 }
 
-entity TourTimes {
-    *tourTime_ID: integer <<Generated>>
+entity tour_times {
+    *id: integer <<Generated>>
     --
-    *tour_ID: integer <<FK>>
+    *tour_id: integer <<FK>>
     *date: date
     *begin_time: time
 }
 
-entity Bookings {
-    *tourTime_ID: integer <<FK>>
-    *user_ID: integer <<FK>>
+entity bookings {
+    *tourTime_id: integer <<FK>>
+    *user_id: integer <<FK>>
     --
     *adult_count: integer
     *child_count: integer
@@ -34,9 +34,9 @@ entity Bookings {
     *cost: integer
 }
 
-Users ||--o{ Tours
-Tours ||--o{ TourTimes
-Bookings }o--|{ TourTimes
-Bookings }o--|| Users
+users ||--o{ tours
+tours ||--o{ tour_times
+bookings }o--|| tour_times
+bookings }o--|| users
 
 @enduml

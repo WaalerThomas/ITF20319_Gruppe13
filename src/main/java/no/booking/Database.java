@@ -1,30 +1,41 @@
 package no.booking;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.*;
 
 /** Class for talking to the database.
  */
-public class Database {
-    private static final String file_path = System.getProperty("user.dir") + "/data/database.sqlite";
+public class Database implements DataHandler {
+    private static final String folder_path = System.getProperty("user.dir") + "/data";
+    private static final String file_name = "database.sqlite";
     private static Connection conn;
 
+    // NOTE: This is a temp function, going to be removed after testing the setup
     public static void printAllUsers() {
         try {
             connect();
 
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+            ResultSet rs = stmt.executeQuery("""
+                SELECT id, username, first_name, last_name,
+                    (SELECT name
+                    FROM user_types
+                    WHERE user_types.id = users.user_type) AS user_type
+                FROM users
+            """);
 
             // Loop through the results and print it out
             System.out.println("==== users ====");
-            System.out.println("<user_id | username | first_name | last_name | user_type>");
+            System.out.println("<id | username | first_name | last_name | user_type>");
             while (rs.next()) {
-                System.out.println(rs.getInt("user_id") + "\t" +
+                System.out.println(rs.getInt("id") + "\t" +
                         rs.getString("username") + "\t" +
                         rs.getString("first_name") + "\t" +
                         rs.getString("last_name") + "\t" +
-                        rs.getInt("user_type"));
+                        rs.getString("user_type"));
             }
             System.out.println("===============");
         } catch (SQLException e) {
@@ -35,10 +46,16 @@ public class Database {
     }
 
     private static void connect() throws SQLException {
-        boolean fileExists = (new File(file_path)).exists();
+        // Check if the data folder exists
+        boolean folderDoNotExist = !(new File(folder_path)).exists();
+        if (folderDoNotExist)
+            createDataFolder();
 
-        conn = DriverManager.getConnection("jdbc:sqlite:" + file_path);
-        if (!fileExists) createDatabase();
+        // Check if the file exists
+        boolean fileDoNotExist = !(new File(folder_path + "/" + file_name)).exists();
+
+        conn = DriverManager.getConnection("jdbc:sqlite:" + folder_path + "/" + file_name);
+        if (fileDoNotExist) createDatabase();
     }
 
     private static void disconnect() {
@@ -49,6 +66,15 @@ public class Database {
         }
     }
 
+    // TODO: Handle this exception better
+    private static void createDataFolder() {
+        try {
+            Files.createDirectory(Path.of(folder_path));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private static void createDatabase() {
         try {
             Statement stmt = conn.createStatement();
@@ -56,7 +82,7 @@ public class Database {
             // Create user_types table
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS user_types (
-                    id integer PRIMARY KEY,
+                    id integer PRIMARY KEY AUTOINCREMENT,
                     name varchar(50)
                 );
                 """);
@@ -64,7 +90,7 @@ public class Database {
             // Create users table
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS users (
-                    user_id integer PRIMARY KEY,
+                    id integer PRIMARY KEY AUTOINCREMENT,
                     username varchar(50) NOT NULL,
                     first_name varchar(50) NOT NULL,
                     last_name varchar(50) NOT NULL,
@@ -72,6 +98,58 @@ public class Database {
                     user_type integer,
                     FOREIGN KEY (user_type) REFERENCES user_types(id)
                 );""");
+
+            // Create tours table
+            stmt.execute("""
+                CREATE TABLE IF NOT EXISTS tours (
+                    id integer PRIMARY KEY AUTOINCREMENT,
+                    user_id integer NOT NULL,
+                    title varchar(100) NOT NULL,
+                    meet_point varchar(100) NOT NULL,
+                    FOREIGN KEY (user_id) REFERENCES users(id)
+                );""");
+
+            // Create tour_times table
+            stmt.execute("""
+                CREATE TABLE IF NOT EXISTS tour_times (
+                    id integer PRIMARY KEY AUTOINCREMENT,
+                    tour_id integer NOT NULL,
+                    date_time datetime NOT NULL,
+                    FOREIGN KEY (tour_id) REFERENCES tours(id)
+                );""");
+
+            // Create bookings table
+            stmt.execute("""
+                CREATE TABLE IF NOT EXISTS bookings (
+                    tourTime_id integer,
+                    user_id integer,
+                    adult_count integer DEFAULT 0,
+                    child_count integer DEFAULT 0,
+                    infant_count integer DEFAULT 0,
+                    cost integer NOT NULL,
+                    PRIMARY KEY (tourTime_id, user_id),
+                    FOREIGN KEY (tourTime_id) REFERENCES tour_times(id),
+                    FOREIGN KEY (user_id) REFERENCES users(id)
+                );""");
+
+            // Insert the different user_types
+            stmt.execute("""
+                INSERT INTO user_types (name) VALUES
+                    ('bruker'),
+                    ('admin');
+                """);
+
+            // Insert the default users
+            stmt.execute("""
+                INSERT INTO users (username, first_name, last_name, email, user_type)
+                VALUES
+                    ('brukerberit', 'berit', 'bruker', 'berit@bruker.no',
+                        (SELECT id FROM user_types WHERE name=='bruker')),
+                    ('guidegard', 'gard', 'guide', 'gard@guide.no',
+                        (SELECT id FROM user_types WHERE name=='bruker')),
+                    ('adminadam', 'adam', 'admin', 'adam@admin.no',
+                        (SELECT id FROM user_types WHERE name=='admin'));
+                """);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
