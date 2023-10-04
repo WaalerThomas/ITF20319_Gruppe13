@@ -1,5 +1,6 @@
 package no.booking.Users;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,19 +12,26 @@ class UserTest {
         assertEquals(false, true);
     }
 
+    @DisplayName("Testing if password is valid")
     @Test
     void checksIfPasswordIsValid() {
-        assertEquals(false, true);
+        User testbruker = new User("Testbruker", "Testbruker123%", "Testbruker@fake.no");
+        assertTrue(testbruker.validatePassword(testbruker.getPassword()));
     }
 
+    @DisplayName("Testing if email is valid")
     @Test
     void checksIfEmailIsValid() {
-        assertEquals(false, true);
+        User testbruker = new User("Testbruker", "Testbruker123%", "Testbruker@fake.no");
+        assertTrue(testbruker.validateEmail(testbruker.getEmail()));
+
     }
 
+    @DisplayName("Testing if username is valid")
     @Test
-    void checksIfUserNameLengthIsValid() {
-        assertEquals(false, true);
+    void checksIfUserNameIsValid() {
+        User testbruker = new User("Testbruker", "Testbruker123%", "Testbruker@fake.no");
+        assertTrue(testbruker.validateUserName(testbruker.getUserName()));
     }
 
     @Test
