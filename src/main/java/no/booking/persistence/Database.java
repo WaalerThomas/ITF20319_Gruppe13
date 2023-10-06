@@ -1,4 +1,6 @@
-package no.booking;
+package no.booking.persistence;
+
+import no.booking.Users.User;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,12 +11,17 @@ import java.sql.*;
 /** Class for talking to the database.
  */
 public class Database implements DataHandler {
-    private static final String folder_path = System.getProperty("user.dir") + "/data";
-    private static final String file_name = "database.sqlite";
-    private static Connection conn;
+    private final String folder_path = System.getProperty("user.dir") + "/data";
+    private final String file_name = "database.sqlite";
+    private Connection conn;
+
+    @Override
+    public User getUserByUsername(String username) {
+        return null;
+    }
 
     // NOTE: This is a temp function, going to be removed after testing the setup
-    public static void printAllUsers() {
+    public void printAllUsers() {
         try {
             connect();
 
@@ -45,7 +52,7 @@ public class Database implements DataHandler {
         }
     }
 
-    private static void connect() throws SQLException {
+    private void connect() throws SQLException {
         // Check if the data folder exists
         boolean folderDoNotExist = !(new File(folder_path)).exists();
         if (folderDoNotExist)
@@ -58,7 +65,7 @@ public class Database implements DataHandler {
         if (fileDoNotExist) createDatabase();
     }
 
-    private static void disconnect() {
+    private void disconnect() {
         try {
             if (conn != null) conn.close();
         } catch (SQLException e) {
@@ -67,7 +74,7 @@ public class Database implements DataHandler {
     }
 
     // TODO: Handle this exception better
-    private static void createDataFolder() {
+    private void createDataFolder() {
         try {
             Files.createDirectory(Path.of(folder_path));
         } catch (IOException e) {
@@ -75,7 +82,7 @@ public class Database implements DataHandler {
         }
     }
 
-    private static void createDatabase() {
+    private void createDatabase() {
         try {
             Statement stmt = conn.createStatement();
 

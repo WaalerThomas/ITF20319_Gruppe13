@@ -1,12 +1,18 @@
 package no.booking.GUI;
 
+import no.booking.persistence.DataHandler;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class MainWindow extends JFrame {
     private final JPanel mainPanel;
 
-    public MainWindow() {
+    private DataHandler dataHandler;
+
+    public MainWindow(DataHandler dataHandler) {
+        this.dataHandler = dataHandler;
+
         setTitle("Booking Prototype");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
