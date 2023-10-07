@@ -25,8 +25,6 @@ public class User {
         return email;
     }
 
-
-
     public boolean validateUserName(String userName) {
         if (userName.length() < 6) {
             throw new RuntimeException("Username is short");

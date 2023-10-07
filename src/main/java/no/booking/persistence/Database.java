@@ -1,12 +1,14 @@
 package no.booking.persistence;
 
 import no.booking.Users.User;
+import no.booking.logic.Tour;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.*;
+import java.util.List;
 
 /** Class for talking to the database.
  */
@@ -15,8 +17,14 @@ public class Database implements DataHandler {
     private final String file_name = "database.sqlite";
     private Connection conn;
 
+
     @Override
     public User getUserByUsername(String username) {
+        return null;
+    }
+
+    @Override
+    public List<Tour> getTours() {
         return null;
     }
 

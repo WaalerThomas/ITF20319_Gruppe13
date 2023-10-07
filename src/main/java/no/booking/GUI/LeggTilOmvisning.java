@@ -3,6 +3,7 @@ package no.booking.GUI;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import no.booking.logic.Tour;
 
 import javax.swing.*;
 import java.awt.*;
@@ -119,6 +120,5 @@ public class LeggTilOmvisning implements UIPageInterface {
     public JComponent $$$getRootComponent$$$() {
         return mainPanel;
     }
-
 
 }
