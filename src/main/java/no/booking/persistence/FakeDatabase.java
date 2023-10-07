@@ -34,9 +34,10 @@ public class FakeDatabase implements DataHandler {
     }
 
     private void addDefaultDataTours() {
-        Tour tour = new Tour("Tur til København", "København", "Fantastisk tur til københavn",
-                "04.04.24", "600 kr", "København Sentrum");
-        tours.add(tour);
+        tours.add(new Tour("Tur til København", "København", "Fantastisk tur til københavn",
+                "04.04.24", "600 kr", "København Sentrum"));
+        tours.add(new Tour("Cruising rundt Faro", "Faro", "Ferjetur rundt øyene", "20.06.24",
+                "1400 kr", "FaroVeien 12"));
     }
 
     @Override
