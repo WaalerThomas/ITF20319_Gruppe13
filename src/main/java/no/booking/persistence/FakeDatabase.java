@@ -34,15 +34,20 @@ public class FakeDatabase implements DataHandler {
     }
 
     private void addDefaultDataTours() {
-        tours.add(new Tour("Tur til København", "København", "Fantastisk tur til københavn",
-                "04.04.24", "600 kr", "København Sentrum"));
-        tours.add(new Tour("Cruising rundt Faro", "Faro", "Ferjetur rundt øyene", "20.06.24",
-                "1400 kr", "FaroVeien 12"));
+        tours.add(new Tour(1,"Tur til København", "Denmark", "København", "Fantastisk tur til københavn",
+                "04.04.24", 600, "København Sentrum"));
+        tours.add(new Tour(2,"Cruising rundt Faro", "Portugal","Faro" ,"Ferjetur rundt øyene", "20.06.24",
+                1400, "FaroVeien 12"));
     }
 
     @Override
     public List<Tour> getTours() {
         return tours;
+    }
+
+    private boolean createTour() {
+
+        return false;
     }
 }
 

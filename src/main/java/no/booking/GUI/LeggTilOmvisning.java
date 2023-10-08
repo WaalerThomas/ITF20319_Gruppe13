@@ -4,6 +4,7 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import no.booking.logic.Tour;
+import no.booking.persistence.FakeDatabase;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,6 +30,14 @@ public class LeggTilOmvisning implements UIPageInterface {
 
 
     public LeggTilOmvisning(MainWindow mainWindow) {
+
+        FakeDatabase fakeDatabase = new FakeDatabase();
+
+        Tour tour = new Tour(1, beskrivelse.getText(), velgLand.getText(),velgBy.getText(), beskrivelse.getText(),
+                "dato", pris.getDisplayedMnemonic(), beskrivelse.getText());
+
+        fakeDatabase.getTours();
+
         cancelBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
