@@ -29,7 +29,7 @@ public class MainWindow extends JFrame {
         // Initialize the pages
         LoginPage loginPage = new LoginPage(this);
         CreateUserPage createUserPage = new CreateUserPage(this);
-        TouristMainPage touristMainPage = new TouristMainPage(this);
+        TouristMainPage touristMainPage = new TouristMainPage(this, dataHandler);
         LoginGuide loginGuide = new LoginGuide(this);
         LeggTilOmvisning leggTilOmvisning = new LeggTilOmvisning(this);
 
