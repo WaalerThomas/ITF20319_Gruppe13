@@ -29,7 +29,7 @@ public class MainWindow extends JFrame {
         // Initialize the pages
         LoginPage loginPage = new LoginPage(this);
         CreateUserPage createUserPage = new CreateUserPage(this);
-        LoginBruker loginBruker = new LoginBruker(this);
+        TouristMainPage touristMainPage = new TouristMainPage(this);
         LoginGuide loginGuide = new LoginGuide(this);
         LeggTilOmvisning leggTilOmvisning = new LeggTilOmvisning(this);
 
@@ -37,7 +37,7 @@ public class MainWindow extends JFrame {
         // Need to add the mainPanel from the pages
         mainPanel.add(loginPage.getMainPanel(), "LoginPage");
         mainPanel.add(createUserPage.getMainPanel(), "CreateUserPage");
-        mainPanel.add(loginBruker.getMainPanel(), "LoginBruker");
+        mainPanel.add(touristMainPage.getMainPanel(), "TouristMainPage");
         mainPanel.add(loginGuide.getMainPanel(), "LoginGuide");
         mainPanel.add(leggTilOmvisning.getMainPanel(), "leggTilOmvisning");
     }

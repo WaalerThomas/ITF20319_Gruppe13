@@ -40,12 +40,12 @@
         </properties>
         <border type="none"/>
         <children>
-          <component id="171cb" class="javax.swing.JButton" binding="userLoginBtn">
+          <component id="171cb" class="javax.swing.JButton" binding="touristLoginBtn">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Bruker"/>
+              <text value="Turist"/>
             </properties>
           </component>
           <component id="47f8c" class="javax.swing.JButton" binding="guideLoginBtn">
