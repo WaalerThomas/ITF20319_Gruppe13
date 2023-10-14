@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Locale;
 
-public class LoginPage implements UIPageInterface {
+public class LoginPage extends UIPage {
     public static final String NAME = "LoginPage";
 
     private JPanel mainPanel;
@@ -45,6 +45,16 @@ public class LoginPage implements UIPageInterface {
     @Override
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    @Override
+    public void setup() {
+
+    }
+
+    @Override
+    public void teardown() {
+
     }
 
     {

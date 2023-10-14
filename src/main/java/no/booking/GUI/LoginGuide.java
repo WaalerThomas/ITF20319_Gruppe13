@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class LoginGuide implements UIPageInterface {
+public class LoginGuide extends UIPage {
     public static final String NAME = "LoginGuide";
 
     private JPanel mainPanel;
@@ -35,6 +35,14 @@ public class LoginGuide implements UIPageInterface {
     @Override
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    @Override
+    public void setup() {
+    }
+
+    @Override
+    public void teardown() {
     }
 
     {

@@ -7,15 +7,9 @@ import no.booking.logic.Tour;
 import no.booking.persistence.DataHandler;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 
-public class TouristMainPage implements UIPageInterface {
+public class TouristMainPage extends UIPage {
     public static final String NAME = "TouristMainPage";
 
     private JPanel mainPanel;
@@ -39,6 +33,8 @@ public class TouristMainPage implements UIPageInterface {
 
         cancelBtn.addActionListener(actionEvent -> mainWindow.setPage(LoginPage.NAME));
 
+        System.out.println("This is the constructor");
+
         tourList.addListSelectionListener(listSelectionEvent -> {
             int selectionIndex = tourList.getSelectedIndex();
 
@@ -49,6 +45,16 @@ public class TouristMainPage implements UIPageInterface {
             // Navigate to the detail screen for the tour
             System.out.println("Selection index changed to: " + selectionIndex);
         });
+    }
+
+    @Override
+    public void setup() {
+        System.out.println("TouristMainPage setup method called");
+    }
+
+    @Override
+    public void teardown() {
+        System.out.println("TouristMainPage teardown method called");
     }
 
     @Override

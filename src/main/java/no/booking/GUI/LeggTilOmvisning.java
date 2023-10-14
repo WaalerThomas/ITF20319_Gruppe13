@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 import java.util.Locale;
 import java.util.stream.Stream;
 
-public class LeggTilOmvisning implements UIPageInterface {
+public class LeggTilOmvisning extends UIPage {
     public static final String NAME = "LeggTilOmvisning";
 
     private JButton cancelBtn;
@@ -67,6 +67,16 @@ public class LeggTilOmvisning implements UIPageInterface {
     @Override
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    @Override
+    public void setup() {
+
+    }
+
+    @Override
+    public void teardown() {
+
     }
 
     {
