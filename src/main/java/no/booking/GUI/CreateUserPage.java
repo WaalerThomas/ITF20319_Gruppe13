@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CreateUserPage implements UIPageInterface {
+public class CreateUserPage extends UIPage {
     public static final String NAME = "CreateUserPage";
 
     private JPanel mainPanel;
@@ -35,6 +35,16 @@ public class CreateUserPage implements UIPageInterface {
     @Override
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    @Override
+    public void setup() {
+
+    }
+
+    @Override
+    public void teardown() {
+
     }
 
     {

@@ -3,7 +3,6 @@ package no.booking.GUI;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import no.booking.logic.Tour;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.util.Locale;
 import java.util.stream.Stream;
 
-public class LeggTilOmvisning implements UIPageInterface {
+public class LeggTilOmvisning extends UIPage {
     public static final String NAME = "LeggTilOmvisning";
 
     private JButton cancelBtn;
@@ -58,6 +57,16 @@ public class LeggTilOmvisning implements UIPageInterface {
     @Override
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    @Override
+    public void setup() {
+
+    }
+
+    @Override
+    public void teardown() {
+
     }
 
     {
