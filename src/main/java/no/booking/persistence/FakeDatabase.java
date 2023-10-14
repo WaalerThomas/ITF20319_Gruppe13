@@ -38,6 +38,8 @@ public class FakeDatabase implements DataHandler {
                 "04.04.24", 600, "København Sentrum"));
         tours.add(new Tour(2,"Cruising rundt Faro", "Portugal","Faro" ,"Ferjetur rundt øyene", "20.06.24",
                 1400, "FaroVeien 12"));
+        tours.add(new Tour(3, "Opplev magien i Roma", "Italia", "Roma",
+                "Nyt romantisk aften i Roma", "25.06.24", 2300, "Romaveien 20"));
     }
 
     @Override
