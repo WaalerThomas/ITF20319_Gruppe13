@@ -53,23 +53,6 @@ public class MainWindow extends JFrame {
         mainPanel.add(pages.get(TourDetailPage.NAME).getMainPanel(), TourDetailPage.NAME);
     }
 
-    private void createPages() {
-        // Initialize the pages
-        LoginPage loginPage = new LoginPage(this);
-        CreateUserPage createUserPage = new CreateUserPage(this);
-        TouristMainPage touristMainPage = new TouristMainPage(this, dataHandler);
-        LoginGuide loginGuide = new LoginGuide(this);
-        LeggTilOmvisning leggTilOmvisning = new LeggTilOmvisning(this);
-
-        // Add pages to the mainPanel, with a unique name
-        // Need to add the mainPanel from the pages
-        mainPanel.add(loginPage.getMainPanel(), LoginPage.NAME);
-        mainPanel.add(createUserPage.getMainPanel(), CreateUserPage.NAME);
-        mainPanel.add(touristMainPage.getMainPanel(), TouristMainPage.NAME);
-        mainPanel.add(loginGuide.getMainPanel(), LoginGuide.NAME);
-        mainPanel.add(leggTilOmvisning.getMainPanel(), LeggTilOmvisning.NAME);
-    }
-
     public void setPage(String name) {
         if (currentPage.equals(name)) return;
 
