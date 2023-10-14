@@ -16,6 +16,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 
 public class TouristMainPage implements UIPageInterface {
+    public static final String NAME = "TouristMainPage";
+
     private JPanel mainPanel;
     private JLabel headerLbl;
     private JButton cancelBtn;
@@ -35,7 +37,8 @@ public class TouristMainPage implements UIPageInterface {
         tourList.setModel(tourListModel);
         tourList.setCellRenderer(new TourCellRenderer());
 
-        cancelBtn.addActionListener(actionEvent -> mainWindow.setPage("LoginPage"));
+        cancelBtn.addActionListener(actionEvent -> mainWindow.setPage(LoginPage.NAME));
+
         tourList.addListSelectionListener(listSelectionEvent -> {
             int selectionIndex = tourList.getSelectedIndex();
 

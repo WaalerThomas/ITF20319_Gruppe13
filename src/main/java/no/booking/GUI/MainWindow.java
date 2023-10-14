@@ -14,7 +14,7 @@ public class MainWindow extends JFrame {
         this.dataHandler = dataHandler;
 
         setTitle("Booking Prototype");
-        setSize(800, 600);
+        setSize(1024, 768);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         mainPanel = new JPanel();
@@ -35,11 +35,11 @@ public class MainWindow extends JFrame {
 
         // Add pages to the mainPanel, with a unique name
         // Need to add the mainPanel from the pages
-        mainPanel.add(loginPage.getMainPanel(), "LoginPage");
-        mainPanel.add(createUserPage.getMainPanel(), "CreateUserPage");
-        mainPanel.add(touristMainPage.getMainPanel(), "TouristMainPage");
-        mainPanel.add(loginGuide.getMainPanel(), "LoginGuide");
-        mainPanel.add(leggTilOmvisning.getMainPanel(), "leggTilOmvisning");
+        mainPanel.add(loginPage.getMainPanel(), LoginPage.NAME);
+        mainPanel.add(createUserPage.getMainPanel(), CreateUserPage.NAME);
+        mainPanel.add(touristMainPage.getMainPanel(), TouristMainPage.NAME);
+        mainPanel.add(loginGuide.getMainPanel(), LoginGuide.NAME);
+        mainPanel.add(leggTilOmvisning.getMainPanel(), LeggTilOmvisning.NAME);
     }
 
     public void setPage(String name) {

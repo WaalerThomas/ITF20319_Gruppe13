@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CreateUserPage implements UIPageInterface {
+    public static final String NAME = "CreateUserPage";
+
     private JPanel mainPanel;
     private JButton cancelBtn;
     private JTextField textField1;
@@ -25,7 +27,7 @@ public class CreateUserPage implements UIPageInterface {
         cancelBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                mainWindow.setPage("LoginPage");
+                mainWindow.setPage(LoginPage.NAME);
             }
         });
     }

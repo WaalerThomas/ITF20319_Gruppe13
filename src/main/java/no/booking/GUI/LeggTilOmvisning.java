@@ -13,6 +13,7 @@ import java.util.Locale;
 import java.util.stream.Stream;
 
 public class LeggTilOmvisning implements UIPageInterface {
+    public static final String NAME = "LeggTilOmvisning";
 
     private JButton cancelBtn;
     private JLabel leggTilOmvisning;
@@ -32,7 +33,7 @@ public class LeggTilOmvisning implements UIPageInterface {
         cancelBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                mainWindow.setPage("LoginGuide");
+                mainWindow.setPage(LoginGuide.NAME);
             }
         });
 

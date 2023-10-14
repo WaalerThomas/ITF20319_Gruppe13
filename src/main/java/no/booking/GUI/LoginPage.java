@@ -13,6 +13,8 @@ import java.awt.event.ActionListener;
 import java.util.Locale;
 
 public class LoginPage implements UIPageInterface {
+    public static final String NAME = "LoginPage";
+
     private JPanel mainPanel;
     private JButton touristLoginBtn;
     private JButton guideLoginBtn;
@@ -23,19 +25,19 @@ public class LoginPage implements UIPageInterface {
         touristLoginBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                mainWindow.setPage("TouristMainPage");
+                mainWindow.setPage(TouristMainPage.NAME);
             }
         });
         guideLoginBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                mainWindow.setPage("LoginGuide");
+                mainWindow.setPage(LoginGuide.NAME);
             }
         });
         newAccountBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                mainWindow.setPage("CreateUserPage");
+                mainWindow.setPage(CreateUserPage.NAME);
             }
         });
     }
