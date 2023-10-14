@@ -7,8 +7,13 @@ import no.booking.logic.Tour;
 import no.booking.persistence.DataHandler;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 
 public class TouristMainPage implements UIPageInterface {
     private JPanel mainPanel;
@@ -17,7 +22,6 @@ public class TouristMainPage implements UIPageInterface {
     private JPanel contentPanel;
     private JList<Tour> tourList;
 
-    //private JList<Tour> tourJList;
     private DefaultListModel<Tour> tourListModel;
     private DataHandler dataHandler;
 
@@ -26,21 +30,22 @@ public class TouristMainPage implements UIPageInterface {
 
         tourListModel = new DefaultListModel<>();
         tourListModel.addElement(new Tour("Example title", "Oslo"));
+        tourListModel.addElement(new Tour("To timers sightseeingtur på Oslofjorden", "Oslo"));
 
         tourList.setModel(tourListModel);
         tourList.setCellRenderer(new TourCellRenderer());
 
-        //tourJList = new JList<>(tourListModel);
-        //tourJList.setFixedCellHeight(75);
-        //tourJList.setSelectedIndex(-1);
-        //tourJList.setCellRenderer(new TourCellRenderer());
-
-        //listScrollPane.add(tourJList);
-        //String[] stringArray = {"Hello"};
-        //listScrollPane.add(new JList<>(stringArray));
-        //tourJList.setBackground(Color.CYAN);
-
         cancelBtn.addActionListener(actionEvent -> mainWindow.setPage("LoginPage"));
+        tourList.addListSelectionListener(listSelectionEvent -> {
+            int selectionIndex = tourList.getSelectedIndex();
+
+            // Wait to change the selected index to when the value has finished adjusting
+            if (listSelectionEvent.getValueIsAdjusting()) return;
+            if (selectionIndex == -1) return;
+
+            // Navigate to the detail screen for the tour
+            System.out.println("Selection index changed to: " + selectionIndex);
+        });
     }
 
     @Override
@@ -94,6 +99,7 @@ public class TouristMainPage implements UIPageInterface {
         final JScrollPane scrollPane1 = new JScrollPane();
         contentPanel.add(scrollPane1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         tourList = new JList();
+        tourList.setSelectionMode(0);
         scrollPane1.setViewportView(tourList);
     }
 

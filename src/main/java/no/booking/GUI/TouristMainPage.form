@@ -93,7 +93,9 @@
             <children>
               <component id="4f7cf" class="javax.swing.JList" binding="tourList">
                 <constraints/>
-                <properties/>
+                <properties>
+                  <selectionMode value="0"/>
+                </properties>
               </component>
             </children>
           </scrollpane>

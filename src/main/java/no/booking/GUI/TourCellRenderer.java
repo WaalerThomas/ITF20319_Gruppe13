@@ -4,6 +4,7 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import no.booking.logic.Tour;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class TourCellRenderer extends TourElement implements ListCellRenderer<Tour> {
@@ -13,22 +14,18 @@ public class TourCellRenderer extends TourElement implements ListCellRenderer<To
     @Override
     public Component getListCellRendererComponent(JList<? extends Tour> list, Tour tour, int index, boolean isSelected, boolean cellHasFocus) {
         JPanel mainPanel = getMainPanel();
-        //mainPanel.add(new JLabel(tour.title));
-        setTitle(tour.title);
+        mainPanel.setBackground(Color.WHITE);
+        mainPanel.setBorder(new EmptyBorder(5, 5, 0, 5));
 
-        Color background;
-        Color foreground;
-
+        JPanel contentPanel = (JPanel) mainPanel.getComponent(0);
         if (isSelected) {
-            background = Color.BLUE;
-            foreground = Color.WHITE;
+            contentPanel.setBackground(Color.BLUE);
         } else {
-            background = Color.RED;
-            foreground = Color.WHITE;
+            contentPanel.setBackground(Color.GRAY);
         }
 
-        mainPanel.setBackground(background);
-        mainPanel.setForeground(foreground);
+        setCity(tour.city);
+        setTitle(tour.title);
 
         return mainPanel;
     }
