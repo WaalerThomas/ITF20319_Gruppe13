@@ -13,29 +13,31 @@ import java.awt.event.ActionListener;
 import java.util.Locale;
 
 public class LoginPage implements UIPageInterface {
+    public static final String NAME = "LoginPage";
+
     private JPanel mainPanel;
-    private JButton userLoginBtn;
+    private JButton touristLoginBtn;
     private JButton guideLoginBtn;
     private JButton adminLoginBtn;
     private JButton newAccountBtn;
 
     public LoginPage(MainWindow mainWindow) {
-        userLoginBtn.addActionListener(new ActionListener() {
+        touristLoginBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                mainWindow.setPage("LoginBruker");
+                mainWindow.setPage(TouristMainPage.NAME);
             }
         });
         guideLoginBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                mainWindow.setPage("LoginGuide");
+                mainWindow.setPage(LoginGuide.NAME);
             }
         });
         newAccountBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                mainWindow.setPage("CreateUserPage");
+                mainWindow.setPage(CreateUserPage.NAME);
             }
         });
     }
@@ -78,9 +80,9 @@ public class LoginPage implements UIPageInterface {
         panel1.setLayout(new GridLayoutManager(5, 1, new Insets(10, 10, 10, 10), -1, -1));
         panel1.setBackground(new Color(-10921122));
         mainPanel.add(panel1, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        userLoginBtn = new JButton();
-        userLoginBtn.setText("Bruker");
-        panel1.add(userLoginBtn, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        touristLoginBtn = new JButton();
+        touristLoginBtn.setText("Turist");
+        panel1.add(touristLoginBtn, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         guideLoginBtn = new JButton();
         guideLoginBtn.setText("Guide");
         panel1.add(guideLoginBtn, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));

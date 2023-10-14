@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LoginGuide implements UIPageInterface {
+    public static final String NAME = "LoginGuide";
+
     private JPanel mainPanel;
     private JButton cancelBtn;
     private JLabel velkommenGuideLabel;
@@ -19,13 +21,13 @@ public class LoginGuide implements UIPageInterface {
         leggTilOmvisningButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                mainWindow.setPage("leggTilOmvisning");
+                mainWindow.setPage(LeggTilOmvisning.NAME);
             }
         });
         cancelBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                mainWindow.setPage("LoginPage");
+                mainWindow.setPage(LoginPage.NAME);
             }
         });
     }
