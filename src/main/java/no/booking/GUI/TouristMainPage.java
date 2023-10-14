@@ -25,15 +25,10 @@ public class TouristMainPage extends UIPage {
         this.dataHandler = dataHandler;
 
         tourListModel = new DefaultListModel<>();
-        tourListModel.addElement(new Tour("Example title", "Oslo"));
-        tourListModel.addElement(new Tour("To timers sightseeingtur på Oslofjorden", "Oslo"));
-
         tourList.setModel(tourListModel);
         tourList.setCellRenderer(new TourCellRenderer());
 
         cancelBtn.addActionListener(actionEvent -> mainWindow.setPage(LoginPage.NAME));
-
-        System.out.println("This is the constructor");
 
         tourList.addListSelectionListener(listSelectionEvent -> {
             int selectionIndex = tourList.getSelectedIndex();
@@ -50,11 +45,16 @@ public class TouristMainPage extends UIPage {
     @Override
     public void setup() {
         System.out.println("TouristMainPage setup method called");
+
+        //tourListModel.addElement(new Tour("Example title", "Oslo"));
+        //tourListModel.addElement(new Tour("To timers sightseeingtur på Oslofjorden", "Oslo"));
     }
 
     @Override
     public void teardown() {
         System.out.println("TouristMainPage teardown method called");
+
+        tourListModel.removeAllElements();
     }
 
     @Override
