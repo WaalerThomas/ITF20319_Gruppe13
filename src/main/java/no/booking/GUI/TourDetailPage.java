@@ -1,21 +1,35 @@
 package no.booking.GUI;
 
+import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import no.booking.persistence.DataHandler;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.UUID;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class TourDetailPage extends UIPage {
     public static final String NAME = "TourDetailPage";
+    private static int currentTourId;
+    private static String previousPage;
 
     private JPanel mainPanel;
+    private JLabel tourTitleTemp;
+    private JButton backBtn;
 
     private MainWindow mainWindow;
     private DataHandler dataHandler;
 
     public TourDetailPage(MainWindow mainWindow, DataHandler dataHandler) {
+        backBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                // If no previous page has been given, then return to the login page
+                String page = (previousPage.isBlank()) ? LoginPage.NAME : previousPage;
+                mainWindow.setPage(page);
+            }
+        });
     }
 
     @Override
@@ -25,15 +39,23 @@ public class TourDetailPage extends UIPage {
 
     @Override
     public void setup() {
+        tourTitleTemp.setText("Current Tour ID: " + currentTourId);
     }
 
     @Override
     public void teardown() {
     }
 
-    public void setTour(UUID id) {
+    public static void setTour(int id) {
         // Gather information from the database about the given tour
         // and change the elements on the screen.
+        currentTourId = id;
+    }
+
+    public static void setPreviousPage(String prevPage) {
+        if (prevPage.isBlank() || prevPage.isEmpty()) return;
+
+        previousPage = prevPage;
     }
 
     {
@@ -52,7 +74,13 @@ public class TourDetailPage extends UIPage {
      */
     private void $$$setupUI$$$() {
         mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        mainPanel.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        tourTitleTemp = new JLabel();
+        tourTitleTemp.setText("Label");
+        mainPanel.add(tourTitleTemp, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        backBtn = new JButton();
+        backBtn.setText("Tilbake");
+        mainPanel.add(backBtn, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
@@ -61,4 +89,5 @@ public class TourDetailPage extends UIPage {
     public JComponent $$$getRootComponent$$$() {
         return mainPanel;
     }
+
 }

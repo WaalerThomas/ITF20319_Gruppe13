@@ -38,7 +38,9 @@ public class TouristMainPage extends UIPage {
             if (selectionIndex == -1) return;
 
             // Navigate to the detail screen for the tour
-            System.out.println("Selection index changed to: " + selectionIndex);
+            TourDetailPage.setTour(tourListModel.get(selectionIndex).getTourId());
+            TourDetailPage.setPreviousPage(NAME);
+            mainWindow.setPage(TourDetailPage.NAME);
         });
     }
 
@@ -46,8 +48,7 @@ public class TouristMainPage extends UIPage {
     public void setup() {
         System.out.println("TouristMainPage setup method called");
 
-        //tourListModel.addElement(new Tour("Example title", "Oslo"));
-        //tourListModel.addElement(new Tour("To timers sightseeingtur på Oslofjorden", "Oslo"));
+        tourListModel.addAll(dataHandler.getTours());
     }
 
     @Override

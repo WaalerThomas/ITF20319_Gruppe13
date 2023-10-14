@@ -34,7 +34,7 @@ public class LeggTilOmvisning extends UIPage {
 
         FakeDatabase fakeDatabase = new FakeDatabase();
 
-        Tour tour = new Tour(1, beskrivelse.getText(), velgLand.getText(),velgBy.getText(), beskrivelse.getText(),
+        Tour tour = new Tour(1, beskrivelse.getText(), velgLand.getText(), velgBy.getText(), beskrivelse.getText(),
                 "dato", pris.getDisplayedMnemonic(), beskrivelse.getText());
 
         fakeDatabase.getTours();
