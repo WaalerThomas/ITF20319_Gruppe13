@@ -17,7 +17,6 @@ public class Database implements DataHandler {
     private final String file_name = "database.sqlite";
     private Connection conn;
 
-
     @Override
     public User getUserByUsername(String username) {
         throw new RuntimeException("Not implemented");
@@ -25,6 +24,11 @@ public class Database implements DataHandler {
 
     @Override
     public List<Tour> getTours() {
+        throw new RuntimeException("Not implemented");
+    }
+
+    @Override
+    public Tour getTourById(int id) {
         throw new RuntimeException("Not implemented");
     }
 

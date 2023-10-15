@@ -13,8 +13,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class FakeDatabase implements DataHandler {
-    private Set<User> users;
-    private List<Tour> tours;
+    private final Set<User> users;
+    private final List<Tour> tours;
 
     public FakeDatabase() {
         this.users = new HashSet<>();
@@ -46,6 +46,11 @@ public class FakeDatabase implements DataHandler {
     @Override
     public List<Tour> getTours() {
         return tours;
+    }
+
+    @Override
+    public Tour getTourById(int id) {
+        return tours.stream().filter(tour -> tour.getTourId() == id).findFirst().orElse(null);
     }
 
     @Override

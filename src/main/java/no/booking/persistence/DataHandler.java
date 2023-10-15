@@ -7,8 +7,9 @@ import java.util.List;
 import java.util.Set;
 
 public interface DataHandler {
-    public User getUserByUsername(String username);
-    public List<Tour> getTours();
-    public List<Tour> getToursByCity(String city);
+    User getUserByUsername(String username);
+    List<Tour> getTours();
+    Tour getTourById(int id);
+    List<Tour> getToursByCity(String city);
 }
 

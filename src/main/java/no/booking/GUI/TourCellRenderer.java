@@ -1,6 +1,5 @@
 package no.booking.GUI;
 
-import com.intellij.uiDesigner.core.GridLayoutManager;
 import no.booking.logic.Tour;
 
 import javax.swing.*;

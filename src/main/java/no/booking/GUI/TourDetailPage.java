@@ -2,12 +2,17 @@ package no.booking.GUI;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.intellij.uiDesigner.core.Spacer;
+
+import no.booking.logic.Tour;
 import no.booking.persistence.DataHandler;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.Locale;
 
 public class TourDetailPage extends UIPage {
     public static final String NAME = "TourDetailPage";
@@ -15,21 +20,27 @@ public class TourDetailPage extends UIPage {
     private static String previousPage;
 
     private JPanel mainPanel;
-    private JLabel tourTitleTemp;
+    private JLabel titleLbl;
     private JButton backBtn;
+    private JButton logoutBtn;
+    private JPanel contentPanel;
+    private JLabel countryLbl;
+    private JLabel cityLbl;
+    private JLabel descriptionLbl;
+    private JLabel meetPointLbl;
+    private JLabel idLbl;
 
-    private MainWindow mainWindow;
-    private DataHandler dataHandler;
+    private final DataHandler dataHandler;
 
     public TourDetailPage(MainWindow mainWindow, DataHandler dataHandler) {
-        backBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                // If no previous page has been given, then return to the login page
-                String page = (previousPage.isBlank()) ? LoginPage.NAME : previousPage;
-                mainWindow.setPage(page);
-            }
+        this.dataHandler = dataHandler;
+
+        backBtn.addActionListener(actionEvent -> {
+            // If no previous page has been given, then return to the login page
+            String page = (previousPage.isBlank()) ? LoginPage.NAME : previousPage;
+            mainWindow.setPage(page);
         });
+        logoutBtn.addActionListener(actionEvent -> mainWindow.setPage(LoginPage.NAME));
     }
 
     @Override
@@ -39,7 +50,19 @@ public class TourDetailPage extends UIPage {
 
     @Override
     public void setup() {
-        tourTitleTemp.setText("Current Tour ID: " + currentTourId);
+        idLbl.setText("Current Tour ID: " + currentTourId);
+
+        // Gather information from the database about the given tour
+        // and change the elements on the screen.
+        Tour tour = dataHandler.getTourById(currentTourId);
+        if (tour == null)
+            throw new RuntimeException("Cannot find a Tour with the ID: " + currentTourId);
+
+        titleLbl.setText(tour.getTitle());
+        countryLbl.setText(tour.country);
+        cityLbl.setText(tour.getCity());
+        descriptionLbl.setText(tour.getDescription());
+        meetPointLbl.setText(tour.getMeetingPoint());
     }
 
     @Override
@@ -47,8 +70,6 @@ public class TourDetailPage extends UIPage {
     }
 
     public static void setTour(int id) {
-        // Gather information from the database about the given tour
-        // and change the elements on the screen.
         currentTourId = id;
     }
 
@@ -75,12 +96,72 @@ public class TourDetailPage extends UIPage {
     private void $$$setupUI$$$() {
         mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
-        tourTitleTemp = new JLabel();
-        tourTitleTemp.setText("Label");
-        mainPanel.add(tourTitleTemp, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JPanel panel1 = new JPanel();
+        panel1.setLayout(new GridLayoutManager(1, 3, new Insets(10, 10, 5, 10), -1, -1));
+        mainPanel.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, null, null, 0, false));
         backBtn = new JButton();
         backBtn.setText("Tilbake");
-        mainPanel.add(backBtn, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(backBtn, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final Spacer spacer1 = new Spacer();
+        panel1.add(spacer1, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        logoutBtn = new JButton();
+        logoutBtn.setText("Logg ut");
+        panel1.add(logoutBtn, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        contentPanel = new JPanel();
+        contentPanel.setLayout(new GridLayoutManager(1, 2, new Insets(5, 5, 5, 5), -1, -1));
+        contentPanel.setBackground(new Color(-2960942));
+        mainPanel.add(contentPanel, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final JPanel panel2 = new JPanel();
+        panel2.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        contentPanel.add(panel2, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel2.setBorder(BorderFactory.createTitledBorder(null, "Billetter og priser", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, this.$$$getFont$$$(null, Font.BOLD, 16, panel2.getFont()), null));
+        final JPanel panel3 = new JPanel();
+        panel3.setLayout(new GridLayoutManager(6, 2, new Insets(0, 0, 0, 0), -1, -1));
+        contentPanel.add(panel3, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        titleLbl = new JLabel();
+        Font titleLblFont = this.$$$getFont$$$(null, Font.BOLD, 24, titleLbl.getFont());
+        if (titleLblFont != null) titleLbl.setFont(titleLblFont);
+        titleLbl.setText("<Title>");
+        panel3.add(titleLbl, new GridConstraints(1, 0, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final Spacer spacer2 = new Spacer();
+        panel3.add(spacer2, new GridConstraints(5, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        countryLbl = new JLabel();
+        countryLbl.setText("<Country>");
+        panel3.add(countryLbl, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        meetPointLbl = new JLabel();
+        meetPointLbl.setText("<Meeting Point>");
+        panel3.add(meetPointLbl, new GridConstraints(4, 0, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        idLbl = new JLabel();
+        idLbl.setText("Label");
+        panel3.add(idLbl, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        descriptionLbl = new JLabel();
+        descriptionLbl.setText("<Description>");
+        panel3.add(descriptionLbl, new GridConstraints(2, 0, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        cityLbl = new JLabel();
+        cityLbl.setText("<City>");
+        panel3.add(cityLbl, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
+        if (currentFont == null) return null;
+        String resultName;
+        if (fontName == null) {
+            resultName = currentFont.getName();
+        } else {
+            Font testFont = new Font(fontName, Font.PLAIN, 10);
+            if (testFont.canDisplay('a') && testFont.canDisplay('1')) {
+                resultName = fontName;
+            } else {
+                resultName = currentFont.getName();
+            }
+        }
+        Font font = new Font(resultName, style >= 0 ? style : currentFont.getStyle(), size >= 0 ? size : currentFont.getSize());
+        boolean isMac = System.getProperty("os.name", "").toLowerCase(Locale.ENGLISH).startsWith("mac");
+        Font fontWithFallback = isMac ? new Font(font.getFamily(), font.getStyle(), font.getSize()) : new StyleContext().getFont(font.getFamily(), font.getStyle(), font.getSize());
+        return fontWithFallback instanceof FontUIResource ? fontWithFallback : new FontUIResource(fontWithFallback);
     }
 
     /**

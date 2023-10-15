@@ -17,7 +17,7 @@ public class TouristMainPage extends UIPage {
 
     private JPanel mainPanel;
     private JLabel headerLbl;
-    private JButton cancelBtn;
+    private JButton logoutBtn;
     private JPanel contentPanel;
     private JList<Tour> tourList;
     private JComboBox<String> landComboBox;
@@ -34,7 +34,7 @@ public class TouristMainPage extends UIPage {
         tourList.setCellRenderer(new TourCellRenderer());
         tourList.setDragEnabled(false);
 
-        cancelBtn.addActionListener(actionEvent -> mainWindow.setPage(LoginPage.NAME));
+        logoutBtn.addActionListener(actionEvent -> mainWindow.setPage(LoginPage.NAME));
 
         tourList.addListSelectionListener(listSelectionEvent -> {
             int selectionIndex = tourList.getSelectedIndex();
@@ -105,9 +105,9 @@ public class TouristMainPage extends UIPage {
         panel2.add(headerLbl, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
         panel2.add(spacer1, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
-        cancelBtn = new JButton();
-        cancelBtn.setText("Logg ut");
-        panel2.add(cancelBtn, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        logoutBtn = new JButton();
+        logoutBtn.setText("Logg ut");
+        panel2.add(logoutBtn, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         contentPanel = new JPanel();
         contentPanel.setLayout(new GridLayoutManager(2, 1, new Insets(5, 5, 5, 5), -1, -1));
         contentPanel.setBackground(new Color(-2960942));
