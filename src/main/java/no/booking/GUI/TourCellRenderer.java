@@ -17,13 +17,6 @@ public class TourCellRenderer extends TourElement implements ListCellRenderer<To
         mainPanel.setBackground(Color.WHITE);
         mainPanel.setBorder(new EmptyBorder(5, 5, 0, 5));
 
-        JPanel contentPanel = (JPanel) mainPanel.getComponent(0);
-        if (isSelected) {
-            contentPanel.setBackground(Color.BLUE);
-        } else {
-            contentPanel.setBackground(Color.GRAY);
-        }
-
         setCity(tour.getCity());
         setTitle(tour.getTitle());
         setDescription(tour.getDescription());

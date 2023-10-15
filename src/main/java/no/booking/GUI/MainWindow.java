@@ -1,6 +1,5 @@
 package no.booking.GUI;
 
-import no.booking.logic.Tour;
 import no.booking.persistence.DataHandler;
 
 import javax.swing.*;
@@ -11,10 +10,10 @@ import java.util.Map;
 public class MainWindow extends JFrame {
     private final JPanel mainPanel;
 
-    private Map<String, UIPage> pages;
+    private final Map<String, UIPage> pages;
     private String currentPage;
 
-    private DataHandler dataHandler;
+    private final DataHandler dataHandler;
 
     public MainWindow(DataHandler dataHandler) {
         this.dataHandler = dataHandler;

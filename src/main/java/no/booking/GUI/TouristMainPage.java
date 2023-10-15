@@ -9,10 +9,7 @@ import no.booking.persistence.DataHandler;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.util.Arrays;
 import java.util.List;
 
 public class TouristMainPage extends UIPage {
@@ -51,12 +48,9 @@ public class TouristMainPage extends UIPage {
             TourDetailPage.setPreviousPage(NAME);
             mainWindow.setPage(TourDetailPage.NAME);
         });
-        cityComboBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent itemEvent) {
-                if (itemEvent.getStateChange() == ItemEvent.DESELECTED) return;
-                populateToursFromFilters();
-            }
+        cityComboBox.addItemListener(itemEvent -> {
+            if (itemEvent.getStateChange() == ItemEvent.DESELECTED) return;
+            populateToursFromFilters();
         });
     }
 
