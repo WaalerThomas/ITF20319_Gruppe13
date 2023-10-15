@@ -20,12 +20,17 @@ public class Database implements DataHandler {
 
     @Override
     public User getUserByUsername(String username) {
-        return null;
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     public List<Tour> getTours() {
-        return null;
+        throw new RuntimeException("Not implemented");
+    }
+
+    @Override
+    public List<Tour> getToursByCity(String city) {
+        throw new RuntimeException("Not implemented");
     }
 
     // NOTE: This is a temp function, going to be removed after testing the setup

@@ -7,7 +7,13 @@ import no.booking.logic.Tour;
 import no.booking.persistence.DataHandler;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.Arrays;
+import java.util.List;
 
 public class TouristMainPage extends UIPage {
     public static final String NAME = "TouristMainPage";
@@ -17,9 +23,11 @@ public class TouristMainPage extends UIPage {
     private JButton cancelBtn;
     private JPanel contentPanel;
     private JList<Tour> tourList;
+    private JComboBox<String> landComboBox;
+    private JComboBox<String> cityComboBox;
 
-    private DefaultListModel<Tour> tourListModel;
-    private DataHandler dataHandler;
+    private final DefaultListModel<Tour> tourListModel;
+    private final DataHandler dataHandler;
 
     public TouristMainPage(MainWindow mainWindow, DataHandler dataHandler) {
         this.dataHandler = dataHandler;
@@ -27,6 +35,7 @@ public class TouristMainPage extends UIPage {
         tourListModel = new DefaultListModel<>();
         tourList.setModel(tourListModel);
         tourList.setCellRenderer(new TourCellRenderer());
+        tourList.setDragEnabled(false);
 
         cancelBtn.addActionListener(actionEvent -> mainWindow.setPage(LoginPage.NAME));
 
@@ -42,25 +51,36 @@ public class TouristMainPage extends UIPage {
             TourDetailPage.setPreviousPage(NAME);
             mainWindow.setPage(TourDetailPage.NAME);
         });
+        cityComboBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent itemEvent) {
+                if (itemEvent.getStateChange() == ItemEvent.DESELECTED) return;
+                populateToursFromFilters();
+            }
+        });
     }
 
     @Override
     public void setup() {
-        System.out.println("TouristMainPage setup method called");
-
-        tourListModel.addAll(dataHandler.getTours());
+        populateToursFromFilters();
     }
 
     @Override
     public void teardown() {
-        System.out.println("TouristMainPage teardown method called");
-
         tourListModel.removeAllElements();
     }
 
     @Override
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    private void populateToursFromFilters() {
+        String selectedCity = (cityComboBox.getSelectedIndex() == 0) ? "" : cityComboBox.getItemAt(cityComboBox.getSelectedIndex());
+
+        List<Tour> tours = dataHandler.getToursByCity(selectedCity);
+        tourListModel.removeAllElements();
+        tourListModel.addAll(tours);
     }
 
     {
@@ -99,18 +119,41 @@ public class TouristMainPage extends UIPage {
         contentPanel.setBackground(new Color(-2960942));
         mainPanel.add(contentPanel, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JPanel panel3 = new JPanel();
-        panel3.setLayout(new GridLayoutManager(1, 2, new Insets(5, 5, 5, 5), -1, -1));
+        panel3.setLayout(new GridLayoutManager(1, 3, new Insets(5, 5, 5, 5), -1, -1));
         contentPanel.add(panel3, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel3.setBorder(BorderFactory.createTitledBorder(null, "Filter", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         final JLabel label1 = new JLabel();
-        label1.setText("<Filter kommer her>");
+        label1.setText("Lokasjon:");
         panel3.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final Spacer spacer2 = new Spacer();
-        panel3.add(spacer2, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        landComboBox = new JComboBox();
+        landComboBox.setEnabled(false);
+        final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
+        defaultComboBoxModel1.addElement("<Land>");
+        defaultComboBoxModel1.addElement("Danmark");
+        defaultComboBoxModel1.addElement("Finland");
+        defaultComboBoxModel1.addElement("Norge");
+        defaultComboBoxModel1.addElement("Sverige");
+        landComboBox.setModel(defaultComboBoxModel1);
+        landComboBox.setToolTipText("NOT IMPLEMENTED");
+        panel3.add(landComboBox, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        cityComboBox = new JComboBox();
+        cityComboBox.setEditable(false);
+        final DefaultComboBoxModel defaultComboBoxModel2 = new DefaultComboBoxModel();
+        defaultComboBoxModel2.addElement("<By>");
+        defaultComboBoxModel2.addElement("Oslo");
+        defaultComboBoxModel2.addElement("Halden");
+        defaultComboBoxModel2.addElement("Moss");
+        defaultComboBoxModel2.addElement("Roma");
+        defaultComboBoxModel2.addElement("København");
+        defaultComboBoxModel2.addElement("Faro");
+        cityComboBox.setModel(defaultComboBoxModel2);
+        panel3.add(cityComboBox, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JScrollPane scrollPane1 = new JScrollPane();
         contentPanel.add(scrollPane1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         tourList = new JList();
         tourList.setSelectionMode(0);
         scrollPane1.setViewportView(tourList);
+        label1.setLabelFor(landComboBox);
     }
 
     /**

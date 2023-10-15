@@ -2,7 +2,6 @@ package no.booking.GUI;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
-import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
@@ -24,8 +23,22 @@ public class TourElement {
     public void setTitle(String title) {
         titleLbl.setText(title);
     }
+
     public void setCity(String city) {
         cityLbl.setText(city);
+    }
+
+    public void setDescription(String desc) {
+        int maxLength = 100;
+        descLbl.setText((desc.length() >= maxLength) ? desc.substring(0, maxLength) : desc);
+    }
+
+    public void setDuration(String duration) {
+        durationLbl.setText(duration);
+    }
+
+    public void setPrice(String price) {
+        priceLbl.setText("NOK " + price);
     }
 
     public JPanel getMainPanel() {
@@ -51,22 +64,22 @@ public class TourElement {
         mainPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         mainPanel.setBackground(new Color(-1508097));
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), 0, 0));
         mainPanel.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, new Dimension(-1, 100), 0, false));
         final JLabel label1 = new JLabel();
         label1.setIcon(new ImageIcon(getClass().getResource("/no_image_available.png")));
         label1.setText("");
         panel1.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_CAN_GROW, new Dimension(75, 75), null, null, 0, false));
         final JPanel panel2 = new JPanel();
-        panel2.setLayout(new GridLayoutManager(4, 4, new Insets(3, 0, 3, 3), -1, -1));
+        panel2.setLayout(new GridLayoutManager(4, 4, new Insets(3, 0, 3, 5), 3, 0));
         panel1.add(panel2, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         cityLbl = new JLabel();
         cityLbl.setEnabled(true);
-        Font cityLblFont = this.$$$getFont$$$(null, -1, 8, cityLbl.getFont());
+        Font cityLblFont = this.$$$getFont$$$(null, -1, 9, cityLbl.getFont());
         if (cityLblFont != null) cityLbl.setFont(cityLblFont);
         cityLbl.setForeground(new Color(-9605261));
         cityLbl.setText("<City>");
-        panel2.add(cityLbl, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 10), null, 0, false));
+        panel2.add(cityLbl, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         titleLbl = new JLabel();
         Font titleLblFont = this.$$$getFont$$$("Inter", Font.BOLD, 16, titleLbl.getFont());
         if (titleLblFont != null) titleLbl.setFont(titleLblFont);

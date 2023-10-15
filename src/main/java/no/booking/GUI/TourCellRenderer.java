@@ -24,8 +24,9 @@ public class TourCellRenderer extends TourElement implements ListCellRenderer<To
             contentPanel.setBackground(Color.GRAY);
         }
 
-        setCity(tour.city);
-        setTitle(tour.title);
+        setCity(tour.getCity());
+        setTitle(tour.getTitle());
+        setDescription(tour.getDescription());
 
         return mainPanel;
     }

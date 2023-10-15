@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class FakeDatabase implements DataHandler {
     private Set<User> users;
@@ -47,8 +48,15 @@ public class FakeDatabase implements DataHandler {
         return tours;
     }
 
-    private boolean createTour() {
+    @Override
+    public List<Tour> getToursByCity(String city) {
+        // Return every tour if the filter is blank
+        if (city.isBlank()) return getTours();
 
+        return tours.stream().filter(tour -> tour.getCity().contains(city)).collect(Collectors.toList());
+    }
+
+    private boolean createTour() {
         return false;
     }
 }

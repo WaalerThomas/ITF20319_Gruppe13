@@ -113,7 +113,7 @@ public class LeggTilOmvisning extends UIPage {
         comboBox2 = new JComboBox();
         mainPanel.add(comboBox2, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         velgBy = new JLabel();
-        velgBy.setText("Label");
+        velgBy.setText("Velg by");
         mainPanel.add(velgBy, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         beskrivelse = new JLabel();
         beskrivelse.setText("Beskrivelse");
@@ -131,6 +131,7 @@ public class LeggTilOmvisning extends UIPage {
         final JScrollPane scrollPane1 = new JScrollPane();
         mainPanel.add(scrollPane1, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         textPane1 = new JTextPane();
+        textPane1.setText("");
         scrollPane1.setViewportView(textPane1);
     }
 

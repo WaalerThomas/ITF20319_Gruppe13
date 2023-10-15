@@ -61,27 +61,56 @@
         </properties>
         <border type="none"/>
         <children>
-          <grid id="c9395" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="c9395" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="5" left="5" bottom="5" right="5"/>
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
-            <border type="none"/>
+            <border type="none" title="Filter"/>
             <children>
-              <component id="54569" class="javax.swing.JLabel">
+              <component id="f8f24" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="&lt;Filter kommer her&gt;"/>
+                  <labelFor value="350e4"/>
+                  <text value="Lokasjon:"/>
                 </properties>
               </component>
-              <hspacer id="64524">
+              <component id="350e4" class="javax.swing.JComboBox" binding="landComboBox">
                 <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
-              </hspacer>
+                <properties>
+                  <enabled value="false"/>
+                  <model>
+                    <item value="&lt;Land&gt;"/>
+                    <item value="Danmark"/>
+                    <item value="Finland"/>
+                    <item value="Norge"/>
+                    <item value="Sverige"/>
+                  </model>
+                  <toolTipText value="NOT IMPLEMENTED"/>
+                </properties>
+              </component>
+              <component id="ba052" class="javax.swing.JComboBox" binding="cityComboBox">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <editable value="false"/>
+                  <model>
+                    <item value="&lt;By&gt;"/>
+                    <item value="Oslo"/>
+                    <item value="Halden"/>
+                    <item value="Moss"/>
+                    <item value="Roma"/>
+                    <item value="København"/>
+                    <item value="Faro"/>
+                  </model>
+                </properties>
+              </component>
             </children>
           </grid>
           <scrollpane id="252f4">
