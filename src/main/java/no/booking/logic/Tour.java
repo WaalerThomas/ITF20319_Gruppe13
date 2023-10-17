@@ -79,4 +79,12 @@ public class Tour {
     public void setMeetingPoint(String meetingPoint) {
         this.meetingPoint = meetingPoint;
     }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
 }
