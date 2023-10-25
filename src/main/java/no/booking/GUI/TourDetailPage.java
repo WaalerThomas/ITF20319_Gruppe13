@@ -12,6 +12,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Locale;
 
 public class TourDetailPage extends UIPage {
@@ -29,6 +31,7 @@ public class TourDetailPage extends UIPage {
     private JLabel descriptionLbl;
     private JLabel meetPointLbl;
     private JLabel idLbl;
+    private JButton gaTilBetaling;
 
     private final DataHandler dataHandler;
 
@@ -41,6 +44,13 @@ public class TourDetailPage extends UIPage {
             mainWindow.setPage(page);
         });
         logoutBtn.addActionListener(actionEvent -> mainWindow.setPage(LoginPage.NAME));
+
+        gaTilBetaling.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainWindow.setPage(BetalOmvisning.NAME);
+            }
+        });
     }
 
     @Override
@@ -102,11 +112,12 @@ public class TourDetailPage extends UIPage {
         backBtn = new JButton();
         backBtn.setText("Tilbake");
         panel1.add(backBtn, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final Spacer spacer1 = new Spacer();
-        panel1.add(spacer1, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         logoutBtn = new JButton();
         logoutBtn.setText("Logg ut");
         panel1.add(logoutBtn, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        gaTilBetaling = new JButton();
+        gaTilBetaling.setText("Gå til betaling");
+        panel1.add(gaTilBetaling, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         contentPanel = new JPanel();
         contentPanel.setLayout(new GridLayoutManager(1, 2, new Insets(5, 5, 5, 5), -1, -1));
         contentPanel.setBackground(new Color(-2960942));
@@ -123,8 +134,8 @@ public class TourDetailPage extends UIPage {
         if (titleLblFont != null) titleLbl.setFont(titleLblFont);
         titleLbl.setText("<Title>");
         panel3.add(titleLbl, new GridConstraints(1, 0, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final Spacer spacer2 = new Spacer();
-        panel3.add(spacer2, new GridConstraints(5, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        final Spacer spacer1 = new Spacer();
+        panel3.add(spacer1, new GridConstraints(5, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         countryLbl = new JLabel();
         countryLbl.setText("<Country>");
         panel3.add(countryLbl, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
