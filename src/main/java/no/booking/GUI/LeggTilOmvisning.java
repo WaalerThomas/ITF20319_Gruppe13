@@ -37,6 +37,12 @@ public class LeggTilOmvisning extends UIPage {
         Tour tour = new Tour(1, beskrivelse.getText(), velgLand.getText(), velgBy.getText(), beskrivelse.getText(),
                 "dato", pris.getDisplayedMnemonic(), beskrivelse.getText());
 
+        Tour dummyTour = new Tour(2, "Opplev vakre omstendigheter i Athen", "Hellas", "Athen",
+                "Utforsk antikken i hjertet av Athen, fra Parthenon til lokale smaker. " +
+                        "En reise gjennom tusenvis av år med historie og autentisk gresk kultur.", "15.06.24",
+                5000, "Athen Centrum");
+
+
         fakeDatabase.getTours();
 
         cancelBtn.addActionListener(new ActionListener() {
@@ -50,6 +56,10 @@ public class LeggTilOmvisning extends UIPage {
         for (String country : getAllCountries()) {
             comboBox1.addItem(country);
         }
+        //legger til dummy-data i pris, by og tittel feltet
+        comboBox2.addItem(dummyTour.getCity());
+        textField1.setText(String.valueOf(dummyTour.getPrice_Per_Type_Ticket()));
+        textPane1.setText(String.valueOf(dummyTour.getDescription()));
     }
 
     // Genererer liste med land
