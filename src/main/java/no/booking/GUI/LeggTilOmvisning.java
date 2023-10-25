@@ -13,6 +13,8 @@ import java.awt.event.ActionListener;
 import java.util.Locale;
 import java.util.stream.Stream;
 
+import static javax.swing.JOptionPane.showMessageDialog;
+
 public class LeggTilOmvisning extends UIPage {
     public static final String NAME = "LeggTilOmvisning";
 
@@ -65,6 +67,13 @@ public class LeggTilOmvisning extends UIPage {
         textField1.setText(String.valueOf(dummyTour.getPrice_Per_Type_Ticket()));
         textPane1.setText(String.valueOf(dummyTour.getDescription()));
         button1.setText("Rapporter feil");
+        button1.addActionListener(actionEvent -> {
+            showMessageDialog(null, "Opprettelse av omvisning feilet. Prøv igjen senere");
+        });
+        leggTil.addActionListener(actionEvent -> {
+            showMessageDialog(null, "Gratulerer, du har nå lagt til en omvisning. Følg med på" +
+                    " Mine oversikter for mer informasjon");
+        });
     }
 
     // Genererer liste med land
