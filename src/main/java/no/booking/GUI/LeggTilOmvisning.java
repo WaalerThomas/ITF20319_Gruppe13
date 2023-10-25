@@ -28,18 +28,20 @@ public class LeggTilOmvisning extends UIPage {
     private JTextField textField1;
     private JButton leggTil;
     private JTextPane textPane1;
+    private JButton button1;
 
 
     public LeggTilOmvisning(MainWindow mainWindow) {
 
         FakeDatabase fakeDatabase = new FakeDatabase();
 
-        Tour tour = new Tour(1, beskrivelse.getText(), velgLand.getText(), velgBy.getText(), beskrivelse.getText(),
-                "dato", pris.getDisplayedMnemonic(), beskrivelse.getText());
-
         Tour dummyTour = new Tour(2, "Opplev vakre omstendigheter i Athen", "Hellas", "Athen",
                 "Utforsk antikken i hjertet av Athen, fra Parthenon til lokale smaker. " +
-                        "En reise gjennom tusenvis av år med historie og autentisk gresk kultur.", "15.06.24",
+                        "En reise gjennom tusenvis av år med historie og autentisk gresk kultur. " +
+                        "\n \nAlder: 3-99. Maks 25 pr gruppe" +
+                        "\n \nVarighet: 6 timer " +
+                        "\n \nSpråk: Engelsk",
+                "15.06.24",
                 5000, "Athen Centrum");
 
 
@@ -53,13 +55,16 @@ public class LeggTilOmvisning extends UIPage {
         });
 
         // Legger til listen med alle land i DropDown meny
-        for (String country : getAllCountries()) {
+        /*for (String country : getAllCountries()) {
             comboBox1.addItem(country);
         }
+         */
+        comboBox1.addItem(dummyTour.getCountry());
         //legger til dummy-data i pris, by og tittel feltet
         comboBox2.addItem(dummyTour.getCity());
         textField1.setText(String.valueOf(dummyTour.getPrice_Per_Type_Ticket()));
         textPane1.setText(String.valueOf(dummyTour.getDescription()));
+        button1.setText("Rapporter feil");
     }
 
     // Genererer liste med land
