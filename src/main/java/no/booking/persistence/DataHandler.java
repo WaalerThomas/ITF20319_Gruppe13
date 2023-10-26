@@ -11,7 +11,7 @@ public interface DataHandler {
     Tour getTourById(int id);
     List<Tour> getToursByCity(String city);
 
-    void createTour(int tourId, String title, String city, String country, String description, String date,
+    Tour createTour(int tourId, String title, String city, String country, String description, String date,
                     int price_Per_Type_Ticket, String meetingPoint);
 }
 

@@ -62,9 +62,10 @@ public class FakeDatabase implements DataHandler {
     }
 
     @Override
-    public void createTour(int tourId, String title, String country, String city, String description, String date, int price_Per_Type_Ticket, String meetingPoint) {
+    public Tour createTour(int tourId, String title, String country, String city, String description, String date, int price_Per_Type_Ticket, String meetingPoint) {
         Tour newTour = new Tour(tourId, title, country, city, description, date, price_Per_Type_Ticket, meetingPoint);
         tours.add(newTour);
+        return newTour;
     }
 
 }

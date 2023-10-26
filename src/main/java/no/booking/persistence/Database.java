@@ -37,6 +37,11 @@ public class Database implements DataHandler {
         throw new RuntimeException("Not implemented");
     }
 
+    @Override
+    public Tour createTour(int tourId, String title, String city, String country, String description, String date, int price_Per_Type_Ticket, String meetingPoint) {
+        return null;
+    }
+
     // NOTE: This is a temp function, going to be removed after testing the setup
     public void printAllUsers() {
         try {
