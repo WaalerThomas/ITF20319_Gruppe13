@@ -28,7 +28,7 @@ public class FakeDatabase implements DataHandler {
 
     @Override
     public User getUserByUsername(String username) {
-        throw new RuntimeException("Not implemented");
+        return users.stream().filter(user -> user.getUserName().equals(username)).findFirst().orElse(null);
     }
 
     @Override

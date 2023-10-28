@@ -1,5 +1,6 @@
 package no.booking.fakes;
 
+import no.booking.Users.User;
 import no.booking.logic.Tour;
 import no.booking.persistence.FakeDatabase;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,8 +45,12 @@ class PersistenceTests {
 
     @Test
     public void can_get_a_user_by_username() {
-        fail();
-        // database.getUserByUsername("TuridTurist");
+        database.createUser("TuridTurist");
+        database.createUser("FredrikkFeilmann");
+
+        User user = database.getUserByUsername("TuridTurist");
+        assertNotNull(user);
+        assertEquals("TuridTurist", user.getUserName());
     }
 
     @Test
