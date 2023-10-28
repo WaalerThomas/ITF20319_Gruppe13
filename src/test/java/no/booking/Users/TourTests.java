@@ -17,8 +17,9 @@ public class TourTests {
     @Test
     /* Guide skal kunne opprette en omvisning */
     public void guide_can_create_a_tour() {
-        Tour tourTest = database.createTour(1, "TestTour", "TestLand", "TestBy", "TestBeskrivelse", "TestDate",
-                5000, "TestMeetingPoint");
-        assertEquals(1, tourTest.getId());
+        Tour tourTest = database.createTour("TestTour", "TestLand", "TestBy", "TestBeskrivelse", "TestDate",
+                5000, "TestMeetingPoint", 5);
+        int toursCount = database.getTours().toArray().length;
+        assertEquals(1, toursCount);
     }
 }

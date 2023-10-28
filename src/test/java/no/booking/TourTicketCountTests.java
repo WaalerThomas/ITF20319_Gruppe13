@@ -20,7 +20,7 @@ public class TourTicketCountTests {
     public void cannot_remove_more_tickets_than_available() {
         boolean result = tourTest.decreaseTicketCount(6);
         assertFalse(result);
-        assertEquals(0, tourTest.getAvailableTicketsCount());
+        assertEquals(5, tourTest.getAvailableTicketsCount());
     }
 
     @Test

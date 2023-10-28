@@ -15,10 +15,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Locale;
+import java.util.UUID;
 
 public class TourDetailPage extends UIPage {
     public static final String NAME = "TourDetailPage";
-    private static int currentTourId;
+    private static UUID currentTourId;
     private static String previousPage;
 
     private JPanel mainPanel;
@@ -73,7 +74,7 @@ public class TourDetailPage extends UIPage {
             throw new RuntimeException("Cannot find a Tour with the ID: " + currentTourId);
 
         titleLbl.setText(tour.getTitle());
-        countryLbl.setText(tour.country);
+        countryLbl.setText(tour.getCountry());
         cityLbl.setText(tour.getCity());
         descriptionLbl.setText(tour.getDescription());
         meetPointLbl.setText(tour.getMeetingPoint());
@@ -83,7 +84,7 @@ public class TourDetailPage extends UIPage {
     public void teardown() {
     }
 
-    public static void setTour(int id) {
+    public static void setTour(UUID id) {
         currentTourId = id;
     }
 

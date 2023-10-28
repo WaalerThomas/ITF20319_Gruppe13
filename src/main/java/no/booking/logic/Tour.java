@@ -24,7 +24,8 @@ public class Tour {
         this.date = date;
         this.price_Per_Type_Ticket = price_Per_Type_Ticket;
         this.meetingPoint = meetingPoint;
-        this.maxTicketAmount = maxTicketAmount;
+
+        this.maxTicketAmount = Math.max(maxTicketAmount, 0);
         this.availableTicketsCount = maxTicketAmount;
     }
 
@@ -90,6 +91,10 @@ public class Tour {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public int getMaxTicketAmount() {
+        return maxTicketAmount;
     }
 
     public int getAvailableTicketsCount() {

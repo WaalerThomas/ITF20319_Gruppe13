@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.*;
 import java.util.List;
+import java.util.UUID;
 
 /** Class for talking to the database.
  */
@@ -28,7 +29,7 @@ public class Database implements DataHandler {
     }
 
     @Override
-    public Tour getTourById(int id) {
+    public Tour getTourById(UUID id) {
         throw new RuntimeException("Not implemented");
     }
 
@@ -38,7 +39,7 @@ public class Database implements DataHandler {
     }
 
     @Override
-    public Tour createTour(int tourId, String title, String city, String country, String description, String date, int price_Per_Type_Ticket, String meetingPoint) {
+    public Tour createTour(String title, String city, String country, String description, String date, int price_Per_Type_Ticket, String meetingPoint, int maxTicketAmount) {
         return null;
     }
 

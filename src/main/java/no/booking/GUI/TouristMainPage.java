@@ -44,7 +44,7 @@ public class TouristMainPage extends UIPage {
             if (selectionIndex == -1) return;
 
             // Navigate to the detail screen for the tour
-            TourDetailPage.setTour(tourListModel.get(selectionIndex).getTourId());
+            TourDetailPage.setTour(tourListModel.get(selectionIndex).getId());
             TourDetailPage.setPreviousPage(NAME);
             mainWindow.setPage(TourDetailPage.NAME);
         });
