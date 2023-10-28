@@ -57,6 +57,16 @@ public class FakeDatabase implements DataHandler {
     }
 
     @Override
+    public void createTour(Tour tour) {
+        tours.add(tour);
+    }
+
+    @Override
+    public void updateTour(Tour tour) {
+        throw new RuntimeException("Not implemented");
+    }
+
+    @Override
     public void addBooking(Booking booking) {
         bookings.add(booking);
     }
@@ -64,6 +74,11 @@ public class FakeDatabase implements DataHandler {
     @Override
     public List<Booking> getBookingsTourId(UUID tourId) {
         return bookings.stream().filter(booking -> booking.getTourId() == tourId).collect(Collectors.toList());
+    }
+
+    @Override
+    public void createUser(String username) {
+        users.add(new User(username, "123456", "user@mail.no"));
     }
 
     private void addDefaultData() {

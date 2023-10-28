@@ -1,5 +1,6 @@
 package no.booking;
 
+import no.booking.Users.User;
 import no.booking.logic.Tour;
 import no.booking.persistence.FakeDatabase;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,13 +25,28 @@ public class TourTests {
     }
 
     @Test
+    /* Turist bruker kan ikke booke billetter når det ikke er nok billetter tilgjengelig */
     public void tourist_can_not_book_a_full_tour() {
         Tour tourTest = new Tour("TestTour", "TestLand", "TestBy", "TestBeskrivelse",
                 "TestDate", 5000, 2500, 0, "TestMeetingPoint", 5);
-        //tourTest.decreaseTicketCount(5);
+        tourTest.decreaseTicketCount(5);
+        database.createTour(tourTest);
+        database.createUser("TuridTurist");
 
-        //tourTest.book(String username, int ticketAmount, String date);
-        fail();
+        boolean result = tourTest.book(database, "TuridTurist", 1, 0, 0, "2023.11.11");
+        assertFalse(result);
+    }
+
+    @Test
+    /* Turist-bruker skal kunne betale for en tjeneste */
+    public void tourist_can_book_a_tour() {
+        Tour tourTest = new Tour("TestTour", "TestLand", "TestBy", "TestBeskrivelse",
+                "TestDate", 5000, 2500, 0, "TestMeetingPoint", 5);
+        database.createTour(tourTest);
+        database.createUser("TuridTurist");
+
+        boolean result = tourTest.book(database, "TuridTurist", 1, 0, 0, "2023.11.11");
+        assertTrue(result);
     }
 
     @Test

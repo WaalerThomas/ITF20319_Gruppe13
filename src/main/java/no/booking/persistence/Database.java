@@ -45,12 +45,27 @@ public class Database implements DataHandler {
     }
 
     @Override
+    public void createTour(Tour tour) {
+        throw new RuntimeException("Not implemented");
+    }
+
+    @Override
+    public void updateTour(Tour tour) {
+        throw new RuntimeException("Not implemented");
+    }
+
+    @Override
     public void addBooking(Booking booking) {
         throw new RuntimeException("Not implemented");
     }
 
     @Override
     public List<Booking> getBookingsTourId(UUID tourId) {
+        throw new RuntimeException("Not implemented");
+    }
+
+    @Override
+    public void createUser(String username) {
         throw new RuntimeException("Not implemented");
     }
 

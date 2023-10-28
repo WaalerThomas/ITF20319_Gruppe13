@@ -12,10 +12,12 @@ public interface DataHandler {
     List<Tour> getTours();
     Tour getTourById(UUID id);
     List<Tour> getToursByCity(String city);
-
     Tour createTour(String title, String country, String city, String description, String date, int adultTicketPrice,
                     int childTicketPrice, int infantTicketPrice, String meetingPoint, int maxTicketAmount);
+    void createTour(Tour tour);
+    void updateTour(Tour tour);
     void addBooking(Booking booking);
     List<Booking> getBookingsTourId(UUID tourId);
+    void createUser(String username);
 }
 
