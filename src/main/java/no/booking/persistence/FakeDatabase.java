@@ -72,8 +72,13 @@ public class FakeDatabase implements DataHandler {
     }
 
     @Override
-    public List<Booking> getBookingsTourId(UUID tourId) {
+    public List<Booking> getBookingsByTourId(UUID tourId) {
         return bookings.stream().filter(booking -> booking.getTourId() == tourId).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Booking> getBookingsByUsername(String username) {
+        return bookings.stream().filter(booking -> booking.getUsername().equals(username)).collect(Collectors.toList());
     }
 
     @Override

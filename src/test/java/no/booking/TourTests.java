@@ -1,6 +1,7 @@
 package no.booking;
 
 import no.booking.Users.User;
+import no.booking.logic.Booking;
 import no.booking.logic.Tour;
 import no.booking.persistence.FakeDatabase;
 import org.junit.jupiter.api.BeforeEach;
@@ -66,6 +67,23 @@ public class TourTests {
         database.createTour("TestTitle3", "TestCountry3", "TestCity3", "TestDescption3", "2023-10-10 18:00:00", 500, 250, 0, "TestMeetingpoint3", 10);
 
         List<Tour> tours = database.getTours();
+        assertFalse(tours.isEmpty());
         assertEquals(3, tours.size());
+    }
+
+    @Test
+    /* Turist skal kunne sjekke hvilke omvisninger de har booket */
+    public void tourist_can_list_their_booked_tours() {
+        database.createUser("TuridTurist");
+        database.createUser("FredrikkFeilmann");
+        Tour tour1 = database.createTour("TestTitle", "TestCountry", "TestCity", "TestDescption", "2023-10-10 17:00:00", 500, 250, 0, "TestMeetingpoint", 10);
+        Tour tour2 = database.createTour("TestTitle2", "TestCountry2", "TestCity2", "TestDescption2", "2023-10-10 18:00:00", 500, 250, 0, "TestMeetingpoint2", 10);
+        tour1.book(database, "TuridTurist", 1, 0, 0, "2023-10-28 17:00:00");
+        tour1.book(database, "FredrikkFeilmann", 1, 0, 0, "2023-10-28 18:00:00");
+        tour2.book(database, "TuridTurist", 1, 0, 0, "2023-10-29 17:00:00");
+
+        List<Booking> bookings = database.getBookingsByUsername("TuridTurist");
+        assertFalse(bookings.isEmpty());
+        assertEquals(2, bookings.size());
     }
 }

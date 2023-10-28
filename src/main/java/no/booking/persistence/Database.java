@@ -60,7 +60,12 @@ public class Database implements DataHandler {
     }
 
     @Override
-    public List<Booking> getBookingsTourId(UUID tourId) {
+    public List<Booking> getBookingsByTourId(UUID tourId) {
+        throw new RuntimeException("Not implemented");
+    }
+
+    @Override
+    public List<Booking> getBookingsByUsername(String username) {
         throw new RuntimeException("Not implemented");
     }
 
