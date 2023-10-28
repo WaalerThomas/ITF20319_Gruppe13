@@ -1,4 +1,4 @@
-package no.booking.Users;
+package no.booking;
 
 import no.booking.logic.Tour;
 import no.booking.persistence.FakeDatabase;
