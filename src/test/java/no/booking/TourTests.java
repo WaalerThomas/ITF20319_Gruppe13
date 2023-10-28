@@ -50,6 +50,7 @@ public class TourTests {
     }
 
     @Test
+    /* Turist bruker skal ikke kunne booke en omvisning flere ganger */
     public void tourist_can_not_book_the_same_tour_twice() {
         fail();
     }
