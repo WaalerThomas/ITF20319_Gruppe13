@@ -19,7 +19,9 @@ public class TourCellRenderer extends TourElement implements ListCellRenderer<To
         setCity(tour.getCity());
         setTitle(tour.getTitle());
         setDescription(tour.getDescription());
-        setPrice(String.valueOf(tour.getPrice_Per_Type_Ticket()));
+
+        int maxTicketPrice = Math.max(tour.getAdultTicketPrice(), Math.max(tour.getChildTicketPrice(), tour.getInfantTicketPrice()));
+        setPrice(String.valueOf(maxTicketPrice));
 
         return mainPanel;
     }

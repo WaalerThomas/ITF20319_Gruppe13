@@ -1,5 +1,6 @@
 package no.booking.persistence;
 
+import no.booking.logic.Booking;
 import no.booking.Users.Admin;
 import no.booking.Users.Guide;
 import no.booking.Users.Tourist;
@@ -12,10 +13,12 @@ import java.util.stream.Collectors;
 public class FakeDatabase implements DataHandler {
     private final Set<User> users;
     private final List<Tour> tours;
+    private final List<Booking> bookings;
 
     public FakeDatabase() {
         this.users = new HashSet<>();
         this.tours = new ArrayList<>();
+        this.bookings = new ArrayList<>();
     }
 
     public void createDefaultApplicationData() {
@@ -47,10 +50,20 @@ public class FakeDatabase implements DataHandler {
     }
 
     @Override
-    public Tour createTour(String title, String country, String city, String description, String date, int price_Per_Type_Ticket, String meetingPoint, int maxTicketAmount) {
-        Tour newTour = new Tour(title, country, city, description, date, price_Per_Type_Ticket, meetingPoint, maxTicketAmount);
+    public Tour createTour(String title, String country, String city, String description, String date, int adultTicketPrice, int childTicketPrice, int infantTicketPrice, String meetingPoint, int maxTicketAmount) {
+        Tour newTour = new Tour(title, country, city, description, date, adultTicketPrice, childTicketPrice, infantTicketPrice, meetingPoint, maxTicketAmount);
         tours.add(newTour);
         return newTour;
+    }
+
+    @Override
+    public void addBooking(Booking booking) {
+        bookings.add(booking);
+    }
+
+    @Override
+    public List<Booking> getBookingsTourId(UUID tourId) {
+        return bookings.stream().filter(booking -> booking.getTourId() == tourId).collect(Collectors.toList());
     }
 
     private void addDefaultData() {
@@ -61,11 +74,11 @@ public class FakeDatabase implements DataHandler {
 
     private void addDefaultDataTours() {
         tours.add(new Tour("Tur til København", "Denmark", "København", "Fantastisk tur til københavn",
-                "04.04.24", 600, "København Sentrum", 10));
+                "04.04.24", 600, 300, 0, "København Sentrum", 10));
         tours.add(new Tour("Cruising rundt Faro", "Portugal","Faro" ,"Ferjetur rundt øyene", "20.06.24",
-                1400, "FaroVeien 12", 10));
+                1400, 700, 0, "FaroVeien 12", 10));
         tours.add(new Tour("Opplev magien i Roma", "Italia", "Roma",
-                "Nyt romantisk aften i Roma", "25.06.24", 2300, "Romaveien 20", 10));
+                "Nyt romantisk aften i Roma", "25.06.24", 2300, 1150, 0, "Romaveien 20", 10));
     }
 }
 

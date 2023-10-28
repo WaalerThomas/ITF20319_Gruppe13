@@ -1,6 +1,7 @@
 package no.booking.persistence;
 
 import no.booking.Users.User;
+import no.booking.logic.Booking;
 import no.booking.logic.Tour;
 
 import java.util.List;
@@ -12,7 +13,9 @@ public interface DataHandler {
     Tour getTourById(UUID id);
     List<Tour> getToursByCity(String city);
 
-    Tour createTour(String title, String city, String country, String description, String date,
-                    int price_Per_Type_Ticket, String meetingPoint, int maxTicketAmount);
+    Tour createTour(String title, String country, String city, String description, String date, int adultTicketPrice,
+                    int childTicketPrice, int infantTicketPrice, String meetingPoint, int maxTicketAmount);
+    void addBooking(Booking booking);
+    List<Booking> getBookingsTourId(UUID tourId);
 }
 

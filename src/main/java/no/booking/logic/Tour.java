@@ -1,5 +1,8 @@
 package no.booking.logic;
 
+import no.booking.persistence.DataHandler;
+
+import java.util.List;
 import java.util.UUID;
 
 public class Tour {
@@ -9,12 +12,14 @@ public class Tour {
     private String country;
     private String description;
     private String date;
-    private int price_Per_Type_Ticket;
+    private int adultTicketPrice;
+    private int childTicketPrice;
+    private int infantTicketPrice;
     private String meetingPoint;
     private int maxTicketAmount;
     private int availableTicketsCount;
 
-    public Tour(String title, String country, String city, String description, String date, int price_Per_Type_Ticket, String meetingPoint, int maxTicketAmount) {
+    public Tour(String title, String country, String city, String description, String date, int adultTicketPrice, int childTicketPrice, int infantTicketPrice, String meetingPoint, int maxTicketAmount) {
         this.id = UUID.randomUUID();
 
         this.title = title;
@@ -22,11 +27,33 @@ public class Tour {
         this.city = city;
         this.description = description;
         this.date = date;
-        this.price_Per_Type_Ticket = price_Per_Type_Ticket;
+        this.adultTicketPrice = adultTicketPrice;
+        this.childTicketPrice = childTicketPrice;
+        this.infantTicketPrice = infantTicketPrice;
         this.meetingPoint = meetingPoint;
 
         this.maxTicketAmount = Math.max(maxTicketAmount, 0);
         this.availableTicketsCount = maxTicketAmount;
+    }
+
+    public boolean book(DataHandler dataHandler, String username, int adultTicketAmount, int childTicketAmount, int infantTicketAmount, String date) {
+        int totalTicketAmount = adultTicketAmount + childTicketAmount + infantTicketAmount;
+        if (!decreaseTicketCount(totalTicketAmount))
+            return false;
+
+        int calculatedTotalCost = (adultTicketPrice * adultTicketAmount) + (childTicketPrice * adultTicketAmount) + (infantTicketPrice * infantTicketAmount);
+        Booking booking = new Booking(username, id, adultTicketAmount, childTicketAmount, infantTicketAmount, calculatedTotalCost, date);
+
+        // Check that the user hasn't already booked this tour
+        List<Booking> bookings = dataHandler.getBookingsTourId(id);
+        boolean hasBookingAlready = !bookings.isEmpty();
+        if (hasBookingAlready) {
+            increaseTicketCount(totalTicketAmount);
+            return false;
+        }
+
+        dataHandler.addBooking(booking);
+        return true;
     }
 
     public UUID getId() {
@@ -69,12 +96,28 @@ public class Tour {
         this.date = date;
     }
 
-    public int getPrice_Per_Type_Ticket() {
-        return price_Per_Type_Ticket;
+    public void setAdultTicketPrice(int price) {
+        adultTicketPrice = Math.max(price, 0);
     }
 
-    public void setPrice_Per_Type_Ticket(int price_Per_Type_Ticket) {
-        this.price_Per_Type_Ticket = price_Per_Type_Ticket;
+    public int getAdultTicketPrice() {
+        return adultTicketPrice;
+    }
+
+    public void setChildTicketPrice(int price) {
+        childTicketPrice = Math.max(price, 0);
+    }
+
+    public int getChildTicketPrice() {
+        return childTicketPrice;
+    }
+
+    public void setInfantTicketPrice(int price) {
+        infantTicketPrice = Math.max(price, 0);
+    }
+
+    public int getInfantTicketPrice() {
+        return infantTicketPrice;
     }
 
     public String getMeetingPoint() {

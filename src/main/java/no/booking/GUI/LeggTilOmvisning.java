@@ -44,7 +44,7 @@ public class LeggTilOmvisning extends UIPage {
                         "\n \nVarighet: 6 timer " +
                         "\n \nSpråk: Engelsk",
                 "15.06.24",
-                5000, "Athen Centrum", 50);
+                5000, 2500, 0, "Athen Centrum", 50);
 
 
         fakeDatabase.getTours();
@@ -64,7 +64,7 @@ public class LeggTilOmvisning extends UIPage {
         comboBox1.addItem(dummyTour.getCountry());
         //legger til dummy-data i pris, by og tittel feltet
         comboBox2.addItem(dummyTour.getCity());
-        textField1.setText(String.valueOf(dummyTour.getPrice_Per_Type_Ticket()));
+        textField1.setText(String.valueOf(dummyTour.getAdultTicketPrice()));
         textPane1.setText(String.valueOf(dummyTour.getDescription()));
         button1.setText("Rapporter feil");
         button1.addActionListener(actionEvent -> {

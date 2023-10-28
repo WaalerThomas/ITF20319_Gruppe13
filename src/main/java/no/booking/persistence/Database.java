@@ -1,6 +1,7 @@
 package no.booking.persistence;
 
 import no.booking.Users.User;
+import no.booking.logic.Booking;
 import no.booking.logic.Tour;
 
 import java.io.File;
@@ -39,8 +40,18 @@ public class Database implements DataHandler {
     }
 
     @Override
-    public Tour createTour(String title, String city, String country, String description, String date, int price_Per_Type_Ticket, String meetingPoint, int maxTicketAmount) {
-        return null;
+    public Tour createTour(String title, String country, String city, String description, String date, int adultTicketPrice, int childTicketPrice, int infantTicketPrice, String meetingPoint, int maxTicketAmount) {
+        throw new RuntimeException("Not implemented");
+    }
+
+    @Override
+    public void addBooking(Booking booking) {
+        throw new RuntimeException("Not implemented");
+    }
+
+    @Override
+    public List<Booking> getBookingsTourId(UUID tourId) {
+        throw new RuntimeException("Not implemented");
     }
 
     // NOTE: This is a temp function, going to be removed after testing the setup
