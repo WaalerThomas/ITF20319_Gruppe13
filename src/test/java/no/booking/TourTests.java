@@ -5,6 +5,9 @@ import no.booking.logic.Tour;
 import no.booking.persistence.FakeDatabase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TourTests {
@@ -53,5 +56,16 @@ public class TourTests {
     /* Turist bruker skal ikke kunne booke en omvisning flere ganger */
     public void tourist_can_not_book_the_same_tour_twice() {
         fail();
+    }
+
+    @Test
+    /* Turist skal kunne se en liste over tilgjengelige omvisninger */
+    public void tourist_can_list_all_available_tours() {
+        database.createTour("TestTitle", "TestCountry", "TestCity", "TestDescption", "2023-10-10 17:00:00", 500, 250, 0, "TestMeetingpoint", 10);
+        database.createTour("TestTitle2", "TestCountry2", "TestCity2", "TestDescption2", "2023-10-10 18:00:00", 500, 250, 0, "TestMeetingpoint2", 10);
+        database.createTour("TestTitle3", "TestCountry3", "TestCity3", "TestDescption3", "2023-10-10 18:00:00", 500, 250, 0, "TestMeetingpoint3", 10);
+
+        List<Tour> tours = database.getTours();
+        assertEquals(3, tours.size());
     }
 }

@@ -43,12 +43,13 @@ class PersistenceTests {
     }
 
     @Test
-    public void can_get_a_user_by_their_username() {
+    public void can_get_a_user_by_username() {
         fail();
         // database.getUserByUsername("TuridTurist");
     }
 
     @Test
+    /* Turist bruker skal kunne sortere omvisninger etter lokasjon */
     public void can_get_a_tour_by_specifying_city() {
         database.createTour("Lovely tour in my garden", "TourCountry", "TourCity", "TourDescription",
                 "TourDate", 500, 150, 0, "TourMeetingPoint", 5);
