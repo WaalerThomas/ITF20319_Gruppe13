@@ -50,8 +50,13 @@ public class FakeDatabase implements DataHandler {
     }
 
     @Override
-    public Tour createTour(String title, String country, String city, String description, String date, int adultTicketPrice, int childTicketPrice, int infantTicketPrice, String meetingPoint, int maxTicketAmount) {
-        Tour newTour = new Tour(title, country, city, description, date, adultTicketPrice, childTicketPrice, infantTicketPrice, meetingPoint, maxTicketAmount);
+    public List<Tour> getToursByOwner(String ownerUsername) {
+        return tours.stream().filter(tour -> tour.getOwnerUsername().equals(ownerUsername)).collect(Collectors.toList());
+    }
+
+    @Override
+    public Tour createTour(String guideUsername, String title, String country, String city, String description, String date, int adultTicketPrice, int childTicketPrice, int infantTicketPrice, String meetingPoint, int maxTicketAmount) {
+        Tour newTour = new Tour(guideUsername, title, country, city, description, date, adultTicketPrice, childTicketPrice, infantTicketPrice, meetingPoint, maxTicketAmount);
         tours.add(newTour);
         return newTour;
     }
@@ -93,11 +98,11 @@ public class FakeDatabase implements DataHandler {
     }
 
     private void addDefaultDataTours() {
-        tours.add(new Tour("Tur til København", "Denmark", "København", "Fantastisk tur til københavn",
+        tours.add(new Tour("GeorgGuide", "Tur til København", "Denmark", "København", "Fantastisk tur til københavn",
                 "04.04.24", 600, 300, 0, "København Sentrum", 10));
-        tours.add(new Tour("Cruising rundt Faro", "Portugal","Faro" ,"Ferjetur rundt øyene", "20.06.24",
+        tours.add(new Tour("GeorgGuide", "Cruising rundt Faro", "Portugal","Faro" ,"Ferjetur rundt øyene", "20.06.24",
                 1400, 700, 0, "FaroVeien 12", 10));
-        tours.add(new Tour("Opplev magien i Roma", "Italia", "Roma",
+        tours.add(new Tour("GeorgGuide", "Opplev magien i Roma", "Italia", "Roma",
                 "Nyt romantisk aften i Roma", "25.06.24", 2300, 1150, 0, "Romaveien 20", 10));
     }
 }

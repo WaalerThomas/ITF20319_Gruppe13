@@ -40,7 +40,12 @@ public class Database implements DataHandler {
     }
 
     @Override
-    public Tour createTour(String title, String country, String city, String description, String date, int adultTicketPrice, int childTicketPrice, int infantTicketPrice, String meetingPoint, int maxTicketAmount) {
+    public List<Tour> getToursByOwner(String ownerUsername) {
+        throw new RuntimeException("Not implemented");
+    }
+
+    @Override
+    public Tour createTour(String guideUsername, String title, String country, String city, String description, String date, int adultTicketPrice, int childTicketPrice, int infantTicketPrice, String meetingPoint, int maxTicketAmount) {
         throw new RuntimeException("Not implemented");
     }
 

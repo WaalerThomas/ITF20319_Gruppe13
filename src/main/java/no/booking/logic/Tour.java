@@ -7,6 +7,7 @@ import java.util.UUID;
 
 public class Tour {
     private UUID id;
+    private String ownerUsername;
     private String title;
     private String city;
     private String country;
@@ -19,9 +20,9 @@ public class Tour {
     private int maxTicketAmount;
     private int availableTicketsCount;
 
-    public Tour(String title, String country, String city, String description, String date, int adultTicketPrice, int childTicketPrice, int infantTicketPrice, String meetingPoint, int maxTicketAmount) {
+    public Tour(String ownerUsername, String title, String country, String city, String description, String date, int adultTicketPrice, int childTicketPrice, int infantTicketPrice, String meetingPoint, int maxTicketAmount) {
         this.id = UUID.randomUUID();
-
+        this.ownerUsername = ownerUsername;
         this.title = title;
         this.country = country;
         this.city = city;
@@ -62,6 +63,14 @@ public class Tour {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public String getOwnerUsername() {
+        return ownerUsername;
+    }
+
+    public void setOwnerUsername(String username) {
+        ownerUsername = username;
     }
 
     public String getTitle() {

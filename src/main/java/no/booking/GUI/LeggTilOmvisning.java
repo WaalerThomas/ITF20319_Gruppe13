@@ -37,7 +37,7 @@ public class LeggTilOmvisning extends UIPage {
 
         FakeDatabase fakeDatabase = new FakeDatabase();
 
-        Tour dummyTour = new Tour("Opplev vakre omstendigheter i Athen", "Hellas", "Athen",
+        Tour dummyTour = new Tour("GeorgGuide", "Opplev vakre omstendigheter i Athen", "Hellas", "Athen",
                 "Utforsk antikken i hjertet av Athen, fra Parthenon til lokale smaker. " +
                         "En reise gjennom tusenvis av år med historie og autentisk gresk kultur. " +
                         "\n \nAlder: 3-99. Maks 25 pr gruppe" +

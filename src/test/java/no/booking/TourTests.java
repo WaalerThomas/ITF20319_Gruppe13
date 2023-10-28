@@ -22,16 +22,30 @@ public class TourTests {
     @Test
     /* Guide skal kunne opprette en omvisning */
     public void guide_can_create_a_tour() {
-        database.createTour("TestTour", "TestLand", "TestBy", "TestBeskrivelse", "TestDate",
+        database.createTour("No-one", "TestTour", "TestLand", "TestBy", "TestBeskrivelse", "TestDate",
                 5000, 2500, 0, "TestMeetingPoint", 5);
         int toursCount = database.getTours().toArray().length;
         assertEquals(1, toursCount);
     }
 
     @Test
+    /* Guide kan ha en oversikt over alle omvisninger de har opprettet */
+    public void guide_can_see_all_their_created_tours() {
+        database.createUser("GeorgGuide");
+        database.createUser("FredrikkFeilmann");
+        database.createTour("GeorgGuide", "TestTour", "TestLand", "TestBy", "TestBeskrivelse", "TestDate", 5000, 2500, 0, "TestMeetingPoint", 5);
+        database.createTour("GeorgGuide", "TestTour2", "TestLand2", "TestBy2", "TestBeskrivelse2", "TestDate2", 5000, 2500, 0, "TestMeetingPoint2", 5);
+        database.createTour("FredrikkFeilmann", "TestTour3", "TestLand3", "TestBy3", "TestBeskrivelse3", "TestDate3", 5000, 2500, 0, "TestMeetingPoint3", 5);
+
+        List<Tour> tours = database.getToursByOwner("GeorgGuide");
+        assertFalse(tours.isEmpty());
+        assertEquals(2, tours.size());
+    }
+
+    @Test
     /* Turist bruker kan ikke booke billetter når det ikke er nok billetter tilgjengelig */
     public void tourist_can_not_book_a_full_tour() {
-        Tour tourTest = new Tour("TestTour", "TestLand", "TestBy", "TestBeskrivelse",
+        Tour tourTest = new Tour("No-one", "TestTour", "TestLand", "TestBy", "TestBeskrivelse",
                 "TestDate", 5000, 2500, 0, "TestMeetingPoint", 5);
         tourTest.decreaseTicketCount(5);
         database.createTour(tourTest);
@@ -44,7 +58,7 @@ public class TourTests {
     @Test
     /* Turist-bruker skal kunne betale for en tjeneste */
     public void tourist_can_book_a_tour() {
-        Tour tourTest = new Tour("TestTour", "TestLand", "TestBy", "TestBeskrivelse",
+        Tour tourTest = new Tour("No-one", "TestTour", "TestLand", "TestBy", "TestBeskrivelse",
                 "TestDate", 5000, 2500, 0, "TestMeetingPoint", 5);
         database.createTour(tourTest);
         database.createUser("TuridTurist");
@@ -62,9 +76,9 @@ public class TourTests {
     @Test
     /* Turist skal kunne se en liste over tilgjengelige omvisninger */
     public void tourist_can_list_all_available_tours() {
-        database.createTour("TestTitle", "TestCountry", "TestCity", "TestDescption", "2023-10-10 17:00:00", 500, 250, 0, "TestMeetingpoint", 10);
-        database.createTour("TestTitle2", "TestCountry2", "TestCity2", "TestDescption2", "2023-10-10 18:00:00", 500, 250, 0, "TestMeetingpoint2", 10);
-        database.createTour("TestTitle3", "TestCountry3", "TestCity3", "TestDescption3", "2023-10-10 18:00:00", 500, 250, 0, "TestMeetingpoint3", 10);
+        database.createTour("No-one", "TestTitle", "TestCountry", "TestCity", "TestDescption", "2023-10-10 17:00:00", 500, 250, 0, "TestMeetingpoint", 10);
+        database.createTour("No-one", "TestTitle2", "TestCountry2", "TestCity2", "TestDescption2", "2023-10-10 18:00:00", 500, 250, 0, "TestMeetingpoint2", 10);
+        database.createTour("No-one", "TestTitle3", "TestCountry3", "TestCity3", "TestDescption3", "2023-10-10 18:00:00", 500, 250, 0, "TestMeetingpoint3", 10);
 
         List<Tour> tours = database.getTours();
         assertFalse(tours.isEmpty());
@@ -76,8 +90,8 @@ public class TourTests {
     public void tourist_can_list_their_booked_tours() {
         database.createUser("TuridTurist");
         database.createUser("FredrikkFeilmann");
-        Tour tour1 = database.createTour("TestTitle", "TestCountry", "TestCity", "TestDescption", "2023-10-10 17:00:00", 500, 250, 0, "TestMeetingpoint", 10);
-        Tour tour2 = database.createTour("TestTitle2", "TestCountry2", "TestCity2", "TestDescption2", "2023-10-10 18:00:00", 500, 250, 0, "TestMeetingpoint2", 10);
+        Tour tour1 = database.createTour("No-one", "TestTitle", "TestCountry", "TestCity", "TestDescption", "2023-10-10 17:00:00", 500, 250, 0, "TestMeetingpoint", 10);
+        Tour tour2 = database.createTour("No-one", "TestTitle2", "TestCountry2", "TestCity2", "TestDescption2", "2023-10-10 18:00:00", 500, 250, 0, "TestMeetingpoint2", 10);
         tour1.book(database, "TuridTurist", 1, 0, 0, "2023-10-28 17:00:00");
         tour1.book(database, "FredrikkFeilmann", 1, 0, 0, "2023-10-28 18:00:00");
         tour2.book(database, "TuridTurist", 1, 0, 0, "2023-10-29 17:00:00");

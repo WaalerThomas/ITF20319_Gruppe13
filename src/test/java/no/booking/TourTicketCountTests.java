@@ -12,7 +12,7 @@ public class TourTicketCountTests {
 
     @BeforeEach
     public void set_up() {
-        tourTest = new Tour("TestTour", "TestLand", "TestBy", "TestBeskrivelse", "TestDate",
+        tourTest = new Tour("No-one", "TestTour", "TestLand", "TestBy", "TestBeskrivelse", "TestDate",
                 5000, 2500, 0, "TestMeetingPoint", 5);
     }
 

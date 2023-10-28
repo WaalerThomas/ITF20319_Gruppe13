@@ -31,7 +31,7 @@ class PersistenceTests {
     @Test
     public void check_if_we_get_the_correct_tour_by_id() {
         String testID = "f6306509-b1d9-4820-a060-5c2a2e8a610d";
-        Tour testTour = database.createTour("TourTitle", "TourCountry", "TourCity", "TourDescription",
+        Tour testTour = database.createTour("No-one", "TourTitle", "TourCountry", "TourCity", "TourDescription",
                 "TourDate", 500, 150, 0, "TourMeetingPoint", 5);
         testTour.setId(UUID.fromString(testID));
 
@@ -56,7 +56,7 @@ class PersistenceTests {
     @Test
     /* Turist bruker skal kunne sortere omvisninger etter lokasjon */
     public void can_get_a_tour_by_specifying_city() {
-        database.createTour("Lovely tour in my garden", "TourCountry", "TourCity", "TourDescription",
+        database.createTour("No-one", "Lovely tour in my garden", "TourCountry", "TourCity", "TourDescription",
                 "TourDate", 500, 150, 0, "TourMeetingPoint", 5);
 
         List<Tour> tours = database.getToursByCity("TourCity");
