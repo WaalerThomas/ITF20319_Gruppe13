@@ -1,6 +1,7 @@
 package no.booking;
 
 import no.booking.GUI.MainWindow;
+import no.booking.persistence.Database;
 import no.booking.persistence.FakeDatabase;
 
 public class Main {

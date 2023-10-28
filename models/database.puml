@@ -12,8 +12,15 @@ entity tours {
     --
     *user_id: integer <<FK>>
     *title: varchar(100)
-
+    *city: varchar(100)
+    *country: varchar(100)
+    *description: varchar(255)
+    adult_ticket_price: integer
+    child_ticket_price: integer
+    infant_ticket_price: integer
     *meet_point: varchar(100)
+    max_ticket_amount: integer
+    available_tickets_count: integer
 }
 
 entity tour_times {

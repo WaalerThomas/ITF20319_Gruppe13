@@ -9,6 +9,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,6 +23,8 @@ public class Database implements DataHandler {
     private final String file_name = "database.sqlite";
     private Connection conn;
 
+    private final DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+
     @Override
     public User getUserByUsername(String username) {
         throw new RuntimeException("Not implemented");
@@ -26,7 +32,29 @@ public class Database implements DataHandler {
 
     @Override
     public List<Tour> getTours() {
-        throw new RuntimeException("Not implemented");
+        try {
+            connect();
+
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("""
+                SELECT
+                    (SELECT username
+                    FROM users
+                    WHERE users.id = id) as owner_username, *
+                FROM tours
+            """);
+
+            List<Tour> tours = getToursListFromResult(rs);
+            System.out.println(Arrays.toString(tours.toArray()));
+            return tours;
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+
+            // NOTE (Thomas): Is it good enough to just return an empty list if there is an SQLException?
+            return new ArrayList<>();
+        } finally {
+            disconnect();
+        }
     }
 
     @Override
@@ -36,7 +64,32 @@ public class Database implements DataHandler {
 
     @Override
     public List<Tour> getToursByCity(String city) {
-        throw new RuntimeException("Not implemented");
+        // Return every tour if the filter is blank
+        if (city.isBlank()) return getTours();
+
+        try {
+            connect();
+
+            PreparedStatement stmt = conn.prepareStatement("""
+                SELECT
+                    (SELECT username
+                    FROM users
+                    WHERE users.id = id) as owner_username, *
+                FROM tours
+                WHERE LOWER(tours.city) = LOWER(?);
+            """);
+            stmt.setString(1, city);
+            ResultSet rs = stmt.executeQuery();
+
+            return getToursListFromResult(rs);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+
+            // NOTE (Thomas): Is it good enough to just return an empty list if there is an SQLException?
+            return new ArrayList<>();
+        } finally {
+            disconnect();
+        }
     }
 
     @Override
@@ -79,36 +132,29 @@ public class Database implements DataHandler {
         throw new RuntimeException("Not implemented");
     }
 
-    // NOTE: This is a temp function, going to be removed after testing the setup
-    public void printAllUsers() {
-        try {
-            connect();
+    private List<Tour> getToursListFromResult(ResultSet rs) throws SQLException {
+        List<Tour> resultList = new ArrayList<>();
+        while (rs.next()) {
+            Tour tempTour = new Tour(
+                    rs.getString("owner_username"),
+                    rs.getString("title"),
+                    rs.getString("country"),
+                    rs.getString("city"),
+                    rs.getString("description"),
+                    "2023-10-10 17:00:00",
+                    rs.getInt("adult_ticket_price"),
+                    rs.getInt("child_ticket_price"),
+                    rs.getInt("infant_ticket_price"),
+                    rs.getString("meet_point"),
+                    rs.getInt("max_ticket_amount")
+            );
 
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("""
-                SELECT id, username, first_name, last_name,
-                    (SELECT name
-                    FROM user_types
-                    WHERE user_types.id = users.user_type) AS user_type
-                FROM users
-            """);
-
-            // Loop through the results and print it out
-            System.out.println("==== users ====");
-            System.out.println("<id | username | first_name | last_name | user_type>");
-            while (rs.next()) {
-                System.out.println(rs.getInt("id") + "\t" +
-                        rs.getString("username") + "\t" +
-                        rs.getString("first_name") + "\t" +
-                        rs.getString("last_name") + "\t" +
-                        rs.getString("user_type"));
-            }
-            System.out.println("===============");
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        } finally {
-            disconnect();
+            // Need to also set how many tickets are available
+            tempTour.decreaseTicketCount(tempTour.getMaxTicketAmount() - rs.getInt("available_tickets_count"));
+            resultList.add(tempTour);
         }
+
+        return resultList;
     }
 
     private void connect() throws SQLException {
@@ -142,6 +188,8 @@ public class Database implements DataHandler {
     }
 
     private void createDatabase() {
+        System.out.println("Creating the database");
+
         try {
             Statement stmt = conn.createStatement();
 
@@ -171,7 +219,15 @@ public class Database implements DataHandler {
                     id integer PRIMARY KEY AUTOINCREMENT,
                     user_id integer NOT NULL,
                     title varchar(100) NOT NULL,
+                    city varchar(100) NOT NULL,
+                    country varchar(100) NOT NULL,
+                    description varchar(255),
+                    adult_ticket_price integer default 0,
+                    child_ticket_price integer default 0,
+                    infant_ticket_price integer default 0,
                     meet_point varchar(100) NOT NULL,
+                    max_ticket_amount integer,
+                    available_tickets_count integer,
                     FOREIGN KEY (user_id) REFERENCES users(id)
                 );""");
 
@@ -215,6 +271,13 @@ public class Database implements DataHandler {
                         (SELECT id FROM user_types WHERE name=='bruker')),
                     ('adminadam', 'adam', 'admin', 'adam@admin.no',
                         (SELECT id FROM user_types WHERE name=='admin'));
+                """);
+
+            // Inser the default tours
+            stmt.execute("""
+                INSERT INTO tours (user_id, title, city, country, description, adult_ticket_price, child_ticket_price, infant_ticket_price, meet_point, max_ticket_amount, available_tickets_count)
+                VALUES 
+                    ((SELECT id FROM users WHERE users.username = 'guidegard'), 'Title', 'City', 'Country', 'Description', 500, 250, 0, 'MeetPoint', 10, 10)
                 """);
         } catch (SQLException e) {
             throw new RuntimeException(e);
