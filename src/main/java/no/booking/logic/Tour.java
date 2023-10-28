@@ -1,20 +1,22 @@
 package no.booking.logic;
 
-import java.util.Date;
+import java.util.UUID;
 
 public class Tour {
+    private UUID id;
+    private String title;
+    private String city;
+    private String country;
+    private String description;
+    private String date;
+    private int price_Per_Type_Ticket;
+    private String meetingPoint;
+    private int maxTicketAmount;
+    private int availableTicketsCount;
 
-    public int tourId;
-    public String title;
-    public String city;
-    public String country;
-    public String description;
-    public String date;
-    public int price_Per_Type_Ticket;
-    public String meetingPoint;
+    public Tour(String title, String country, String city, String description, String date, int price_Per_Type_Ticket, String meetingPoint, int maxTicketAmount) {
+        this.id = UUID.randomUUID();
 
-    public Tour(int tourId, String title, String country, String city, String description, String date, int price_Per_Type_Ticket, String meetingPoint) {
-        this.tourId = tourId;
         this.title = title;
         this.country = country;
         this.city = city;
@@ -22,14 +24,16 @@ public class Tour {
         this.date = date;
         this.price_Per_Type_Ticket = price_Per_Type_Ticket;
         this.meetingPoint = meetingPoint;
+        this.maxTicketAmount = maxTicketAmount;
+        this.availableTicketsCount = maxTicketAmount;
     }
 
-    public int getTourId() {
-        return tourId;
+    public UUID getId() {
+        return id;
     }
 
-    public void setTourId(int tourId) {
-        this.tourId = tourId;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -86,5 +90,33 @@ public class Tour {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public int getAvailableTicketsCount() {
+        return availableTicketsCount;
+    }
+
+    public boolean increaseTicketCount() {
+        return increaseTicketCount(1);
+    }
+
+    public boolean increaseTicketCount(int amount) {
+        if ((availableTicketsCount + amount) > maxTicketAmount)
+            return false;
+
+        availableTicketsCount += amount;
+        return true;
+    }
+
+    public boolean decreaseTicketCount() {
+        return decreaseTicketCount(1);
+    }
+
+    public boolean decreaseTicketCount(int amount) {
+        if (availableTicketsCount - amount < 0)
+            return false;
+
+        availableTicketsCount -= amount;
+        return true;
     }
 }
