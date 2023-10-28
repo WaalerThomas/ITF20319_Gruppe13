@@ -10,6 +10,8 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// NOTE: We could change this test-class so that we can set which persistence media
+// that we want to test as an environment variable, or something.
 class PersistenceTests {
     private FakeDatabase database;
 
@@ -19,7 +21,7 @@ class PersistenceTests {
     }
 
     @Test
-    public void check_if_list_of_tours_is_empty(){
+    public void check_if_list_of_tours_is_empty_at_creation() {
         List<Tour> tours = database.getTours();
         assertTrue(tours.isEmpty());
         assertNotNull(tours);
@@ -38,4 +40,22 @@ class PersistenceTests {
 
         Tour fakeTour = database.getTourById(UUID.randomUUID());
         assertNull(fakeTour);
-    }}
+    }
+
+    @Test
+    public void can_get_a_user_by_their_username() {
+        fail();
+        // database.getUserByUsername("TuridTurist");
+    }
+
+    @Test
+    public void can_get_a_tour_by_specifying_city() {
+        database.createTour("Lovely tour in my garden", "TourCountry", "TourCity", "TourDescription",
+                "TourDate", 500, "TourMeetingPoint", 5);
+
+        List<Tour> tours = database.getToursByCity("TourCity");
+        assertFalse(tours.isEmpty());
+        assertEquals(1, tours.size());
+        assertEquals("Lovely tour in my garden", tours.get(0).getTitle());
+    }
+}
