@@ -1,4 +1,4 @@
-package no.booking.fakes;
+package no.booking;
 
 import no.booking.Users.User;
 import no.booking.logic.Tour;
