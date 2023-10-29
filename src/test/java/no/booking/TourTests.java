@@ -62,14 +62,21 @@ public class TourTests {
         database.createTour(tourTest);
         database.createUser("TuridTurist");
 
-        boolean result = tourTest.book(database, "TuridTurist", 1, 0, 0, "2023.11.11");
+        boolean result = tourTest.book(database, "TuridTurist", 1, 0, 0, "2023-11-11 11:00:00");
         assertTrue(result);
     }
 
     @Test
     /* Turist bruker skal ikke kunne booke en omvisning flere ganger */
     public void tourist_can_not_book_the_same_tour_twice() {
-        fail();
+        Tour tourTest = new Tour("No-one", "TestTour", "TestLand", "TestBy", "TestBeskrivelse",
+                "TestDate", 5000, 2500, 0, "TestMeetingPoint", 5);
+        database.createTour(tourTest);
+        database.createUser("TuridTurist");
+        tourTest.book(database, "TuridTurist", 1, 0, 0, "2023-10-10 17:00:00");
+
+        boolean result = tourTest.book(database, "TuridTurist", 1, 0, 0, "2023-10-10 17:00:00");
+        assertFalse(result);
     }
 
     @Test

@@ -47,8 +47,8 @@ public class Tour {
 
         // Check that the user hasn't already booked this tour
         List<Booking> bookings = dataHandler.getBookingsByTourId(id);
-        boolean hasBookingAlready = !bookings.isEmpty();
-        if (hasBookingAlready) {
+        boolean hasBookedAlready = !bookings.isEmpty();
+        if (hasBookedAlready) {
             increaseTicketCount(totalTicketAmount);
             return false;
         }
