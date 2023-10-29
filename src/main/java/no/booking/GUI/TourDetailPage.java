@@ -9,11 +9,14 @@ import no.booking.persistence.DataHandler;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -29,16 +32,23 @@ public class TourDetailPage extends UIPage {
     private JPanel contentPanel;
     private JLabel countryLbl;
     private JLabel cityLbl;
-    private JLabel descriptionLbl;
+    private JTextPane descriptionLbl;
     private JLabel meetPointLbl;
     private JLabel idLbl;
     private JComboBox comboBox1;
     private JComboBox comboBox2;
     private JComboBox comboBox3;
-    private JSpinner spinner1;
+    private JSpinner adultTicketAmount;
     private JButton bookButton;
+    private JLabel adultPriceLbl;
+    private JLabel childPriceLbl;
+    private JLabel infantPriceLbl;
+    private JLabel totalCostLbl;
+    private JSpinner childTicketAmount;
+    private JSpinner infantTicketAmount;
 
     private final DataHandler dataHandler;
+    private Tour tourData;
 
     public TourDetailPage(MainWindow mainWindow, DataHandler dataHandler) {
         this.dataHandler = dataHandler;
@@ -56,6 +66,16 @@ public class TourDetailPage extends UIPage {
                 mainWindow.setPage(BetalOmvisning.NAME);
             }
         });
+        adultTicketAmount.addChangeListener(changeEvent -> calculateTotalPrice());
+        childTicketAmount.addChangeListener(changeEvent -> calculateTotalPrice());
+        infantTicketAmount.addChangeListener(changeEvent -> calculateTotalPrice());
+
+        SpinnerModel spinnerModel1 = new SpinnerNumberModel(0, 0, 1_000_000_000, 1);
+        SpinnerModel spinnerModel2 = new SpinnerNumberModel(0, 0, 1_000_000_000, 1);
+        SpinnerModel spinnerModel3 = new SpinnerNumberModel(0, 0, 1_000_000_000, 1);
+        adultTicketAmount.setModel(spinnerModel1);
+        childTicketAmount.setModel(spinnerModel2);
+        infantTicketAmount.setModel(spinnerModel3);
     }
 
     @Override
@@ -69,15 +89,21 @@ public class TourDetailPage extends UIPage {
 
         // Gather information from the database about the given tour
         // and change the elements on the screen.
-        Tour tour = dataHandler.getTourById(currentTourId);
-        if (tour == null)
+        tourData = dataHandler.getTourById(currentTourId);
+        if (tourData == null)
             throw new RuntimeException("Cannot find a Tour with the ID: " + currentTourId);
 
-        titleLbl.setText(tour.getTitle());
-        countryLbl.setText(tour.getCountry());
-        cityLbl.setText(tour.getCity());
-        descriptionLbl.setText(tour.getDescription());
-        meetPointLbl.setText(tour.getMeetingPoint());
+        titleLbl.setText(tourData.getTitle());
+        countryLbl.setText(tourData.getCountry());
+        cityLbl.setText(tourData.getCity());
+        descriptionLbl.setText(tourData.getDescription());
+        meetPointLbl.setText(tourData.getMeetingPoint());
+
+        adultPriceLbl.setText("NOK " + tourData.getAdultTicketPrice());
+        childPriceLbl.setText("NOK " + tourData.getChildTicketPrice());
+        infantPriceLbl.setText("NOK " + tourData.getInfantTicketPrice());
+
+        calculateTotalPrice();
     }
 
     @Override
@@ -92,6 +118,13 @@ public class TourDetailPage extends UIPage {
         if (prevPage.isBlank() || prevPage.isEmpty()) return;
 
         previousPage = prevPage;
+    }
+
+    private void calculateTotalPrice() {
+        int totalPrice = tourData.getAdultTicketPrice() * (int) adultTicketAmount.getValue()
+                + tourData.getChildTicketPrice() * (int) childTicketAmount.getValue()
+                + tourData.getInfantTicketPrice() * (int) infantTicketAmount.getValue();
+        totalCostLbl.setText("NOK " + totalPrice);
     }
 
     {
@@ -128,25 +161,31 @@ public class TourDetailPage extends UIPage {
         mainPanel.add(contentPanel, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(4, 3, new Insets(0, 0, 0, 0), -1, -1));
-        contentPanel.add(panel2, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, 1, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        contentPanel.add(panel2, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         panel2.setBorder(BorderFactory.createTitledBorder(null, "Billetter og priser", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, this.$$$getFont$$$(null, Font.BOLD, 16, panel2.getFont()), null));
         comboBox1 = new JComboBox();
+        comboBox1.setEnabled(false);
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
         defaultComboBoxModel1.addElement("2023");
         comboBox1.setModel(defaultComboBoxModel1);
+        comboBox1.setToolTipText("NOT IMPLEMENTED");
         panel2.add(comboBox1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         comboBox2 = new JComboBox();
+        comboBox2.setEnabled(false);
         final DefaultComboBoxModel defaultComboBoxModel2 = new DefaultComboBoxModel();
         defaultComboBoxModel2.addElement("Januar");
         comboBox2.setModel(defaultComboBoxModel2);
+        comboBox2.setToolTipText("NOT IMPLEMENTED");
         panel2.add(comboBox2, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         comboBox3 = new JComboBox();
+        comboBox3.setEnabled(false);
         final DefaultComboBoxModel defaultComboBoxModel3 = new DefaultComboBoxModel();
         defaultComboBoxModel3.addElement("1");
         comboBox3.setModel(defaultComboBoxModel3);
+        comboBox3.setToolTipText("NOT IMPLEMENTED");
         panel2.add(comboBox3, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label1 = new JLabel();
-        Font label1Font = this.$$$getFont$$$("Inter", Font.BOLD, 14, label1.getFont());
+        Font label1Font = this.$$$getFont$$$("Inter", Font.BOLD, 16, label1.getFont());
         if (label1Font != null) label1.setFont(label1Font);
         label1.setText("Søk etter ledige billetter ut fra dato");
         panel2.add(label1, new GridConstraints(0, 0, 1, 3, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -158,64 +197,64 @@ public class TourDetailPage extends UIPage {
         if (label2Font != null) label2.setFont(label2Font);
         label2.setText("Voksen (16-95 år)");
         panel3.add(label2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        spinner1 = new JSpinner();
-        panel3.add(spinner1, new GridConstraints(0, 1, 2, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_FIXED, new Dimension(-1, 45), null, null, 0, false));
-        final JLabel label3 = new JLabel();
-        Font label3Font = this.$$$getFont$$$("Inter", -1, 12, label3.getFont());
-        if (label3Font != null) label3.setFont(label3Font);
-        label3.setForeground(new Color(-7631471));
-        label3.setText("NOK ???");
-        panel3.add(label3, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        adultTicketAmount = new JSpinner();
+        panel3.add(adultTicketAmount, new GridConstraints(0, 1, 2, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_FIXED, new Dimension(-1, 45), null, null, 0, false));
+        adultPriceLbl = new JLabel();
+        Font adultPriceLblFont = this.$$$getFont$$$("Inter", -1, 12, adultPriceLbl.getFont());
+        if (adultPriceLblFont != null) adultPriceLbl.setFont(adultPriceLblFont);
+        adultPriceLbl.setForeground(new Color(-7631471));
+        adultPriceLbl.setText("NOK ???");
+        panel3.add(adultPriceLbl, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer2 = new Spacer();
         panel3.add(spacer2, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        final JLabel label3 = new JLabel();
+        Font label3Font = this.$$$getFont$$$("Inter", Font.BOLD, 14, label3.getFont());
+        if (label3Font != null) label3.setFont(label3Font);
+        label3.setText("Barn (5-15 år)");
+        panel3.add(label3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        childPriceLbl = new JLabel();
+        Font childPriceLblFont = this.$$$getFont$$$("Inter", -1, 12, childPriceLbl.getFont());
+        if (childPriceLblFont != null) childPriceLbl.setFont(childPriceLblFont);
+        childPriceLbl.setForeground(new Color(-7631471));
+        childPriceLbl.setText("NOK ???");
+        panel3.add(childPriceLbl, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        childTicketAmount = new JSpinner();
+        panel3.add(childTicketAmount, new GridConstraints(2, 1, 2, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_FIXED, new Dimension(-1, 45), null, null, 0, false));
         final JLabel label4 = new JLabel();
         Font label4Font = this.$$$getFont$$$("Inter", Font.BOLD, 14, label4.getFont());
         if (label4Font != null) label4.setFont(label4Font);
-        label4.setText("Barn (5-15 år)");
-        panel3.add(label4, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        label4.setText("Spedbarn (0-4 år)");
+        panel3.add(label4, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        infantPriceLbl = new JLabel();
+        Font infantPriceLblFont = this.$$$getFont$$$("Inter", -1, 12, infantPriceLbl.getFont());
+        if (infantPriceLblFont != null) infantPriceLbl.setFont(infantPriceLblFont);
+        infantPriceLbl.setForeground(new Color(-7631471));
+        infantPriceLbl.setText("NOK ???");
+        panel3.add(infantPriceLbl, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        infantTicketAmount = new JSpinner();
+        panel3.add(infantTicketAmount, new GridConstraints(4, 1, 2, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_FIXED, new Dimension(-1, 45), null, null, 0, false));
+        bookButton = new JButton();
+        bookButton.setText("Book");
+        panel3.add(bookButton, new GridConstraints(7, 1, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(-1, 45), null, null, 0, false));
         final JLabel label5 = new JLabel();
         Font label5Font = this.$$$getFont$$$("Inter", -1, 12, label5.getFont());
         if (label5Font != null) label5.setFont(label5Font);
         label5.setForeground(new Color(-7631471));
-        label5.setText("NOK ???");
-        panel3.add(label5, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JSpinner spinner2 = new JSpinner();
-        panel3.add(spinner2, new GridConstraints(2, 1, 2, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_FIXED, new Dimension(-1, 45), null, null, 0, false));
+        label5.setText("Totalt");
+        panel3.add(label5, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        totalCostLbl = new JLabel();
+        Font totalCostLblFont = this.$$$getFont$$$("Inter", Font.BOLD, 14, totalCostLbl.getFont());
+        if (totalCostLblFont != null) totalCostLbl.setFont(totalCostLblFont);
+        totalCostLbl.setText("NOK ???");
+        panel3.add(totalCostLbl, new GridConstraints(8, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label6 = new JLabel();
-        Font label6Font = this.$$$getFont$$$("Inter", Font.BOLD, 14, label6.getFont());
+        Font label6Font = this.$$$getFont$$$("Inter", Font.BOLD, 16, label6.getFont());
         if (label6Font != null) label6.setFont(label6Font);
-        label6.setText("Spedbarn (0-4 år)");
-        panel3.add(label6, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label7 = new JLabel();
-        Font label7Font = this.$$$getFont$$$("Inter", -1, 12, label7.getFont());
-        if (label7Font != null) label7.setFont(label7Font);
-        label7.setForeground(new Color(-7631471));
-        label7.setText("NOK ???");
-        panel3.add(label7, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JSpinner spinner3 = new JSpinner();
-        panel3.add(spinner3, new GridConstraints(4, 1, 2, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_FIXED, new Dimension(-1, 45), null, null, 0, false));
-        bookButton = new JButton();
-        bookButton.setText("Book");
-        panel3.add(bookButton, new GridConstraints(7, 1, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(-1, 45), null, null, 0, false));
-        final JLabel label8 = new JLabel();
-        Font label8Font = this.$$$getFont$$$("Inter", -1, 12, label8.getFont());
-        if (label8Font != null) label8.setFont(label8Font);
-        label8.setForeground(new Color(-7631471));
-        label8.setText("Totalt");
-        panel3.add(label8, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label9 = new JLabel();
-        Font label9Font = this.$$$getFont$$$("Inter", Font.BOLD, 14, label9.getFont());
-        if (label9Font != null) label9.setFont(label9Font);
-        label9.setText("NOK ???");
-        panel3.add(label9, new GridConstraints(8, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label10 = new JLabel();
-        Font label10Font = this.$$$getFont$$$("Inter", Font.BOLD, 14, label10.getFont());
-        if (label10Font != null) label10.setFont(label10Font);
-        label10.setText("Hvor mange billetter?");
-        panel2.add(label10, new GridConstraints(2, 0, 1, 3, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        label6.setText("Hvor mange billetter?");
+        panel2.add(label6, new GridConstraints(2, 0, 1, 3, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new GridLayoutManager(6, 2, new Insets(0, 0, 0, 0), -1, -1));
-        contentPanel.add(panel4, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        contentPanel.add(panel4, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, 1, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         titleLbl = new JLabel();
         Font titleLblFont = this.$$$getFont$$$(null, Font.BOLD, 24, titleLbl.getFont());
         if (titleLblFont != null) titleLbl.setFont(titleLblFont);
@@ -232,12 +271,15 @@ public class TourDetailPage extends UIPage {
         idLbl = new JLabel();
         idLbl.setText("Label");
         panel4.add(idLbl, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        descriptionLbl = new JLabel();
-        descriptionLbl.setText("<Description>");
-        panel4.add(descriptionLbl, new GridConstraints(2, 0, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         cityLbl = new JLabel();
         cityLbl.setText("<City>");
         panel4.add(cityLbl, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JScrollPane scrollPane1 = new JScrollPane();
+        panel4.add(scrollPane1, new GridConstraints(2, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        descriptionLbl = new JTextPane();
+        descriptionLbl.setEditable(false);
+        descriptionLbl.setText("<Description>");
+        scrollPane1.setViewportView(descriptionLbl);
     }
 
     /**

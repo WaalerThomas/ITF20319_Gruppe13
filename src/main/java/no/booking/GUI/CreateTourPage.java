@@ -52,6 +52,10 @@ public class CreateTourPage extends UIPage {
             showMessageDialog(null, "Opprettelse av omvisning feilet", "Error", JOptionPane.ERROR_MESSAGE);
         });
 
+        adultPriceSpinner.setModel(new SpinnerNumberModel(0, 0, 1_000_000_000, 1));
+        childPriceSpinner.setModel(new SpinnerNumberModel(0, 0, 1_000_000_000, 1));
+        infantPriceSpinner.setModel(new SpinnerNumberModel(0, 0, 1_000_000_000, 1));
+        ticketAmountSpinner.setModel(new SpinnerNumberModel(0, 0, 1_000_000_000, 1));
     }
 
     // Genererer liste med land
