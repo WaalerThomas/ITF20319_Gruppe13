@@ -10,5 +10,6 @@ public class Main {
         fakeDatabase.createDefaultApplicationData();
 
         MainWindow mainWindow = new MainWindow(fakeDatabase);
+        mainWindow.display();
     }
 }

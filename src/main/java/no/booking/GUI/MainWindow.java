@@ -20,17 +20,52 @@ public class MainWindow extends JFrame {
         pages = new HashMap<>();
         currentPage = "";
 
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new CardLayout());
+    }
+
+    public void display() {
         setTitle("Booking Prototype");
         setSize(1024, 768);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        mainPanel = new JPanel();
-        mainPanel.setLayout(new CardLayout());
         addPages();
         setPage(LoginPage.NAME);
 
         add(mainPanel);
         setVisible(true);
+    }
+
+    public boolean setPage(String name) {
+        if (currentPage.equals(name))
+            return false;
+
+        CardLayout cardLayout = (CardLayout) (mainPanel.getLayout());
+
+        // Check that there is a page with that name
+        if (pages.get(name) == null)
+            return false;
+
+        // Run setup on the page we are changing to
+        // Then show it
+        pages.get(name).setup();
+        cardLayout.show(mainPanel, name);
+
+        // Run teardown on the page we came from
+        if (!currentPage.isBlank())
+            pages.get(currentPage).teardown();
+
+        currentPage = name;
+        return true;
+    }
+
+    public String getCurrentPage() {
+        return currentPage;
+    }
+
+    public void addPage(String pageName, UIPage page) {
+        pages.put(pageName, page);
+        mainPanel.add(pages.get(pageName).getMainPanel(), pageName);
     }
 
     private void addPages() {
@@ -52,22 +87,5 @@ public class MainWindow extends JFrame {
         mainPanel.add(pages.get(LeggTilOmvisning.NAME).getMainPanel(), LeggTilOmvisning.NAME);
         mainPanel.add(pages.get(TourDetailPage.NAME).getMainPanel(), TourDetailPage.NAME);
         mainPanel.add(pages.get(BetalOmvisning.NAME).getMainPanel(), BetalOmvisning.NAME);
-    }
-
-    public void setPage(String name) {
-        if (currentPage.equals(name)) return;
-
-        CardLayout cardLayout = (CardLayout) (mainPanel.getLayout());
-
-        // Run setup on the page we are changing to
-        // Then show it
-        pages.get(name).setup();
-        cardLayout.show(mainPanel, name);
-
-        // Run teardown on the page we came from
-        if (!currentPage.isBlank())
-            pages.get(currentPage).teardown();
-
-        currentPage = name;
     }
 }
