@@ -1,6 +1,5 @@
 package no.booking.logic;
 
-import java.sql.Date;
 import java.util.UUID;
 
 public class Booking {

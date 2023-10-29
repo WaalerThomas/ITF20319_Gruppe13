@@ -4,11 +4,21 @@ skinparam linetype ortho
 entity users {
     *id: integer <<Generated>>
     --
+    *username: varchar(50)
+    *first_name: varchar(50)
+    *last_name: varchar(50)
+    *email: varchar(50)
+    user_type: integer <<FK>>
+}
+
+entity user_types {
+    *id: integer <<Generated>>
+    --
     *name: varchar(50)
 }
 
 entity tours {
-    *id: integer <<Generated>>
+    *id: varchar(36)
     --
     *user_id: integer <<FK>>
     *title: varchar(100)
@@ -26,7 +36,7 @@ entity tours {
 entity tour_times {
     *id: integer <<Generated>>
     --
-    *tour_id: integer <<FK>>
+    *tour_id: varchar(36) <<FK>>
     *date: date
     *begin_time: time
 }
@@ -39,9 +49,11 @@ entity bookings {
     *child_count: integer
     *infant_count: integer
     *cost: integer
+    book_date: datetime
 }
 
 users ||--o{ tours
+users }o--|| user_types
 tours ||--o{ tour_times
 bookings }o--|| tour_times
 bookings }o--|| users
