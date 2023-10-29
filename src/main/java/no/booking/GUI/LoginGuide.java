@@ -21,7 +21,7 @@ public class LoginGuide extends UIPage {
         leggTilOmvisningButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                mainWindow.setPage(LeggTilOmvisning.NAME);
+                mainWindow.setPage(CreateTourPage.NAME);
             }
         });
         cancelBtn.addActionListener(new ActionListener() {

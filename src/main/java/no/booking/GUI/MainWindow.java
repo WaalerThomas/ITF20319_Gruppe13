@@ -74,7 +74,7 @@ public class MainWindow extends JFrame {
         pages.put(TouristMainPage.NAME, new TouristMainPage(this, dataHandler));
         pages.put(CreateUserPage.NAME, new CreateUserPage(this));
         pages.put(LoginGuide.NAME, new LoginGuide(this));
-        pages.put(LeggTilOmvisning.NAME, new LeggTilOmvisning(this));
+        pages.put(CreateTourPage.NAME, new CreateTourPage(this, dataHandler));
         pages.put(TourDetailPage.NAME, new TourDetailPage(this, dataHandler));
         pages.put(BetalOmvisning.NAME, new BetalOmvisning(this));
 
@@ -84,7 +84,7 @@ public class MainWindow extends JFrame {
         mainPanel.add(pages.get(TouristMainPage.NAME).getMainPanel(), TouristMainPage.NAME);
         mainPanel.add(pages.get(CreateUserPage.NAME).getMainPanel(), CreateUserPage.NAME);
         mainPanel.add(pages.get(LoginGuide.NAME).getMainPanel(), LoginGuide.NAME);
-        mainPanel.add(pages.get(LeggTilOmvisning.NAME).getMainPanel(), LeggTilOmvisning.NAME);
+        mainPanel.add(pages.get(CreateTourPage.NAME).getMainPanel(), CreateTourPage.NAME);
         mainPanel.add(pages.get(TourDetailPage.NAME).getMainPanel(), TourDetailPage.NAME);
         mainPanel.add(pages.get(BetalOmvisning.NAME).getMainPanel(), BetalOmvisning.NAME);
     }
