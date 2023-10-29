@@ -10,7 +10,6 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ItemEvent;
-import java.util.Arrays;
 import java.util.List;
 
 public class TouristMainPage extends UIPage {
@@ -23,6 +22,7 @@ public class TouristMainPage extends UIPage {
     private JList<Tour> tourList;
     private JComboBox<String> landComboBox;
     private JComboBox<String> cityComboBox;
+    private JButton bookingHistoryBtn;
 
     private final DefaultListModel<Tour> tourListModel;
     private final DataHandler dataHandler;
@@ -36,6 +36,7 @@ public class TouristMainPage extends UIPage {
         tourList.setDragEnabled(false);
 
         logoutBtn.addActionListener(actionEvent -> mainWindow.setPage(LoginPage.NAME));
+        bookingHistoryBtn.addActionListener(actionEvent -> mainWindow.setPage(TouristBookingsPage.NAME));
 
         tourList.addListSelectionListener(listSelectionEvent -> {
             int selectionIndex = tourList.getSelectedIndex();
@@ -99,7 +100,7 @@ public class TouristMainPage extends UIPage {
         panel1.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         mainPanel.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
-        panel2.setLayout(new GridLayoutManager(1, 3, new Insets(10, 10, 5, 10), -1, -1));
+        panel2.setLayout(new GridLayoutManager(1, 4, new Insets(10, 10, 5, 10), -1, -1));
         panel1.add(panel2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         headerLbl = new JLabel();
         headerLbl.setText("Turid Turist");
@@ -108,7 +109,10 @@ public class TouristMainPage extends UIPage {
         panel2.add(spacer1, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         logoutBtn = new JButton();
         logoutBtn.setText("Logg ut");
-        panel2.add(logoutBtn, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel2.add(logoutBtn, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        bookingHistoryBtn = new JButton();
+        bookingHistoryBtn.setText("Booking historikk");
+        panel2.add(bookingHistoryBtn, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         contentPanel = new JPanel();
         contentPanel.setLayout(new GridLayoutManager(2, 1, new Insets(5, 5, 5, 5), -1, -1));
         contentPanel.setBackground(new Color(-2960942));

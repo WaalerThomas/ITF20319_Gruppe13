@@ -43,7 +43,7 @@ public class Tour {
         if (!decreaseTicketCount(totalTicketAmount))
             return false;
 
-        int calculatedTotalCost = (adultTicketPrice * adultTicketAmount) + (childTicketPrice * adultTicketAmount) + (infantTicketPrice * infantTicketAmount);
+        int calculatedTotalCost = (adultTicketPrice * adultTicketAmount) + (childTicketPrice * childTicketAmount) + (infantTicketPrice * infantTicketAmount);
         Booking resultBooking = new Booking(username, id, adultTicketAmount, childTicketAmount, infantTicketAmount, calculatedTotalCost, date);
 
         // Check that the user hasn't already booked this tour

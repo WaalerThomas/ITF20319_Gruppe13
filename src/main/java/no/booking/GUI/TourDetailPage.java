@@ -59,6 +59,7 @@ public class TourDetailPage extends UIPage {
 
         bookButton.addActionListener(e -> {
             PayForTourPage.setTour(currentTourId);
+            PayForTourPage.setTicketAmounts((int) adultTicketAmount.getValue(), (int) childTicketAmount.getValue(), (int) infantTicketAmount.getValue());
             mainWindow.setPage(PayForTourPage.NAME);
         });
 
@@ -254,7 +255,7 @@ public class TourDetailPage extends UIPage {
         panel2.add(label6, new GridConstraints(2, 0, 1, 3, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new GridLayoutManager(6, 3, new Insets(0, 0, 0, 0), -1, -1));
-        contentPanel.add(panel4, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, 1, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        contentPanel.add(panel4, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         titleLbl = new JLabel();
         Font titleLblFont = this.$$$getFont$$$(null, Font.BOLD, 24, titleLbl.getFont());
         if (titleLblFont != null) titleLbl.setFont(titleLblFont);

@@ -8,6 +8,10 @@ import no.booking.logic.Tour;
 import no.booking.persistence.DataHandler;
 
 import javax.swing.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.border.TitledBorder;
@@ -22,6 +26,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
 public class PayForTourPage extends UIPage {
     public static final String NAME = "PayForTourPage";
     private static UUID currentTourId;
+    private static final int[] ticketAmounts = {0, 0, 0};
 
     private JPanel mainPanel;
     private JButton paymentSuccessBtn;
@@ -43,7 +48,12 @@ public class PayForTourPage extends UIPage {
         });
         paymentSuccessBtn.addActionListener(actionEvent -> {
             Tour tour = dataHandler.getTourById(currentTourId);
-            boolean result = tour.book(dataHandler, "TuridTurist", 0, 0, 0, "2023-10-10 17:00:00");
+
+            // Gets the current datetime
+            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime now = LocalDateTime.now();
+
+            boolean result = tour.book(dataHandler, "TuridTurist", ticketAmounts[0], ticketAmounts[1], ticketAmounts[2], dateFormat.format(now));
             if (!result) {
                 showMessageDialog(null, "Kan ikke booke en omvisning som allerede er booket", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -62,7 +72,6 @@ public class PayForTourPage extends UIPage {
 
     @Override
     public void setup() {
-
     }
 
     @Override
@@ -72,6 +81,12 @@ public class PayForTourPage extends UIPage {
 
     public static void setTour(UUID id) {
         currentTourId = id;
+    }
+
+    public static void setTicketAmounts(int adultTicketAmount, int childTicketAmount, int infantTicketAmount) {
+        ticketAmounts[0] = adultTicketAmount;
+        ticketAmounts[1] = childTicketAmount;
+        ticketAmounts[2] = infantTicketAmount;
     }
 
     {

@@ -77,6 +77,7 @@ public class MainWindow extends JFrame {
         pages.put(CreateTourPage.NAME, new CreateTourPage(this, dataHandler));
         pages.put(TourDetailPage.NAME, new TourDetailPage(this, dataHandler));
         pages.put(PayForTourPage.NAME, new PayForTourPage(this, dataHandler));
+        pages.put(TouristBookingsPage.NAME, new TouristBookingsPage(this, dataHandler));
 
         // Add pages to the mainPanel, with a unique name
         // Need to add the mainPanel from the pages
@@ -87,5 +88,6 @@ public class MainWindow extends JFrame {
         mainPanel.add(pages.get(CreateTourPage.NAME).getMainPanel(), CreateTourPage.NAME);
         mainPanel.add(pages.get(TourDetailPage.NAME).getMainPanel(), TourDetailPage.NAME);
         mainPanel.add(pages.get(PayForTourPage.NAME).getMainPanel(), PayForTourPage.NAME);
+        mainPanel.add(pages.get(TouristBookingsPage.NAME).getMainPanel(), TouristBookingsPage.NAME);
     }
 }
