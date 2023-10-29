@@ -88,11 +88,20 @@ public class CreateTourPage extends UIPage {
         childPriceSpinner.setValue(2500);
         infantPriceSpinner.setValue(0);
         ticketAmountSpinner.setValue(50);
+
+        // Add countries into the combobox
+        String[] countries = {"Norge", "Sverige", "Danmark", "Portugal", "Italia"};
+        for (String item : countries)
+            countryComboBox.addItem(item);
+
+        // Add cities into the combobox
+        String[] cities = {"Oslo", "Halden", "Moss", "Roma", "København", "Faro"};
+        for (String item : cities)
+            cityComboBox.addItem(item);
     }
 
     @Override
     public void teardown() {
-
     }
 
     private void createTour() {

@@ -98,7 +98,7 @@ public class FakeDatabase implements DataHandler {
     }
 
     private void addDefaultDataTours() {
-        tours.add(new Tour("GeorgGuide", "Tur til København", "Denmark", "København", "Fantastisk tur til københavn",
+        tours.add(new Tour("GeorgGuide", "Tur til København", "Danmark", "København", "Fantastisk tur til københavn",
                 "04.04.24", 600, 300, 0, "København Sentrum", 10));
         tours.add(new Tour("GeorgGuide", "Cruising rundt Faro", "Portugal","Faro" ,"Ferjetur rundt øyene", "20.06.24",
                 1400, 700, 0, "FaroVeien 12", 10));

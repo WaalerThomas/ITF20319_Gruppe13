@@ -141,6 +141,7 @@ public class TouristMainPage extends UIPage {
         defaultComboBoxModel2.addElement("Roma");
         defaultComboBoxModel2.addElement("København");
         defaultComboBoxModel2.addElement("Faro");
+        defaultComboBoxModel2.addElement("Athen");
         cityComboBox.setModel(defaultComboBoxModel2);
         panel3.add(cityComboBox, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JScrollPane scrollPane1 = new JScrollPane();
