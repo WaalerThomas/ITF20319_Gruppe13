@@ -1,4 +1,4 @@
-package no.booking.fakes;
+package no.booking.stubs;
 
 import no.booking.GUI.UIPage;
 

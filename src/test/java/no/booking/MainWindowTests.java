@@ -1,7 +1,7 @@
 package no.booking;
 
 import no.booking.GUI.MainWindow;
-import no.booking.fakes.TestPage;
+import no.booking.stubs.TestPage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
