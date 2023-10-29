@@ -4,6 +4,7 @@ import no.booking.persistence.DataHandler;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class Tour {
     private UUID id;
@@ -43,17 +44,18 @@ public class Tour {
             return false;
 
         int calculatedTotalCost = (adultTicketPrice * adultTicketAmount) + (childTicketPrice * adultTicketAmount) + (infantTicketPrice * infantTicketAmount);
-        Booking booking = new Booking(username, id, adultTicketAmount, childTicketAmount, infantTicketAmount, calculatedTotalCost, date);
+        Booking resultBooking = new Booking(username, id, adultTicketAmount, childTicketAmount, infantTicketAmount, calculatedTotalCost, date);
 
         // Check that the user hasn't already booked this tour
         List<Booking> bookings = dataHandler.getBookingsByTourId(id);
+        bookings = bookings.stream().filter(booking -> booking.getUsername().equals(username)).collect(Collectors.toList());
         boolean hasBookedAlready = !bookings.isEmpty();
         if (hasBookedAlready) {
             increaseTicketCount(totalTicketAmount);
             return false;
         }
 
-        dataHandler.addBooking(booking);
+        dataHandler.addBooking(resultBooking);
         return true;
     }
 
