@@ -1,6 +1,6 @@
 package no.booking;
 
-import no.booking.Users.User;
+import no.booking.users.User;
 import no.booking.logic.Tour;
 import no.booking.persistence.FakeDatabase;
 import org.junit.jupiter.api.BeforeEach;

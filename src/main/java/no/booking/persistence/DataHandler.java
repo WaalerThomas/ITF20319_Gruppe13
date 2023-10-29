@@ -1,6 +1,6 @@
 package no.booking.persistence;
 
-import no.booking.Users.User;
+import no.booking.users.User;
 import no.booking.logic.Booking;
 import no.booking.logic.Tour;
 

@@ -1,10 +1,10 @@
 package no.booking.persistence;
 
 import no.booking.logic.Booking;
-import no.booking.Users.Admin;
-import no.booking.Users.Guide;
-import no.booking.Users.Tourist;
-import no.booking.Users.User;
+import no.booking.users.Admin;
+import no.booking.users.Guide;
+import no.booking.users.Tourist;
+import no.booking.users.User;
 import no.booking.logic.Tour;
 
 import java.util.*;

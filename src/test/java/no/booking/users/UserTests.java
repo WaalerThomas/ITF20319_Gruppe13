@@ -1,15 +1,14 @@
-package no.booking.Users;
+package no.booking.users;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserTest {
-
+class UserTests {
     @Test
     void checksIfUserNameAlreadyExist(){
-        assertEquals(false, true);
+        fail();
     }
 
     @DisplayName("Testing if password is valid")
@@ -36,26 +35,21 @@ class UserTest {
 
     @Test
     void checksIfNewUserCanMakeUserAccount() {
-        assertEquals(false, true);
+        fail();
     }
 
     @Test
     void checksIfUserCanReceiveMessagesFromGuides() {
-        assertEquals(false, true);
+        fail();
     }
 
     @Test
     void checksIfUserCanPostPosts() {
-        assertEquals(false, true);
+        fail();
     }
 
     @Test
     void checksIfUserGetsBankTerminalWindow() {
-        assertEquals(false, true);
+        fail();
     }
-
-
-
-
-
 }

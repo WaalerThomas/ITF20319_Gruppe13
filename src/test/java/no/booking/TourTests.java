@@ -1,6 +1,5 @@
 package no.booking;
 
-import no.booking.Users.User;
 import no.booking.logic.Booking;
 import no.booking.logic.Tour;
 import no.booking.persistence.FakeDatabase;

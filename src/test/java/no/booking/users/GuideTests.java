@@ -1,24 +1,22 @@
-package no.booking.Users;
+package no.booking.users;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class GuideTest {
-
+class GuideTests {
     @Test
     void checksIfGuideCanMakeBooking() {
-        assertEquals(false, true);
+        fail();
     }
 
     @Test
     void checksIfGuideHasReceivedMoney() {
-        assertEquals(false, true);
+        fail();
     }
 
     @Test
     void checksIfGuideHasValidBankAccount() {
-        assertEquals(false, true);
+        fail();
     }
-
 }

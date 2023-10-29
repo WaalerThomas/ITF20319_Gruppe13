@@ -1,28 +1,28 @@
-package no.booking.Users;
+package no.booking.users;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AdminTest {
+class AdminTests {
 
     @Test
     void checksIfPaymentAppIsWorking() {
-        assertEquals(false, true);
+        fail();
     }
 
     @Test
     void checksIfPaymentIsApproved() {
-        assertEquals(false, true);
+        fail();
     }
 
     @Test
     void checksIfAdminHasAccessToUserAccounts() {
-        assertEquals(false, true);
+        fail();
     }
 
     @Test
     void checksIfAdminCanMakeChangesInUserAccounts() {
-        assertEquals(false, true);
+        fail();
     }
 }

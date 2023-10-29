@@ -1,4 +1,4 @@
-package no.booking.Users;
+package no.booking.users;
 
 public class Tourist extends User{
     public Tourist(String userName, String password, String email) {
