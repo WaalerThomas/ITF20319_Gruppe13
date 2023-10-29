@@ -69,4 +69,23 @@ class GuideTests {
         assertEquals(2, bookings.size());
         assertEquals(16, tourTest.getAvailableTicketsCount());
     }
+
+    @Test
+    /* Guide bruker kan lage opp til flere omvisnigner og bruke dem samtidig */
+    public void can_create_multiple_active_tours() {
+        database.createUser("GeorgGuide");
+        database.createTour("GeorgGuide", "Title", "Country", "City",
+                "Description", "2023-10-10 17:00:00", 500, 250,
+                0, "MeetingPoint", 20);
+        database.createTour("GeorgGuide", "Title2", "Country2", "City2",
+                "Description2", "2023-10-10 17:00:00", 500, 250,
+                0, "MeetingPoint2", 20);
+        database.createTour("GeorgGuide", "Title3", "Country3", "City3",
+                "Description", "2023-10-10 17:00:00", 500, 250,
+                0, "MeetingPoint3", 20);
+
+        List<Tour> tours = database.getToursByOwner("GeorgGuide");
+        assertFalse(tours.isEmpty());
+        assertEquals(3, tours.size());
+    }
 }
