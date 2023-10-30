@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="815" height="578"/>
+      <xy x="20" y="20" width="756" height="481"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -52,7 +52,7 @@
           <grid id="2bc97" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
             <border type="none" title="Billetter og priser">
@@ -245,7 +245,7 @@
           <grid id="c73eb" layout-manager="GridLayoutManager" row-count="6" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -290,16 +290,20 @@
               </component>
               <scrollpane id="6f831">
                 <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="7" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <horizontalScrollBarPolicy value="31"/>
+                  <verticalScrollBarPolicy value="22"/>
+                </properties>
                 <border type="none"/>
                 <children>
-                  <component id="f7fab" class="javax.swing.JTextPane" binding="descriptionLbl">
+                  <component id="921c3" class="javax.swing.JTextArea" binding="descriptionLbl">
                     <constraints/>
                     <properties>
                       <editable value="false"/>
-                      <text value="&lt;Description&gt;"/>
+                      <lineWrap value="true"/>
+                      <text value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris auctor sem lorem, ac tincidunt nunc dignissim elementum. Praesent nec gravida elit, id porttitor ligula. Sed ligula diam, interdum eget est sed, finibus imperdiet velit. Aenean euismod, arcu ac pharetra rutrum, lorem dui convallis nulla, quis auctor mi risus at sapien. Etiam sit amet risus vestibulum, scelerisque nunc eu, venenatis arcu. Vestibulum malesuada, risus eu vehicula tristique, tortor odio iaculis eros, eget cursus nisl sapien sed elit. Suspendisse eu accumsan dui, ac mattis leo. "/>
                     </properties>
                   </component>
                 </children>

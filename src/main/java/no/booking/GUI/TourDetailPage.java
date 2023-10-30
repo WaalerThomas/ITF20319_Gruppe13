@@ -29,7 +29,7 @@ public class TourDetailPage extends UIPage {
     private JPanel contentPanel;
     private JLabel countryLbl;
     private JLabel cityLbl;
-    private JTextPane descriptionLbl;
+    private JTextArea descriptionLbl;
     private JLabel meetPointLbl;
     private JLabel idLbl;
     private JComboBox comboBox1;
@@ -162,7 +162,7 @@ public class TourDetailPage extends UIPage {
         mainPanel.add(contentPanel, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(4, 3, new Insets(0, 0, 0, 0), -1, -1));
-        contentPanel.add(panel2, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        contentPanel.add(panel2, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         panel2.setBorder(BorderFactory.createTitledBorder(null, "Billetter og priser", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, this.$$$getFont$$$(null, Font.BOLD, 16, panel2.getFont()), null));
         comboBox1 = new JComboBox();
         comboBox1.setEnabled(false);
@@ -255,7 +255,7 @@ public class TourDetailPage extends UIPage {
         panel2.add(label6, new GridConstraints(2, 0, 1, 3, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new GridLayoutManager(6, 3, new Insets(0, 0, 0, 0), -1, -1));
-        contentPanel.add(panel4, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        contentPanel.add(panel4, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         titleLbl = new JLabel();
         Font titleLblFont = this.$$$getFont$$$(null, Font.BOLD, 24, titleLbl.getFont());
         if (titleLblFont != null) titleLbl.setFont(titleLblFont);
@@ -273,10 +273,13 @@ public class TourDetailPage extends UIPage {
         cityLbl.setText("<City>");
         panel4.add(cityLbl, new GridConstraints(3, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JScrollPane scrollPane1 = new JScrollPane();
-        panel4.add(scrollPane1, new GridConstraints(2, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        descriptionLbl = new JTextPane();
+        scrollPane1.setHorizontalScrollBarPolicy(31);
+        scrollPane1.setVerticalScrollBarPolicy(22);
+        panel4.add(scrollPane1, new GridConstraints(2, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        descriptionLbl = new JTextArea();
         descriptionLbl.setEditable(false);
-        descriptionLbl.setText("<Description>");
+        descriptionLbl.setLineWrap(true);
+        descriptionLbl.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris auctor sem lorem, ac tincidunt nunc dignissim elementum. Praesent nec gravida elit, id porttitor ligula. Sed ligula diam, interdum eget est sed, finibus imperdiet velit. Aenean euismod, arcu ac pharetra rutrum, lorem dui convallis nulla, quis auctor mi risus at sapien. Etiam sit amet risus vestibulum, scelerisque nunc eu, venenatis arcu. Vestibulum malesuada, risus eu vehicula tristique, tortor odio iaculis eros, eget cursus nisl sapien sed elit. Suspendisse eu accumsan dui, ac mattis leo. ");
         scrollPane1.setViewportView(descriptionLbl);
         final JLabel label7 = new JLabel();
         label7.setText("Møtepunkt:");

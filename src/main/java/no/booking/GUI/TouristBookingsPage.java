@@ -37,6 +37,19 @@ public class TouristBookingsPage extends UIPage {
 
         backBtn.addActionListener(actionEvent -> mainWindow.setPage(TouristMainPage.NAME));
         logoutBtn.addActionListener(actionEvent -> mainWindow.setPage(LoginPage.NAME));
+
+        bookingList.addListSelectionListener(listSelectionEvent -> {
+            int selectionIndex = bookingList.getSelectedIndex();
+
+            // Wait to change the selected index to when the value has finished adjusting
+            if (listSelectionEvent.getValueIsAdjusting()) return;
+            if (selectionIndex == -1) return;
+
+            // Navigate to the detail screen for the tour
+            TourDetailPage.setTour(bookingListModel.get(selectionIndex).getTourId());
+            TourDetailPage.setPreviousPage(NAME);
+            mainWindow.setPage(TourDetailPage.NAME);
+        });
     }
 
     @Override
