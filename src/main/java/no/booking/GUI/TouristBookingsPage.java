@@ -48,6 +48,7 @@ public class TouristBookingsPage extends UIPage {
             // Navigate to the detail screen for the tour
             TourDetailPage.setTour(bookingListModel.get(selectionIndex).getTourId());
             TourDetailPage.setPreviousPage(NAME);
+            TourDetailPage.setIsInViewMode(true);
             mainWindow.setPage(TourDetailPage.NAME);
         });
     }
