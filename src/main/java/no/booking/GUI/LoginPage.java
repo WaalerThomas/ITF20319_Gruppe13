@@ -22,24 +22,10 @@ public class LoginPage extends UIPage {
     private JButton newAccountBtn;
 
     public LoginPage(MainWindow mainWindow) {
-        touristLoginBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                mainWindow.setPage(TouristMainPage.NAME);
-            }
-        });
-        guideLoginBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                mainWindow.setPage(LoginGuide.NAME);
-            }
-        });
-        newAccountBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                mainWindow.setPage(CreateUserPage.NAME);
-            }
-        });
+        touristLoginBtn.addActionListener(actionEvent -> mainWindow.setPage(TouristMainPage.NAME));
+        guideLoginBtn.addActionListener(actionEvent -> mainWindow.setPage(LoginGuide.NAME));
+        adminLoginBtn.addActionListener(actionEvent -> mainWindow.setPage(AdminMainPage.NAME));
+        newAccountBtn.addActionListener(actionEvent -> mainWindow.setPage(CreateUserPage.NAME));
     }
 
     @Override
