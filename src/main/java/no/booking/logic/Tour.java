@@ -40,6 +40,8 @@ public class Tour {
 
     public boolean book(DataHandler dataHandler, String username, int adultTicketAmount, int childTicketAmount, int infantTicketAmount, String date) {
         int totalTicketAmount = adultTicketAmount + childTicketAmount + infantTicketAmount;
+        if (totalTicketAmount <= 0) return false;
+
         if (!decreaseTicketCount(totalTicketAmount))
             return false;
 

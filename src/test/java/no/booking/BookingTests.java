@@ -1,6 +1,8 @@
 package no.booking;
 
 import no.booking.logic.Booking;
+import no.booking.logic.Tour;
+import no.booking.persistence.FakeDatabase;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -36,5 +38,16 @@ public class BookingTests {
 
         int result = booking.getTotalTicketAmount();
         assertEquals(30, result);
+    }
+
+    @Test
+    public void can_not_book_with_zero_ticket_amount_given() {
+        FakeDatabase database = new FakeDatabase();
+        Tour testTour = new Tour("GeorgGuide", "Title", "Country", "City",
+                "Description", "2023-10-10 17:00:00", 500, 250,
+                0, "MeetingPoint", 20);
+
+        boolean result = testTour.book(database, "TuridTurist", 0, 0, 0, "2023-10-10 17:00:00");
+        assertFalse(result);
     }
 }
