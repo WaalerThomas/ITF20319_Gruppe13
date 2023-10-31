@@ -17,6 +17,9 @@ import java.awt.event.ActionListener;
 import java.util.Locale;
 import java.util.UUID;
 
+import static javax.swing.JOptionPane.showMessageDialog;
+
+
 public class TourDetailPage extends UIPage {
     public static final String NAME = "TourDetailPage";
     private static UUID currentTourId;
@@ -63,7 +66,13 @@ public class TourDetailPage extends UIPage {
         bookButton.addActionListener(e -> {
             PayForTourPage.setTour(currentTourId);
             PayForTourPage.setTicketAmounts((int) adultTicketAmount.getValue(), (int) childTicketAmount.getValue(), (int) infantTicketAmount.getValue());
-            mainWindow.setPage(PayForTourPage.NAME);
+
+            int total_tickets = (int) adultTicketAmount.getValue() + (int) childTicketAmount.getValue() + (int) infantTicketAmount.getValue();
+            if (total_tickets <= 0) {
+                showMessageDialog(null, "Du må velge minst en billett", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            else
+                mainWindow.setPage(PayForTourPage.NAME);
         });
 
         adultTicketAmount.addChangeListener(changeEvent -> calculateTotalPrice());
