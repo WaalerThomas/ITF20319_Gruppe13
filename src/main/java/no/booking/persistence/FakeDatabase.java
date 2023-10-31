@@ -67,11 +67,6 @@ public class FakeDatabase implements DataHandler {
     }
 
     @Override
-    public void updateTour(Tour tour) {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
     public void addBooking(Booking booking) {
         bookings.add(booking);
     }

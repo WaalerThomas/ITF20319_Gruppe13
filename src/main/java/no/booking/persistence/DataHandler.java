@@ -16,7 +16,6 @@ public interface DataHandler {
     Tour createTour(String guideUsername, String title, String country, String city, String description, String date, int adultTicketPrice,
                     int childTicketPrice, int infantTicketPrice, String meetingPoint, int maxTicketAmount);
     void createTour(Tour tour);
-    void updateTour(Tour tour);
     void addBooking(Booking booking);
     List<Booking> getBookingsByTourId(UUID tourId);
     List<Booking> getBookingsByUsername(String username);

@@ -33,7 +33,7 @@ public class Database implements DataHandler {
             ResultSet rs = stmt.executeQuery("""
                 SELECT *
                 FROM users
-                WHERE LOWER(username) = LOWER(?)
+                WHERE LOWER(username) == LOWER(?)
             """);
 
             return new User(
@@ -59,7 +59,7 @@ public class Database implements DataHandler {
                 SELECT
                     (SELECT username
                     FROM users
-                    WHERE users.id = id) as owner_username, *
+                    WHERE users.id == id) as owner_username, *
                 FROM tours
             """);
 
@@ -85,7 +85,7 @@ public class Database implements DataHandler {
                     FROM users
                     WHERE users.id = id) as owner_username, *
                 FROM tours
-                WHERE tours.id = ?;
+                WHERE tours.id == ?;
             """);
             stmt.setString(1, id.toString());
             ResultSet rs = stmt.executeQuery();
@@ -114,7 +114,7 @@ public class Database implements DataHandler {
                     FROM users
                     WHERE users.id = id) as owner_username, *
                 FROM tours
-                WHERE LOWER(tours.city) = LOWER(?);
+                WHERE LOWER(tours.city) == LOWER(?);
             """);
             stmt.setString(1, city);
             ResultSet rs = stmt.executeQuery();
@@ -139,7 +139,7 @@ public class Database implements DataHandler {
                     FROM users
                     WHERE users.id = id) as owner_username, *
                 FROM tours
-                WHERE LOWER(tours.owner_username) = LOWER(?);
+                WHERE LOWER(tours.owner_username) == LOWER(?);
             """);
             stmt.setString(1, ownerUsername);
             ResultSet rs = stmt.executeQuery();
@@ -155,27 +155,85 @@ public class Database implements DataHandler {
 
     @Override
     public Tour createTour(String guideUsername, String title, String country, String city, String description, String date, int adultTicketPrice, int childTicketPrice, int infantTicketPrice, String meetingPoint, int maxTicketAmount) {
-        throw new RuntimeException("Not implemented");
+        try {
+            connect();
+            Tour tempTour = new Tour(guideUsername, title, country, city, description, date, adultTicketPrice,
+                    childTicketPrice, infantTicketPrice, meetingPoint, maxTicketAmount);
+
+            insertTour(tempTour);
+            return tempTour;
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return null;
+        } finally {
+            disconnect();
+        }
     }
 
     @Override
     public void createTour(Tour tour) {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public void updateTour(Tour tour) {
-        throw new RuntimeException("Not implemented");
+        try {
+            connect();
+            insertTour(tour);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            disconnect();
+        }
     }
 
     @Override
     public void addBooking(Booking booking) {
-        throw new RuntimeException("Not implemented");
+        try {
+            connect();
+
+            PreparedStatement stmt = conn.prepareStatement("""
+                INSERT INTO bookings (tour_id, user_id, adult_count, child_count, infant_count, cost, book_date)
+                VALUES (?, (
+                    SELECT id
+                    FROM users
+                    WHERE LOWER(username) == LOWER(?)
+                ), ?, ?, ?, ?, ?)
+            """);
+            stmt.setString(1, booking.getTourId().toString());
+            stmt.setString(2, booking.getUsername());
+            stmt.setInt(3, booking.getAdultTicketAmount());
+            stmt.setInt(4, booking.getChildTicketAmount());
+            stmt.setInt(5, booking.getInfantTicketAmount());
+            stmt.setInt(6, booking.getTotalCost());
+            stmt.setString(7, booking.getDate());
+            stmt.execute();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            disconnect();
+        }
     }
 
     @Override
     public List<Booking> getBookingsByTourId(UUID tourId) {
-        throw new RuntimeException("Not implemented");
+        try {
+            connect();
+
+            PreparedStatement stmt = conn.prepareStatement("""
+                SELECT tour_id,
+                    (SELECT username
+                    FROM users
+                    WHERE user_id == id) as username,
+                    adult_count, child_count, infant_count, cost, book_date
+                FROM bookings
+                WHERE tour_id = ?
+            """);
+            stmt.setString(1, tourId.toString());
+            ResultSet rs = stmt.executeQuery();
+
+            return getBookingsListFromResult(rs);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return new ArrayList<>();
+        } finally {
+            disconnect();
+        }
     }
 
     @Override
@@ -187,7 +245,7 @@ public class Database implements DataHandler {
                 SELECT tour_id,
                     (SELECT username
                     FROM users
-                    WHERE user_id = id) as username,
+                    WHERE user_id == id) as username,
                     adult_count, child_count, infant_count, cost, book_date
                 FROM bookings
                 WHERE LOWER(username) = LOWER(?)
@@ -206,7 +264,24 @@ public class Database implements DataHandler {
 
     @Override
     public void createUser(String username) {
-        throw new RuntimeException("Not implemented");
+        try {
+            connect();
+
+            PreparedStatement stmt = conn.prepareStatement("""
+                INSERT INTO users (username, first_name, last_name, email, user_type)
+                VALUES (?, 'FirstNameTemp', 'LastNameTemp', 'email@temp.no', (
+                    SELECT id
+                    FROM user_types
+                    WHERE name == 'bruker'
+                ));
+            """);
+            stmt.setString(1, username);
+            stmt.execute();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            disconnect();
+        }
     }
 
     private List<Tour> getToursListFromResult(ResultSet rs) throws SQLException {
@@ -252,6 +327,30 @@ public class Database implements DataHandler {
         }
 
         return resultList;
+    }
+
+    private void insertTour(Tour tour) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("""
+            INSERT INTO tours VALUES (?, (
+                SELECT id
+                FROM users
+                WHERE LOWER(username) == LOWER(?)
+            ), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """);
+
+        stmt.setString(1, tour.getId().toString());
+        stmt.setString(2, tour.getOwnerUsername());
+        stmt.setString(3, tour.getTitle());
+        stmt.setString(4, tour.getCountry());
+        stmt.setString(5, tour.getCity());
+        stmt.setString(6, tour.getDescription());
+        stmt.setInt(7, tour.getAdultTicketPrice());
+        stmt.setInt(8, tour.getChildTicketPrice());
+        stmt.setInt(9, tour.getInfantTicketPrice());
+        stmt.setString(10, tour.getMeetingPoint());
+        stmt.setInt(11, tour.getMaxTicketAmount());
+        stmt.setInt(12, tour.getAvailableTicketsCount());
+        stmt.execute();
     }
 
     private void connect() throws SQLException {
@@ -367,11 +466,11 @@ public class Database implements DataHandler {
             stmt.execute("""
                 INSERT INTO users (username, first_name, last_name, email, user_type)
                 VALUES
-                    ('brukerberit', 'berit', 'bruker', 'berit@bruker.no',
+                    ('TuridTurist', 'Turid', 'Turist', 'turid@turist.no',
                         (SELECT id FROM user_types WHERE name=='bruker')),
-                    ('guidegard', 'gard', 'guide', 'gard@guide.no',
+                    ('GeorgGuide', 'Georg', 'Guide', 'georg@guide.no',
                         (SELECT id FROM user_types WHERE name=='bruker')),
-                    ('adminadam', 'adam', 'admin', 'adam@admin.no',
+                    ('ArnoldAdmin', 'Arnold', 'Admin', 'arnold@admin.no',
                         (SELECT id FROM user_types WHERE name=='admin'));
                 """);
 
@@ -379,9 +478,9 @@ public class Database implements DataHandler {
             PreparedStatement prepStmt = conn.prepareStatement("""
                 INSERT INTO tours (id, user_id, title, city, country, description, adult_ticket_price, child_ticket_price, infant_ticket_price, meet_point, max_ticket_amount, available_tickets_count)
                 VALUES
-                    (?, (SELECT id FROM users WHERE users.username = 'guidegard'), 'Tur til København', 'Danmark', 'København', 'Fantastisk tur til københavn', 600, 300, 0, 'København Sentrum', 10, 10),
-                    (?, (SELECT id FROM users WHERE users.username = 'guidegard'), 'Cruising rundt Faro', 'Portugal', 'Faro', 'Ferjetur rundt øyene', 1400, 700, 0, 'FaroVeien 12', 10, 10),
-                    (?, (SELECT id FROM users WHERE users.username = 'guidegard'), 'Opplev magien i Roma', 'Italia', 'Roma', 'Nyt romantisk aften i Roma', 2300, 1150, 0, 'Romaveien 20', 10, 10)
+                    (?, (SELECT id FROM users WHERE users.username == 'GeorgGuide'), 'Tur til København', 'Danmark', 'København', 'Fantastisk tur til københavn', 600, 300, 0, 'København Sentrum', 10, 10),
+                    (?, (SELECT id FROM users WHERE users.username == 'GeorgGuide'), 'Cruising rundt Faro', 'Portugal', 'Faro', 'Ferjetur rundt øyene', 1400, 700, 0, 'FaroVeien 12', 10, 10),
+                    (?, (SELECT id FROM users WHERE users.username == 'GeorgGuide'), 'Opplev magien i Roma', 'Italia', 'Roma', 'Nyt romantisk aften i Roma', 2300, 1150, 0, 'Romaveien 20', 10, 10)
                 """);
             // Generate a UUID for all the lines
             prepStmt.setString(1, UUID.randomUUID().toString());
