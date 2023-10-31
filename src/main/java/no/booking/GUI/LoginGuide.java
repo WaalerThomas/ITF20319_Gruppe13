@@ -15,9 +15,16 @@ public class LoginGuide extends UIPage {
     private JButton cancelBtn;
     private JLabel velkommenGuideLabel;
     private JButton leggTilOmvisningButton;
+    private JButton mineOmvisningerBtn;
 
 
     public LoginGuide(MainWindow mainWindow) {
+        mineOmvisningerBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                mainWindow.setPage(ViewCreatedToursPage.NAME);
+            }
+        });
         leggTilOmvisningButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -61,19 +68,22 @@ public class LoginGuide extends UIPage {
      */
     private void $$$setupUI$$$() {
         mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
+        mainPanel.setLayout(new GridLayoutManager(2, 3, new Insets(0, 0, 0, 0), -1, -1));
         cancelBtn = new JButton();
         cancelBtn.setText("Logg ut");
         mainPanel.add(cancelBtn, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         leggTilOmvisningButton = new JButton();
         leggTilOmvisningButton.setText("Legg til omvisning");
-        mainPanel.add(leggTilOmvisningButton, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mainPanel.add(leggTilOmvisningButton, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         velkommenGuideLabel = new JLabel();
         velkommenGuideLabel.setEnabled(true);
         velkommenGuideLabel.setText("Velkommen Guide");
         velkommenGuideLabel.setVerticalAlignment(0);
         velkommenGuideLabel.setVerticalTextPosition(0);
-        mainPanel.add(velkommenGuideLabel, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mainPanel.add(velkommenGuideLabel, new GridConstraints(0, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mineOmvisningerBtn = new JButton();
+        mineOmvisningerBtn.setText("Mine omvisninger");
+        mainPanel.add(mineOmvisningerBtn, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
