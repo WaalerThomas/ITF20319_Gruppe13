@@ -42,7 +42,7 @@ entity tour_times {
 }
 
 entity bookings {
-    *tourTime_id: integer <<FK>>
+    *tour_id: integer <<FK>>
     *user_id: integer <<FK>>
     --
     *adult_count: integer
@@ -54,8 +54,9 @@ entity bookings {
 
 users ||--o{ tours
 users }o--|| user_types
-tours ||--o{ tour_times
-bookings }o--|| tour_times
+'tours ||--o{ tour_times
+'bookings }o--|| tour_times
+bookings }o--|| tours
 bookings }o--|| users
 
 @enduml

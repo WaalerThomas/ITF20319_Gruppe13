@@ -63,8 +63,7 @@ public class Database implements DataHandler {
                 FROM tours
             """);
 
-            List<Tour> tours = getToursListFromResult(rs);
-            return tours;
+            return getToursListFromResult(rs);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
 
@@ -181,7 +180,28 @@ public class Database implements DataHandler {
 
     @Override
     public List<Booking> getBookingsByUsername(String username) {
-        throw new RuntimeException("Not implemented");
+        try {
+            connect();
+
+            PreparedStatement stmt = conn.prepareStatement("""
+                SELECT tour_id,
+                    (SELECT username
+                    FROM users
+                    WHERE user_id = id) as username,
+                    adult_count, child_count, infant_count, cost, book_date
+                FROM bookings
+                WHERE LOWER(username) = LOWER(?)
+            """);
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+
+            return getBookingsListFromResult(rs);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return new ArrayList<>();
+        } finally {
+            disconnect();
+        }
     }
 
     @Override
@@ -210,6 +230,25 @@ public class Database implements DataHandler {
             tempTour.decreaseTicketCount(tempTour.getMaxTicketAmount() - rs.getInt("available_tickets_count"));
             tempTour.setId(UUID.fromString(rs.getString("id")));
             resultList.add(tempTour);
+        }
+
+        return resultList;
+    }
+
+    private List<Booking> getBookingsListFromResult(ResultSet rs) throws SQLException {
+        List<Booking> resultList = new ArrayList<>();
+        while (rs.next()) {
+            Booking tempBooking = new Booking(
+                    rs.getString("username"),
+                    UUID.fromString(rs.getString("tour_id")),
+                    rs.getInt("adult_count"),
+                    rs.getInt("child_count"),
+                    rs.getInt("infant_count"),
+                    rs.getInt("cost"),
+                    rs.getString("book_date")
+            );
+
+            resultList.add(tempBooking);
         }
 
         return resultList;
@@ -285,6 +324,7 @@ public class Database implements DataHandler {
                 );""");
 
             // Create tour_times table
+            /*
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS tour_times (
                     id integer PRIMARY KEY AUTOINCREMENT,
@@ -292,19 +332,20 @@ public class Database implements DataHandler {
                     date_time datetime NOT NULL,
                     FOREIGN KEY (tour_id) REFERENCES tours(id)
                 );""");
+             */
 
             // Create bookings table
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS bookings (
-                    tourTime_id integer,
+                    tour_id integer,
                     user_id integer,
                     adult_count integer DEFAULT 0,
                     child_count integer DEFAULT 0,
                     infant_count integer DEFAULT 0,
                     cost integer NOT NULL,
                     book_date datetime DEFAULT CURRENT_TIMESTAMP,
-                    PRIMARY KEY (tourTime_id, user_id),
-                    FOREIGN KEY (tourTime_id) REFERENCES tour_times(id),
+                    PRIMARY KEY (tour_id, user_id),
+                    FOREIGN KEY (tour_id) REFERENCES tours(id),
                     FOREIGN KEY (user_id) REFERENCES users(id)
                 );""");
 
@@ -338,10 +379,14 @@ public class Database implements DataHandler {
             PreparedStatement prepStmt = conn.prepareStatement("""
                 INSERT INTO tours (id, user_id, title, city, country, description, adult_ticket_price, child_ticket_price, infant_ticket_price, meet_point, max_ticket_amount, available_tickets_count)
                 VALUES
-                    (?, (SELECT id FROM users WHERE users.username = 'guidegard'), 'Title1', 'Halden', 'Norge', 'Description1', 500, 250, 0, 'MeetPoint1', 10, 10)
+                    (?, (SELECT id FROM users WHERE users.username = 'guidegard'), 'Tur til København', 'Danmark', 'København', 'Fantastisk tur til københavn', 600, 300, 0, 'København Sentrum', 10, 10),
+                    (?, (SELECT id FROM users WHERE users.username = 'guidegard'), 'Cruising rundt Faro', 'Portugal', 'Faro', 'Ferjetur rundt øyene', 1400, 700, 0, 'FaroVeien 12', 10, 10),
+                    (?, (SELECT id FROM users WHERE users.username = 'guidegard'), 'Opplev magien i Roma', 'Italia', 'Roma', 'Nyt romantisk aften i Roma', 2300, 1150, 0, 'Romaveien 20', 10, 10)
                 """);
             // Generate a UUID for all the lines
             prepStmt.setString(1, UUID.randomUUID().toString());
+            prepStmt.setString(2, UUID.randomUUID().toString());
+            prepStmt.setString(3, UUID.randomUUID().toString());
             prepStmt.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
