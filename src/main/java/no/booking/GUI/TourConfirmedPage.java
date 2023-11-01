@@ -4,16 +4,16 @@ import javax.swing.*;
 
 public class TourConfirmedPage extends UIPage {
     public static final String Name = "TourConfirmedPage";
-    private JPanel panel1;
+    private JPanel mainPanel;
     private JButton loggUtButton;
 
     public TourConfirmedPage(MainWindow mainWindow) {
-        loggUtButton.addActionListener(actionEvent -> mainWindow.setPage(LoginGuide.NAME));
+        loggUtButton.addActionListener(actionEvent -> mainWindow.setPage(LoginPage.NAME));
     }
 
     @Override
     public JPanel getMainPanel() {
-        return null;
+        return mainPanel;
     }
 
     @Override
