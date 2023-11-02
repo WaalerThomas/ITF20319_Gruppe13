@@ -51,11 +51,13 @@ public class CreateTourPage extends UIPage {
         failedCreationBtn.addActionListener(actionEvent -> {
             showMessageDialog(null, "Opprettelse av omvisning feilet", "Error", JOptionPane.ERROR_MESSAGE);
         });
+        checking_If_Fields_Are_Empty();
 
         adultPriceSpinner.setModel(new SpinnerNumberModel(0, 0, 1_000_000_000, 1));
         childPriceSpinner.setModel(new SpinnerNumberModel(0, 0, 1_000_000_000, 1));
         infantPriceSpinner.setModel(new SpinnerNumberModel(0, 0, 1_000_000_000, 1));
         ticketAmountSpinner.setModel(new SpinnerNumberModel(0, 0, 1_000_000_000, 1));
+
     }
 
     // Genererer liste med land
@@ -106,6 +108,14 @@ public class CreateTourPage extends UIPage {
 
     @Override
     public void teardown() {
+    }
+
+    public void checking_If_Fields_Are_Empty(){
+        if (titleTextField.getText().isEmpty() && descriptionTextPane.getText().isEmpty() &&
+                meetingPointTextField.getText().isEmpty()){
+            addTourBtn.addActionListener(actionEvent ->
+                    showMessageDialog(null, "Vennligst fyll ut alle påkrevde felt", "Error", JOptionPane.ERROR_MESSAGE));
+        }
     }
 
 
