@@ -45,13 +45,12 @@ public class CreateTourPage extends UIPage {
 
         cancelBtn.addActionListener(actionEvent -> mainWindow.setPage(LoginGuide.NAME));
         logoutBtn.addActionListener(actionEvent -> mainWindow.setPage(LoginPage.NAME));
-
         addTourBtn.addActionListener(actionEvent -> mainWindow.setPage(TourConfirmedPage.Name));
-
+        //checking_If_Fields_Are_Empty();
         failedCreationBtn.addActionListener(actionEvent -> {
             showMessageDialog(null, "Opprettelse av omvisning feilet", "Error", JOptionPane.ERROR_MESSAGE);
         });
-        checking_If_Fields_Are_Empty();
+
 
         adultPriceSpinner.setModel(new SpinnerNumberModel(0, 0, 1_000_000_000, 1));
         childPriceSpinner.setModel(new SpinnerNumberModel(0, 0, 1_000_000_000, 1));
@@ -110,9 +109,8 @@ public class CreateTourPage extends UIPage {
     public void teardown() {
     }
 
-    public void checking_If_Fields_Are_Empty(){
-        if (titleTextField.getText().isEmpty() && descriptionTextPane.getText().isEmpty() &&
-                meetingPointTextField.getText().isEmpty()){
+    public void checking_If_Fields_Are_Empty() {
+        if (titleTextField.getText().isEmpty() && meetingPointTextField.getText().isEmpty() && descriptionTextPane.getText().isEmpty()) {
             addTourBtn.addActionListener(actionEvent ->
                     showMessageDialog(null, "Vennligst fyll ut alle påkrevde felt", "Error", JOptionPane.ERROR_MESSAGE));
         }
@@ -140,7 +138,6 @@ public class CreateTourPage extends UIPage {
         // Redirect the user to the main window after creation
         mainWindow.setPage(LoginGuide.NAME);
     }
-
 
 
     {
