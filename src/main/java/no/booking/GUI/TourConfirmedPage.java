@@ -8,7 +8,10 @@ public class TourConfirmedPage extends UIPage {
     private JButton loggUtButton;
 
     public TourConfirmedPage(MainWindow mainWindow) {
-        loggUtButton.addActionListener(actionEvent -> mainWindow.setPage(LoginPage.NAME));
+        try {
+            loggUtButton.addActionListener(actionEvent -> mainWindow.setPage(LoginPage.NAME));
+        } catch (NullPointerException e){
+        }
     }
 
     @Override
