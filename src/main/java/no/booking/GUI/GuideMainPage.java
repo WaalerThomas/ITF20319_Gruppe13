@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class LoginGuide extends UIPage {
+public class GuideMainPage extends UIPage {
     public static final String NAME = "LoginGuide";
 
     private JPanel mainPanel;
@@ -18,7 +18,7 @@ public class LoginGuide extends UIPage {
     private JButton mineOmvisningerBtn;
 
 
-    public LoginGuide(MainWindow mainWindow) {
+    public GuideMainPage(MainWindow mainWindow) {
         mineOmvisningerBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {

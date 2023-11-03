@@ -43,7 +43,7 @@ public class CreateTourPage extends UIPage {
         this.mainWindow = mainWindow;
         this.dataHandler = dataHandler;
 
-        cancelBtn.addActionListener(actionEvent -> mainWindow.setPage(LoginGuide.NAME));
+        cancelBtn.addActionListener(actionEvent -> mainWindow.setPage(GuideMainPage.NAME));
         logoutBtn.addActionListener(actionEvent -> mainWindow.setPage(LoginPage.NAME));
 
         addTourBtn.addActionListener(actionEvent -> mainWindow.setPage(TourConfirmedPage.Name));
@@ -128,7 +128,7 @@ public class CreateTourPage extends UIPage {
         int result = JOptionPane.showConfirmDialog(null, "Omvisning er opprettet", "Suksess", JOptionPane.OK_CANCEL_OPTION);
         // Not checking the result
         // Redirect the user to the main window after creation
-        mainWindow.setPage(LoginGuide.NAME);
+        mainWindow.setPage(GuideMainPage.NAME);
     }
 
 

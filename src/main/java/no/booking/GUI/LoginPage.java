@@ -8,8 +8,6 @@ import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Locale;
 
 public class LoginPage extends UIPage {
@@ -23,7 +21,7 @@ public class LoginPage extends UIPage {
 
     public LoginPage(MainWindow mainWindow) {
         touristLoginBtn.addActionListener(actionEvent -> mainWindow.setPage(TouristMainPage.NAME));
-        guideLoginBtn.addActionListener(actionEvent -> mainWindow.setPage(LoginGuide.NAME));
+        guideLoginBtn.addActionListener(actionEvent -> mainWindow.setPage(GuideMainPage.NAME));
         adminLoginBtn.addActionListener(actionEvent -> mainWindow.setPage(AdminMainPage.NAME));
         newAccountBtn.addActionListener(actionEvent -> mainWindow.setPage(CreateUserPage.NAME));
     }

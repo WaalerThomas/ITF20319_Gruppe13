@@ -32,7 +32,7 @@ public class ViewCreatedToursPage extends UIPage {
         tourList.setCellRenderer(new TourCellRenderer());
         tourList.setDragEnabled(false);
 
-        backBtn.addActionListener(actionEvent -> mainWindow.setPage(LoginGuide.NAME));
+        backBtn.addActionListener(actionEvent -> mainWindow.setPage(GuideMainPage.NAME));
         logoutBtn.addActionListener(actionEvent -> mainWindow.setPage(LoginPage.NAME));
 
         tourList.addListSelectionListener(listSelectionEvent -> {
