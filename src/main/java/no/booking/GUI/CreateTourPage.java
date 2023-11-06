@@ -46,7 +46,10 @@ public class CreateTourPage extends UIPage {
         cancelBtn.addActionListener(actionEvent -> mainWindow.setPage(GuideMainPage.NAME));
         logoutBtn.addActionListener(actionEvent -> mainWindow.setPage(LoginPage.NAME));
 
-        addTourBtn.addActionListener(actionEvent -> mainWindow.setPage(TourConfirmedPage.Name));
+        addTourBtn.addActionListener(actionEvent -> {
+            createTour();
+            mainWindow.setPage(TourConfirmedPage.Name);
+        });
 
         failedCreationBtn.addActionListener(actionEvent -> {
             showMessageDialog(null, "Opprettelse av omvisning feilet", "Error", JOptionPane.ERROR_MESSAGE);
