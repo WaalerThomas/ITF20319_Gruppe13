@@ -14,7 +14,7 @@
         </constraints>
         <properties>
           <font size="28"/>
-          <text value="Takk for din bestilling!"/>
+          <text value="Takk for å ha lagt til din omvisning"/>
         </properties>
       </component>
       <vspacer id="f50b">
