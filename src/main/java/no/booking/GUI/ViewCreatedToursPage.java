@@ -10,10 +10,8 @@ import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 import java.util.List;
-import java.util.Locale;
 
 public class ViewCreatedToursPage extends UIPage {
     public static final String NAME = "ViewCreatedToursPage";
@@ -25,7 +23,6 @@ public class ViewCreatedToursPage extends UIPage {
     private JPanel mainPanel;
     private final DefaultListModel<Tour> tourListModel;
     private final DataHandler dataHandler;
-
 
     public ViewCreatedToursPage(MainWindow mainWindow, DataHandler dataHandler) {
         this.dataHandler = dataHandler;

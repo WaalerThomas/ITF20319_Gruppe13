@@ -137,9 +137,9 @@ public class Database implements DataHandler {
                 SELECT
                     (SELECT username
                     FROM users
-                    WHERE users.id = id) as owner_username, *
+                    WHERE users.id = tours.user_id) as owner_username, *
                 FROM tours
-                WHERE LOWER(tours.owner_username) == LOWER(?);
+                WHERE LOWER(owner_username) == LOWER(?);
             """);
             stmt.setString(1, ownerUsername);
             ResultSet rs = stmt.executeQuery();
