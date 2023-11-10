@@ -29,7 +29,7 @@ public class ViewCreatedToursPage extends UIPage {
 
         tourListModel = new DefaultListModel<>();
         tourList.setModel(tourListModel);
-        tourList.setCellRenderer(new TourCellRenderer());
+        tourList.setCellRenderer(new TourOverviewCellRenderer());
         tourList.setDragEnabled(false);
 
         backBtn.addActionListener(actionEvent -> mainWindow.setPage(GuideMainPage.NAME));
