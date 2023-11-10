@@ -3,6 +3,7 @@ package no.booking.GUI;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import no.booking.GUI.renderers.TourOverviewCellRenderer;
 import no.booking.logic.Tour;
 import no.booking.persistence.DataHandler;
 

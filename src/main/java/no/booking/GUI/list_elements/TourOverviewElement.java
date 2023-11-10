@@ -1,4 +1,4 @@
-package no.booking.GUI;
+package no.booking.GUI.list_elements;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
