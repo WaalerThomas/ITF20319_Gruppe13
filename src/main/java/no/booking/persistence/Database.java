@@ -381,8 +381,8 @@ public class Database implements DataHandler {
         stmt.setString(1, tour.getId().toString());
         stmt.setString(2, tour.getOwnerUsername());
         stmt.setString(3, tour.getTitle());
-        stmt.setString(4, tour.getCountry());
-        stmt.setString(5, tour.getCity());
+        stmt.setString(4, tour.getCity());
+        stmt.setString(5, tour.getCountry());
         stmt.setString(6, tour.getDescription());
         stmt.setInt(7, tour.getAdultTicketPrice());
         stmt.setInt(8, tour.getChildTicketPrice());
@@ -526,9 +526,9 @@ public class Database implements DataHandler {
             PreparedStatement prepStmt = conn.prepareStatement("""
                 INSERT INTO tours (id, user_id, title, city, country, description, adult_ticket_price, child_ticket_price, infant_ticket_price, meet_point, max_ticket_amount, available_tickets_count)
                 VALUES
-                    (?, (SELECT id FROM users WHERE users.username == 'GeorgGuide'), 'Tur til København', 'Danmark', 'København', 'Fantastisk tur til københavn', 600, 300, 0, 'København Sentrum', 10, 10),
-                    (?, (SELECT id FROM users WHERE users.username == 'GeorgGuide'), 'Cruising rundt Faro', 'Portugal', 'Faro', 'Ferjetur rundt øyene', 1400, 700, 0, 'FaroVeien 12', 10, 10),
-                    (?, (SELECT id FROM users WHERE users.username == 'GeorgGuide'), 'Opplev magien i Roma', 'Italia', 'Roma', 'Nyt romantisk aften i Roma', 2300, 1150, 0, 'Romaveien 20', 10, 10)
+                    (?, (SELECT id FROM users WHERE users.username == 'GeorgGuide'), 'Tur til København', 'København', 'Danmark', 'Fantastisk tur til københavn', 600, 300, 0, 'København Sentrum', 10, 10),
+                    (?, (SELECT id FROM users WHERE users.username == 'GeorgGuide'), 'Cruising rundt Faro', 'Faro', 'Portugal', 'Ferjetur rundt øyene', 1400, 700, 0, 'FaroVeien 12', 10, 10),
+                    (?, (SELECT id FROM users WHERE users.username == 'GeorgGuide'), 'Opplev magien i Roma', 'Roma', 'Italia', 'Nyt romantisk aften i Roma', 2300, 1150, 0, 'Romaveien 20', 10, 10)
                 """);
             // Generate a UUID for all the lines
             prepStmt.setString(1, UUID.randomUUID().toString());
