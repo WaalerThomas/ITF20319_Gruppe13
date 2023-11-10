@@ -36,8 +36,8 @@ public class CreateTourPage extends UIPage {
     private JTextField titleTextField;
     private JTextField meetingPointTextField;
 
-    private MainWindow mainWindow;
-    private DataHandler dataHandler;
+    private final MainWindow mainWindow;
+    private final DataHandler dataHandler;
 
     public CreateTourPage(MainWindow mainWindow, DataHandler dataHandler) {
         this.mainWindow = mainWindow;
@@ -59,18 +59,6 @@ public class CreateTourPage extends UIPage {
         childPriceSpinner.setModel(new SpinnerNumberModel(0, 0, 1_000_000_000, 1));
         infantPriceSpinner.setModel(new SpinnerNumberModel(0, 0, 1_000_000_000, 1));
         ticketAmountSpinner.setModel(new SpinnerNumberModel(0, 0, 1_000_000_000, 1));
-    }
-
-    // Genererer liste med land
-    public String[] getAllCountries() {
-        String[] countries = new String[Locale.getISOCountries().length];
-        String[] countryCodes = Locale.getISOCountries();
-        for (int i = 0; i < countryCodes.length; i++) {
-            Locale obj = new Locale("", countryCodes[i]);
-            countries[i] = obj.getDisplayCountry();
-        }
-        countries = Stream.of(countries).sorted().toArray(String[]::new);
-        return countries;
     }
 
     @Override
@@ -110,7 +98,6 @@ public class CreateTourPage extends UIPage {
     @Override
     public void teardown() {
     }
-
 
     private void createTour() {
         // TODO: Check that all the fields are filled

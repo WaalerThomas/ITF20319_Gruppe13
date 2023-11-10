@@ -18,7 +18,6 @@ public class GuideMainPage extends UIPage {
     private JLabel headerLbl;
     private JButton logoutBtn;
 
-
     public GuideMainPage(MainWindow mainWindow) {
         myToursBtn.addActionListener(actionEvent -> mainWindow.setPage(ViewCreatedToursPage.NAME));
         addTourBtn.addActionListener(actionEvent -> mainWindow.setPage(CreateTourPage.NAME));

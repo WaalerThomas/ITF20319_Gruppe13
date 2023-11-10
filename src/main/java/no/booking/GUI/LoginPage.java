@@ -33,12 +33,10 @@ public class LoginPage extends UIPage {
 
     @Override
     public void setup() {
-
     }
 
     @Override
     public void teardown() {
-
     }
 
     {
