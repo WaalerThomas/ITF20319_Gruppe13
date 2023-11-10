@@ -54,7 +54,7 @@ public class TourConfirmedPage extends UIPage {
         final JLabel label1 = new JLabel();
         Font label1Font = this.$$$getFont$$$(null, -1, 28, label1.getFont());
         if (label1Font != null) label1.setFont(label1Font);
-        label1.setText("Takk for din bestilling!");
+        label1.setText("Takk for å ha lagt til din omvisning");
         mainPanel.add(label1, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
         mainPanel.add(spacer1, new GridConstraints(1, 1, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
@@ -104,4 +104,5 @@ public class TourConfirmedPage extends UIPage {
     public JComponent $$$getRootComponent$$$() {
         return mainPanel;
     }
+
 }

@@ -1,0 +1,8 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+:Test;
+stop
+
+@enduml
