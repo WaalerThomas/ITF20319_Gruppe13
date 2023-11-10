@@ -4,10 +4,11 @@ start
 :Legge til omvisning;
 if (IfGuideClicksLeggTilOmvisning) is (yes) then
   :OmvisningOpprettet;
+  :TourConfirmedPage;
 else (no)
   :OpprettelsenFeilet;
+  :ErrorMessage;
 endif
 :LoggUt;
 stop
-
 @enduml
