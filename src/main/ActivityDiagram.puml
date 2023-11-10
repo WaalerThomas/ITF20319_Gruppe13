@@ -1,14 +1,21 @@
 @startuml
 'https://plantuml.com/activity-diagram-beta
 start
-:Legge til omvisning;
-if (IfGuideClicksLeggTilOmvisning) is (yes) then
-  :OmvisningOpprettet;
-  :TourConfirmedPage;
-else (no)
-  :OpprettelsenFeilet;
-  :ErrorMessage;
+:Starts program;
+:Choose which account;
+if (ifUserAccountIsTurist) is (yes) then
+  :SeeAllTheAvailableTours;
+  :PressTheDesiredTour;
+  :SeeDetailedTourInfo;
+  :ChooseAmountOfTickets;
+  if (ClickBook) is (yes) then
+    :TypeInYourCardInformation;
+    if(ifPaymentSucceed) is (yes) then
+    :PopupMessage: Betaling godkjent;
+  else  (no)
+    :PopupMessage: Kortbetaling kunne ikke godkjennes;
+  endif
+:loggut;
 endif
-:LoggUt;
 stop
 @enduml
