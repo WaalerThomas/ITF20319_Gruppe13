@@ -19,27 +19,41 @@ import java.util.UUID;
  */
 public class Database implements DataHandler {
     private final String folder_path = System.getProperty("user.dir") + "/data";
-    private final String file_name = "database.sqlite";
+    private final String file_name;
     private Connection conn;
 
     private final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+    public Database() {
+        this("database.sqlite", true);
+    }
+
+    public Database(String filename, boolean shouldCreateDefaultData) {
+        this.file_name = filename;
+
+        createTables();
+
+        if (shouldCreateDefaultData)
+            createDefaultApplicationData();
+    }
 
     @Override
     public User getUserByUsername(String username) {
         try {
             connect();
 
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("""
+            PreparedStatement stmt = conn.prepareStatement("""
                 SELECT *
                 FROM users
                 WHERE LOWER(username) == LOWER(?)
             """);
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
 
             return new User(
-                    rs.getString("username"),
-                    "123456",
-                    rs.getString("email")
+                rs.getString("username"),
+                "123456",
+                rs.getString("email")
             );
         } catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -91,6 +105,8 @@ public class Database implements DataHandler {
             ResultSet rs = stmt.executeQuery();
 
             List<Tour> tours = getToursListFromResult(rs);
+            if (tours.isEmpty())
+                return null;
             return tours.get(0);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -403,7 +419,15 @@ public class Database implements DataHandler {
         }
     }
 
-    public void createDefaultApplicationData() {
+    public String getFolderPath() {
+        return folder_path;
+    }
+
+    public String getFileName() {
+        return file_name;
+    }
+
+    private void createTables() {
         try {
             connect();
             Statement stmt = conn.createStatement();
@@ -460,6 +484,17 @@ public class Database implements DataHandler {
                     FOREIGN KEY (tour_id) REFERENCES tours(id),
                     FOREIGN KEY (user_id) REFERENCES users(id)
                 );""");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            disconnect();
+        }
+    }
+
+    private void createDefaultApplicationData() {
+        try {
+            connect();
+            Statement stmt = conn.createStatement();
 
             // If there are user_types, then there is already default data here, skip adding
             ResultSet rs = stmt.executeQuery("""
