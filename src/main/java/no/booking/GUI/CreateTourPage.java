@@ -128,8 +128,6 @@ public class CreateTourPage extends UIPage {
                 (int) ticketAmountSpinner.getValue()
         );
 
-        int result = JOptionPane.showConfirmDialog(null, "Omvisning er opprettet", "Suksess", JOptionPane.OK_CANCEL_OPTION);
-        // Not checking the result
         // Redirect the user to the main window after creation
         mainWindow.setPage(GuideMainPage.NAME);
     }
