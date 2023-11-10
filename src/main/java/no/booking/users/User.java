@@ -32,8 +32,6 @@ public class User {
         if (userName.length() > 12) {
             throw new RuntimeException("Username is too long");
         }
-        if (!userName.matches(".*[!@#$%^&*()_+\\-=[\\]{};':\"\\\\|,.<>/?].*]")) {
-        }
         return true;
     }
 

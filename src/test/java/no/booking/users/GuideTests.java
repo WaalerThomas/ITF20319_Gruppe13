@@ -19,16 +19,6 @@ class GuideTests {
     }
 
     @Test
-    void checksIfGuideHasReceivedMoney() {
-        fail();
-    }
-
-    @Test
-    void checksIfGuideHasValidBankAccount() {
-        fail();
-    }
-
-    @Test
     /* Guide skal kunne opprette en omvisning */
     public void can_create_a_tour() {
         database.createTour("No-one", "TestTour", "TestLand", "TestBy", "TestBeskrivelse", "TestDate",
