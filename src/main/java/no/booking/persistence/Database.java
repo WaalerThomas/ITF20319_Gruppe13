@@ -22,7 +22,7 @@ public class Database implements DataHandler {
     private final String file_name = "database.sqlite";
     private Connection conn;
 
-    private final DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+    private final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
     @Override
     public User getUserByUsername(String username) {
@@ -445,17 +445,6 @@ public class Database implements DataHandler {
                     available_tickets_count integer,
                     FOREIGN KEY (user_id) REFERENCES users(id)
                 );""");
-
-            // Create tour_times table
-            /*
-            stmt.execute("""
-                CREATE TABLE IF NOT EXISTS tour_times (
-                    id integer PRIMARY KEY AUTOINCREMENT,
-                    tour_id varchar(36) NOT NULL,
-                    date_time datetime NOT NULL,
-                    FOREIGN KEY (tour_id) REFERENCES tours(id)
-                );""");
-             */
 
             // Create bookings table
             stmt.execute("""

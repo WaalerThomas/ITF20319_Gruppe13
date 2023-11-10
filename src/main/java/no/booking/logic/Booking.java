@@ -45,6 +45,10 @@ public class Booking {
         this.totalCost = Math.max(totalCost, 0);
     }
 
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     public String getUsername() {
         return username;
     }

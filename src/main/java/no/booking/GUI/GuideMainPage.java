@@ -6,8 +6,6 @@ import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class GuideMainPage extends UIPage {
     public static final String NAME = "LoginGuide";

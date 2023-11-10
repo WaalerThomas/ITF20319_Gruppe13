@@ -26,7 +26,7 @@ public class TouristBookingsPage extends UIPage {
     private JList<Booking> bookingList;
 
     private final DefaultListModel<Booking> bookingListModel;
-    private DataHandler dataHandler;
+    private final DataHandler dataHandler;
 
     public TouristBookingsPage(MainWindow mainWindow, DataHandler dataHandler) {
         this.dataHandler = dataHandler;

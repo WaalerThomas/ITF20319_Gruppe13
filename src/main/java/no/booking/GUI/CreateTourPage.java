@@ -12,7 +12,7 @@ import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.util.Locale;
-import java.util.stream.Stream;
+import java.util.Objects;
 
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -51,9 +51,7 @@ public class CreateTourPage extends UIPage {
             mainWindow.setPage(TourConfirmedPage.Name);
         });
 
-        failedCreationBtn.addActionListener(actionEvent -> {
-            showMessageDialog(null, "Opprettelse av omvisning feilet", "Error", JOptionPane.ERROR_MESSAGE);
-        });
+        failedCreationBtn.addActionListener(actionEvent -> showMessageDialog(null, "Opprettelse av omvisning feilet", "Error", JOptionPane.ERROR_MESSAGE));
 
         adultPriceSpinner.setModel(new SpinnerNumberModel(0, 0, 1_000_000_000, 1));
         childPriceSpinner.setModel(new SpinnerNumberModel(0, 0, 1_000_000_000, 1));
@@ -104,8 +102,8 @@ public class CreateTourPage extends UIPage {
         Tour newTour = dataHandler.createTour(
                 "GeorgGuide",
                 titleTextField.getText(),
-                countryComboBox.getSelectedItem().toString(),
-                cityComboBox.getSelectedItem().toString(),
+                Objects.requireNonNull(countryComboBox.getSelectedItem()).toString(),
+                Objects.requireNonNull(cityComboBox.getSelectedItem()).toString(),
                 descriptionTextPane.getText(),
                 "2023-10-10 17:00:00",
                 (int) adultPriceSpinner.getValue(),

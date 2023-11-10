@@ -3,17 +3,12 @@ package no.booking.GUI;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import no.booking.logic.Booking;
 import no.booking.logic.Tour;
 import no.booking.persistence.DataHandler;
 
 import javax.swing.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.List;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
@@ -43,9 +38,7 @@ public class PayForTourPage extends UIPage {
         backBtn.addActionListener(actionEvent -> mainWindow.setPage(TourDetailPage.NAME));
         logoutBtn.addActionListener(actionEvent -> mainWindow.setPage(LoginPage.NAME));
 
-        paymentFailedBtn.addActionListener(actionEvent -> {
-            showMessageDialog(null, "Kortbetaling kunne ikke godkjennes", "Error", JOptionPane.ERROR_MESSAGE);
-        });
+        paymentFailedBtn.addActionListener(actionEvent -> showMessageDialog(null, "Kortbetaling kunne ikke godkjennes", "Error", JOptionPane.ERROR_MESSAGE));
         paymentSuccessBtn.addActionListener(actionEvent -> {
             Tour tour = dataHandler.getTourById(currentTourId);
 
