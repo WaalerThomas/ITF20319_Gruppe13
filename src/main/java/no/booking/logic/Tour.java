@@ -58,6 +58,7 @@ public class Tour {
         }
 
         dataHandler.addBooking(resultBooking);
+        dataHandler.updateTour(this);
         return true;
     }
 

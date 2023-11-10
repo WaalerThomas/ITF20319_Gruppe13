@@ -86,6 +86,11 @@ public class FakeDatabase implements DataHandler {
         users.add(new User(username, "123456", "user@mail.no"));
     }
 
+    @Override
+    public void updateTour(Tour tour) {
+        // NOTE: This function is not necessary to implement.
+    }
+
     private void addDefaultData() {
         users.add(new Tourist("TuridTurist", "123456", "turid@turist.no"));
         users.add(new Guide("GeorgGuide", "123456", "georg@guide.no"));

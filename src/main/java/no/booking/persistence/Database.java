@@ -284,6 +284,29 @@ public class Database implements DataHandler {
         }
     }
 
+    @Override
+    public void updateTour(Tour tour) {
+        // NOTE: So far there isn't anything else other than ticket count that we change in this prototype, so don't see
+        //      a reason to add update to the other fields that will stay static.
+        try {
+            connect();
+
+            PreparedStatement stmt = conn.prepareStatement("""
+                UPDATE tours
+                SET available_tickets_count = ?, max_ticket_amount = ?
+                WHERE id == ?
+            """);
+            stmt.setInt(1, tour.getAvailableTicketsCount());
+            stmt.setInt(2, tour.getMaxTicketAmount());
+            stmt.setString(3, tour.getId().toString());
+            stmt.execute();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            disconnect();
+        }
+    }
+
     private List<Tour> getToursListFromResult(ResultSet rs) throws SQLException {
         List<Tour> resultList = new ArrayList<>();
         while (rs.next()) {
@@ -304,6 +327,7 @@ public class Database implements DataHandler {
             // Need to also set how many tickets are available
             tempTour.decreaseTicketCount(tempTour.getMaxTicketAmount() - rs.getInt("available_tickets_count"));
             tempTour.setId(UUID.fromString(rs.getString("id")));
+
             resultList.add(tempTour);
         }
 
