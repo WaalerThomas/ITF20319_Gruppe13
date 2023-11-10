@@ -64,15 +64,24 @@ public class TourDetailPage extends UIPage {
         logoutBtn.addActionListener(actionEvent -> mainWindow.setPage(LoginPage.NAME));
 
         bookButton.addActionListener(e -> {
+            int total_tickets = (int) adultTicketAmount.getValue() + (int) childTicketAmount.getValue() + (int) infantTicketAmount.getValue();
+
+            if (total_tickets <= 0) {
+                showMessageDialog(null, "Du må velge minst én billett", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (tourData.getAvailableTicketsCount() <= 0) {
+                showMessageDialog(null, "Det er ingen tilgjengelige billetter igjen", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (total_tickets > tourData.getAvailableTicketsCount()) {
+                showMessageDialog(null, "Det er ikke nok billetter igjen", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             PayForTourPage.setTour(currentTourId);
             PayForTourPage.setTicketAmounts((int) adultTicketAmount.getValue(), (int) childTicketAmount.getValue(), (int) infantTicketAmount.getValue());
-
-            int total_tickets = (int) adultTicketAmount.getValue() + (int) childTicketAmount.getValue() + (int) infantTicketAmount.getValue();
-            if (total_tickets <= 0) {
-                showMessageDialog(null, "Du må velge minst en billett", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            else
-                mainWindow.setPage(PayForTourPage.NAME);
+            mainWindow.setPage(PayForTourPage.NAME);
         });
 
         adultTicketAmount.addChangeListener(changeEvent -> calculateTotalPrice());
