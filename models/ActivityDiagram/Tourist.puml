@@ -3,6 +3,7 @@
 
 start
 :Trykk på Turist;
+:Se liste over tilgjengelige omvisninger;
 :Velg ønsket omvisning;
 :Velg antall ønsket billetter;
 :Trykk "Book" når du er ferdig valgt;
@@ -21,5 +22,4 @@ endif
 :Trykk på ønsket omvisning;
 :Se detaljert informasjon på omvisning;
 stop
-
 @enduml
