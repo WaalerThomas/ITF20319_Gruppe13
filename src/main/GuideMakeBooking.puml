@@ -1,0 +1,16 @@
+@startuml
+'Aktivitet: Guide skal legge til en omvisning
+start
+:Choose guide as user account;
+:Choose "Legg til omvisning" to add tour;
+:Type in your desired tour details;
+:Select the cost and amount of tickets;
+:Ready to add tour;
+if (ClicksLeggTilButton) is (yes) then
+  :New windows pops up that confirms the booking;
+else (no)
+  :Error Message: Opprettelsen feilet;
+endif
+:Returns to Guide main page;
+stop
+@enduml
