@@ -1,0 +1,11 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+:Åpne program;
+:Trykk på "Lag ny bruker";
+:Legg til nødvendig informasjon;
+:Trykk opprett bruker;
+stop
+
+@enduml
