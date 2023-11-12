@@ -1,0 +1,42 @@
+@startuml
+skinparam componentStyle rectangle
+
+' Lag et enkelt diagram over de ulike delene systemet antas å bestå av
+
+' Dere foreslår et system som har flere ulike deler som har forskjellige funksjoner knyttet til seg
+
+component [Omvisningsbestilling] <<System>>
+component [Brukeromtaler] <<System>>
+component [Innleggsoppretting] <<System>>
+component [Meldingssystem] <<System>>
+component [Betalingshistorikk]
+' Betalt plassering for områder
+component [Markedsføring] <<System>>
+' Egen kalender i applikasjonen som kan oppdatere brukerens egen kalender (google / apple / linux / windows / osv)
+component [Kalenderintegrasjon] <<System>>
+component [Booking Applikasjon] #LightGrey
+
+component [Omvisningsoversikt]
+component [Omvisningsfiltrering] <<System>>
+[Omvisningsoversikt] -UP- [Omvisningsfiltrering]
+
+component [Administrasjon]
+component [Omvisningsredigering] <<System>>
+component [Brukerredigering] <<System>>
+' Har med at guide brukere kan ha underordnede brukere som kan utføre handlinger
+component [Tilgangsrettigheter] <<System>>
+[Administrasjon] -- [Omvisningsredigering]
+[Administrasjon] -- [Brukerredigering]
+[Administrasjon] -- [Tilgangsrettigheter]
+
+[Booking Applikasjon] -UP- [Kalenderintegrasjon]
+[Booking Applikasjon] -UP- [Omvisningsoversikt]
+[Booking Applikasjon] -UP- [Brukeromtaler]
+[Booking Applikasjon] -UP- [Meldingssystem]
+[Booking Applikasjon] -LEFT- [Betalingshistorikk]
+[Booking Applikasjon] -- [Innleggsoppretting]
+[Booking Applikasjon] -- [Omvisningsbestilling]
+[Booking Applikasjon] -- [Markedsføring]
+
+[Booking Applikasjon] -- [Administrasjon]
+@enduml
