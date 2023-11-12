@@ -20,4 +20,5 @@ public interface DataHandler {
     List<Booking> getBookingsByTourId(UUID tourId);
     List<Booking> getBookingsByUsername(String username);
     void createUser(String username);
+    void updateTour(Tour tour);
 }

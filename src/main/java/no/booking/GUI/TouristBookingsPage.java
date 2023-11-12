@@ -3,6 +3,7 @@ package no.booking.GUI;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import no.booking.GUI.renderers.BookingHistoryCellRenderer;
 import no.booking.logic.Booking;
 import no.booking.persistence.DataHandler;
 
@@ -25,7 +26,7 @@ public class TouristBookingsPage extends UIPage {
     private JList<Booking> bookingList;
 
     private final DefaultListModel<Booking> bookingListModel;
-    private DataHandler dataHandler;
+    private final DataHandler dataHandler;
 
     public TouristBookingsPage(MainWindow mainWindow, DataHandler dataHandler) {
         this.dataHandler = dataHandler;

@@ -32,8 +32,6 @@ public class User {
         if (userName.length() > 12) {
             throw new RuntimeException("Username is too long");
         }
-        if (!userName.matches(".*[!@#$%^&*()_+\\-=[\\]{};':\"\\\\|,.<>/?].*]")) {
-        }
         return true;
     }
 
@@ -46,8 +44,8 @@ public class User {
         if (password.length() > 20) {
             throw new RuntimeException("Password is too long");
         }
-        String førstetegn = password.substring(0,1);
-        if (!førstetegn.matches("[A-Z]")) {
+        String firstCharacter = password.substring(0,1);
+        if (!firstCharacter.matches("[A-Z]")) {
             throw new RuntimeException("Password must start with big letter");
         }
         if (!password.matches(".*[!@#$%^&*()_+\\-=[\\]{};':\"\\\\|,.<>/?].*]")) {

@@ -12,7 +12,7 @@ import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.util.Locale;
-import java.util.stream.Stream;
+import java.util.Objects;
 
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -36,8 +36,8 @@ public class CreateTourPage extends UIPage {
     private JTextField titleTextField;
     private JTextField meetingPointTextField;
 
-    private MainWindow mainWindow;
-    private DataHandler dataHandler;
+    private final MainWindow mainWindow;
+    private final DataHandler dataHandler;
 
     public CreateTourPage(MainWindow mainWindow, DataHandler dataHandler) {
         this.mainWindow = mainWindow;
@@ -51,26 +51,12 @@ public class CreateTourPage extends UIPage {
             mainWindow.setPage(TourConfirmedPage.Name);
         });
 
-        failedCreationBtn.addActionListener(actionEvent -> {
-            showMessageDialog(null, "Opprettelse av omvisning feilet", "Error", JOptionPane.ERROR_MESSAGE);
-        });
+        failedCreationBtn.addActionListener(actionEvent -> showMessageDialog(null, "Opprettelse av omvisning feilet", "Error", JOptionPane.ERROR_MESSAGE));
 
         adultPriceSpinner.setModel(new SpinnerNumberModel(0, 0, 1_000_000_000, 1));
         childPriceSpinner.setModel(new SpinnerNumberModel(0, 0, 1_000_000_000, 1));
         infantPriceSpinner.setModel(new SpinnerNumberModel(0, 0, 1_000_000_000, 1));
         ticketAmountSpinner.setModel(new SpinnerNumberModel(0, 0, 1_000_000_000, 1));
-    }
-
-    // Genererer liste med land
-    public String[] getAllCountries() {
-        String[] countries = new String[Locale.getISOCountries().length];
-        String[] countryCodes = Locale.getISOCountries();
-        for (int i = 0; i < countryCodes.length; i++) {
-            Locale obj = new Locale("", countryCodes[i]);
-            countries[i] = obj.getDisplayCountry();
-        }
-        countries = Stream.of(countries).sorted().toArray(String[]::new);
-        return countries;
     }
 
     @Override
@@ -111,14 +97,13 @@ public class CreateTourPage extends UIPage {
     public void teardown() {
     }
 
-
     private void createTour() {
         // TODO: Check that all the fields are filled
         Tour newTour = dataHandler.createTour(
                 "GeorgGuide",
                 titleTextField.getText(),
-                countryComboBox.getSelectedItem().toString(),
-                cityComboBox.getSelectedItem().toString(),
+                Objects.requireNonNull(countryComboBox.getSelectedItem()).toString(),
+                Objects.requireNonNull(cityComboBox.getSelectedItem()).toString(),
                 descriptionTextPane.getText(),
                 "2023-10-10 17:00:00",
                 (int) adultPriceSpinner.getValue(),
@@ -128,8 +113,6 @@ public class CreateTourPage extends UIPage {
                 (int) ticketAmountSpinner.getValue()
         );
 
-        int result = JOptionPane.showConfirmDialog(null, "Omvisning er opprettet", "Suksess", JOptionPane.OK_CANCEL_OPTION);
-        // Not checking the result
         // Redirect the user to the main window after creation
         mainWindow.setPage(GuideMainPage.NAME);
     }

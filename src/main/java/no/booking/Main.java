@@ -6,9 +6,7 @@ import no.booking.persistence.FakeDatabase;
 
 public class Main {
     public static void main(String[] args) {
-        FakeDatabase database = new FakeDatabase();
-        //Database database = new Database();
-        database.createDefaultApplicationData();
+        Database database = new Database();
 
         MainWindow mainWindow = new MainWindow(database);
         mainWindow.display();

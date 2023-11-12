@@ -1,5 +1,6 @@
-package no.booking.GUI;
+package no.booking.GUI.renderers;
 
+import no.booking.GUI.list_elements.TourElement;
 import no.booking.logic.Tour;
 
 import javax.swing.*;

@@ -19,27 +19,41 @@ import java.util.UUID;
  */
 public class Database implements DataHandler {
     private final String folder_path = System.getProperty("user.dir") + "/data";
-    private final String file_name = "database.sqlite";
+    private final String file_name;
     private Connection conn;
 
-    private final DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+    private final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+    public Database() {
+        this("database.sqlite", true);
+    }
+
+    public Database(String filename, boolean shouldCreateDefaultData) {
+        this.file_name = filename;
+
+        createTables();
+
+        if (shouldCreateDefaultData)
+            createDefaultApplicationData();
+    }
 
     @Override
     public User getUserByUsername(String username) {
         try {
             connect();
 
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("""
+            PreparedStatement stmt = conn.prepareStatement("""
                 SELECT *
                 FROM users
                 WHERE LOWER(username) == LOWER(?)
             """);
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
 
             return new User(
-                    rs.getString("username"),
-                    "123456",
-                    rs.getString("email")
+                rs.getString("username"),
+                "123456",
+                rs.getString("email")
             );
         } catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -91,6 +105,8 @@ public class Database implements DataHandler {
             ResultSet rs = stmt.executeQuery();
 
             List<Tour> tours = getToursListFromResult(rs);
+            if (tours.isEmpty())
+                return null;
             return tours.get(0);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -137,9 +153,9 @@ public class Database implements DataHandler {
                 SELECT
                     (SELECT username
                     FROM users
-                    WHERE users.id = id) as owner_username, *
+                    WHERE users.id = tours.user_id) as owner_username, *
                 FROM tours
-                WHERE LOWER(tours.owner_username) == LOWER(?);
+                WHERE LOWER(owner_username) == LOWER(?);
             """);
             stmt.setString(1, ownerUsername);
             ResultSet rs = stmt.executeQuery();
@@ -284,6 +300,29 @@ public class Database implements DataHandler {
         }
     }
 
+    @Override
+    public void updateTour(Tour tour) {
+        // NOTE: So far there isn't anything else other than ticket count that we change in this prototype, so don't see
+        //      a reason to add update to the other fields that will stay static.
+        try {
+            connect();
+
+            PreparedStatement stmt = conn.prepareStatement("""
+                UPDATE tours
+                SET available_tickets_count = ?, max_ticket_amount = ?
+                WHERE id == ?
+            """);
+            stmt.setInt(1, tour.getAvailableTicketsCount());
+            stmt.setInt(2, tour.getMaxTicketAmount());
+            stmt.setString(3, tour.getId().toString());
+            stmt.execute();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            disconnect();
+        }
+    }
+
     private List<Tour> getToursListFromResult(ResultSet rs) throws SQLException {
         List<Tour> resultList = new ArrayList<>();
         while (rs.next()) {
@@ -304,6 +343,7 @@ public class Database implements DataHandler {
             // Need to also set how many tickets are available
             tempTour.decreaseTicketCount(tempTour.getMaxTicketAmount() - rs.getInt("available_tickets_count"));
             tempTour.setId(UUID.fromString(rs.getString("id")));
+
             resultList.add(tempTour);
         }
 
@@ -341,8 +381,8 @@ public class Database implements DataHandler {
         stmt.setString(1, tour.getId().toString());
         stmt.setString(2, tour.getOwnerUsername());
         stmt.setString(3, tour.getTitle());
-        stmt.setString(4, tour.getCountry());
-        stmt.setString(5, tour.getCity());
+        stmt.setString(4, tour.getCity());
+        stmt.setString(5, tour.getCountry());
         stmt.setString(6, tour.getDescription());
         stmt.setInt(7, tour.getAdultTicketPrice());
         stmt.setInt(8, tour.getChildTicketPrice());
@@ -379,7 +419,15 @@ public class Database implements DataHandler {
         }
     }
 
-    public void createDefaultApplicationData() {
+    public String getFolderPath() {
+        return folder_path;
+    }
+
+    public String getFileName() {
+        return file_name;
+    }
+
+    private void createTables() {
         try {
             connect();
             Statement stmt = conn.createStatement();
@@ -422,17 +470,6 @@ public class Database implements DataHandler {
                     FOREIGN KEY (user_id) REFERENCES users(id)
                 );""");
 
-            // Create tour_times table
-            /*
-            stmt.execute("""
-                CREATE TABLE IF NOT EXISTS tour_times (
-                    id integer PRIMARY KEY AUTOINCREMENT,
-                    tour_id varchar(36) NOT NULL,
-                    date_time datetime NOT NULL,
-                    FOREIGN KEY (tour_id) REFERENCES tours(id)
-                );""");
-             */
-
             // Create bookings table
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS bookings (
@@ -447,6 +484,17 @@ public class Database implements DataHandler {
                     FOREIGN KEY (tour_id) REFERENCES tours(id),
                     FOREIGN KEY (user_id) REFERENCES users(id)
                 );""");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            disconnect();
+        }
+    }
+
+    private void createDefaultApplicationData() {
+        try {
+            connect();
+            Statement stmt = conn.createStatement();
 
             // If there are user_types, then there is already default data here, skip adding
             ResultSet rs = stmt.executeQuery("""
@@ -478,9 +526,9 @@ public class Database implements DataHandler {
             PreparedStatement prepStmt = conn.prepareStatement("""
                 INSERT INTO tours (id, user_id, title, city, country, description, adult_ticket_price, child_ticket_price, infant_ticket_price, meet_point, max_ticket_amount, available_tickets_count)
                 VALUES
-                    (?, (SELECT id FROM users WHERE users.username == 'GeorgGuide'), 'Tur til København', 'Danmark', 'København', 'Fantastisk tur til københavn', 600, 300, 0, 'København Sentrum', 10, 10),
-                    (?, (SELECT id FROM users WHERE users.username == 'GeorgGuide'), 'Cruising rundt Faro', 'Portugal', 'Faro', 'Ferjetur rundt øyene', 1400, 700, 0, 'FaroVeien 12', 10, 10),
-                    (?, (SELECT id FROM users WHERE users.username == 'GeorgGuide'), 'Opplev magien i Roma', 'Italia', 'Roma', 'Nyt romantisk aften i Roma', 2300, 1150, 0, 'Romaveien 20', 10, 10)
+                    (?, (SELECT id FROM users WHERE users.username == 'GeorgGuide'), 'Tur til København', 'København', 'Danmark', 'Fantastisk tur til københavn', 600, 300, 0, 'København Sentrum', 10, 10),
+                    (?, (SELECT id FROM users WHERE users.username == 'GeorgGuide'), 'Cruising rundt Faro', 'Faro', 'Portugal', 'Ferjetur rundt øyene', 1400, 700, 0, 'FaroVeien 12', 10, 10),
+                    (?, (SELECT id FROM users WHERE users.username == 'GeorgGuide'), 'Opplev magien i Roma', 'Roma', 'Italia', 'Nyt romantisk aften i Roma', 2300, 1150, 0, 'Romaveien 20', 10, 10)
                 """);
             // Generate a UUID for all the lines
             prepStmt.setString(1, UUID.randomUUID().toString());

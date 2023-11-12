@@ -12,8 +12,6 @@ import javax.swing.border.TitledBorder;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -36,9 +34,9 @@ public class TourDetailPage extends UIPage {
     private JTextArea descriptionLbl;
     private JLabel meetPointLbl;
     private JLabel idLbl;
-    private JComboBox comboBox1;
-    private JComboBox comboBox2;
-    private JComboBox comboBox3;
+    private JComboBox<String> comboBox1;
+    private JComboBox<String> comboBox2;
+    private JComboBox<String> comboBox3;
     private JSpinner adultTicketAmount;
     private JButton bookButton;
     private JLabel adultPriceLbl;
@@ -64,15 +62,24 @@ public class TourDetailPage extends UIPage {
         logoutBtn.addActionListener(actionEvent -> mainWindow.setPage(LoginPage.NAME));
 
         bookButton.addActionListener(e -> {
+            int total_tickets = (int) adultTicketAmount.getValue() + (int) childTicketAmount.getValue() + (int) infantTicketAmount.getValue();
+
+            if (total_tickets <= 0) {
+                showMessageDialog(null, "Du må velge minst én billett", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (tourData.getAvailableTicketsCount() <= 0) {
+                showMessageDialog(null, "Det er ingen tilgjengelige billetter igjen", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (total_tickets > tourData.getAvailableTicketsCount()) {
+                showMessageDialog(null, "Det er ikke nok billetter igjen", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             PayForTourPage.setTour(currentTourId);
             PayForTourPage.setTicketAmounts((int) adultTicketAmount.getValue(), (int) childTicketAmount.getValue(), (int) infantTicketAmount.getValue());
-
-            int total_tickets = (int) adultTicketAmount.getValue() + (int) childTicketAmount.getValue() + (int) infantTicketAmount.getValue();
-            if (total_tickets <= 0) {
-                showMessageDialog(null, "Du må velge minst en billett", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            else
-                mainWindow.setPage(PayForTourPage.NAME);
+            mainWindow.setPage(PayForTourPage.NAME);
         });
 
         adultTicketAmount.addChangeListener(changeEvent -> calculateTotalPrice());
@@ -150,10 +157,6 @@ public class TourDetailPage extends UIPage {
     }
 
     private void controlElementsViewMode() {
-        //adultTicketAmount.setEnabled(!isInViewMode);
-        //childTicketAmount.setEnabled(!isInViewMode);
-        //infantTicketAmount.setEnabled(!isInViewMode);
-        //bookButton.setEnabled(!isInViewMode);
         bookingPanel.setVisible(!isInViewMode);
     }
 

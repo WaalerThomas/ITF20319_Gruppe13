@@ -3,6 +3,7 @@ package no.booking.GUI;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import no.booking.GUI.renderers.TourOverviewCellRenderer;
 import no.booking.logic.Tour;
 import no.booking.persistence.DataHandler;
 
@@ -10,10 +11,8 @@ import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 import java.util.List;
-import java.util.Locale;
 
 public class ViewCreatedToursPage extends UIPage {
     public static final String NAME = "ViewCreatedToursPage";
@@ -26,13 +25,12 @@ public class ViewCreatedToursPage extends UIPage {
     private final DefaultListModel<Tour> tourListModel;
     private final DataHandler dataHandler;
 
-
     public ViewCreatedToursPage(MainWindow mainWindow, DataHandler dataHandler) {
         this.dataHandler = dataHandler;
 
         tourListModel = new DefaultListModel<>();
         tourList.setModel(tourListModel);
-        tourList.setCellRenderer(new TourCellRenderer());
+        tourList.setCellRenderer(new TourOverviewCellRenderer());
         tourList.setDragEnabled(false);
 
         backBtn.addActionListener(actionEvent -> mainWindow.setPage(GuideMainPage.NAME));
@@ -90,7 +88,7 @@ public class ViewCreatedToursPage extends UIPage {
         mainPanel.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         contentPanel = new JPanel();
         contentPanel.setLayout(new GridLayoutManager(1, 1, new Insets(5, 5, 5, 5), -1, -1));
-        contentPanel.setBackground(new Color(-1049601));
+        contentPanel.setBackground(new Color(-2960942));
         mainPanel.add(contentPanel, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JScrollPane scrollPane1 = new JScrollPane();
         contentPanel.add(scrollPane1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
