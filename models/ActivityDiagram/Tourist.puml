@@ -1,0 +1,25 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+:Trykk på Turist;
+:Velg ønsket omvisning;
+:Velg antall ønsket billetter;
+:Trykk "Book" når du er ferdig valgt;
+if () is (Booking OK) then
+  :Henter kortinformasjon;
+  if () is (Betaling OK) then
+    :Melding: Betaling godkjent;
+  else (Betaling feilet)
+    :Popup: Feilmelding;
+  endif
+else (Booking feilet)
+  :Popup: Feilmelding;
+endif
+:Blir ført tilbake til Login Turist;
+:Trykk på Booking historikk;
+:Trykk på ønsket omvisning;
+:Se detaljert informasjon på omvisning;
+stop
+
+@enduml
