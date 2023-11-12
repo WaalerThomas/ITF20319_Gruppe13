@@ -1,21 +1,6 @@
 @startuml
 'https://plantuml.com/activity-diagram-beta
 start
-:Starts program;
-:Choose which account;
-if (ifUserAccountIsTurist) is (yes) then
-  :SeeAllTheAvailableTours;
-  :PressTheDesiredTour;
-  :SeeDetailedTourInfo;
-  :ChooseAmountOfTickets;
-  if (ClickBook) is (yes) then
-    :TypeInYourCardInformation;
-    if(ifPaymentSucceed) is (yes) then
-    :PopupMessage: Betaling godkjent;
-  else  (no)
-    :PopupMessage: Kortbetaling kunne ikke godkjennes;
-  endif
-:loggut;
-endif
+
 stop
 @enduml
