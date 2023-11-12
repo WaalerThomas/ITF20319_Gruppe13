@@ -1,16 +1,15 @@
 @startuml
 'Aktivitet: Guide skal legge til en omvisning
 start
-:Choose guide as user account;
-:Choose "Legg til omvisning" to add tour;
-:Type in your desired tour details;
-:Select the cost and amount of tickets;
-:Ready to add tour;
-if (ClicksLeggTilButton) is (yes) then
-  :New windows pops up that confirms the booking;
-else (no)
+:Logg inn som Guide;
+:Velg "Legg til omvisning";
+:Fyll ut informasjon;;
+:Trykk på knappen "Legg til";
+if () is (Booking er ok) then
+  :Åpnes ny vindu som bekrefter opprettelsen av omvisning;
+  :Trykk på tilbake-knapp;
+else (Booking feilet)
   :Error Message: Opprettelsen feilet;
 endif
-:Returns to Guide main page;
 stop
 @enduml
