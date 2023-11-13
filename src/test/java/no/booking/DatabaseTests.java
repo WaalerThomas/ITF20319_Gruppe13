@@ -28,6 +28,21 @@ public class DatabaseTests {
     }
 
     @Test
+    void can_update_ticket_count_on_a_tour() {
+        database.createUser("TestUser");
+        Tour testTour = database.createTour("TestUser", "TestTitle", "TestCountry", "TestCity",
+                "TestDescription", "2023-11-10 17:00:00", 500, 250,
+                0, "TestMeetingpoint", 5);
+        testTour.decreaseTicketCount(3);
+
+        database.updateTour(testTour);
+        Tour dataTour = database.getTourById(testTour.getId());
+        assertNotNull(dataTour);
+        assertEquals(2, dataTour.getAvailableTicketsCount());
+        assertEquals(5, dataTour.getMaxTicketAmount());
+    }
+
+    @Test
     void can_get_user_by_username() {
         database.createUser("TestUser");
 
