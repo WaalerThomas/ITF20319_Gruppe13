@@ -1,0 +1,20 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+:Trykk Admin;
+:Logg inn med brukernavn og passord;
+:Trykk på "Oversikt over omvisninger";
+:Trykk på valgt omvisning;
+if (Valgt omvisning) is (OK) then
+  :Se detaljert info for omvisning;
+else (Not OK)
+  :Error Melding;
+  :Ført tilbake til "Oversikt over omvisninger";
+endif
+:Se alle brukere;
+
+
+stop
+
+@enduml
