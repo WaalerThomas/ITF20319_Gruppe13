@@ -2,14 +2,14 @@
 'Aktivitet: Guide skal legge til en omvisning
 start
 :Logg inn som Guide;
-:Velg "Legg til omvisning";
-:Fyll ut informasjon;;
-:Trykk på knappen "Legg til";
+:Trykk "Legg til omvisning";
+:Fyll ut informasjon;
+:Trykk "Opprett bruker";
 if () is (Booking er ok) then
   :Åpnes ny vindu som bekrefter opprettelsen av omvisning;
-  :Trykk på tilbake-knapp;
 else (Booking feilet)
   :Error Message: Opprettelsen feilet;
 endif
+:Trykk "Logg ut";
 stop
 @enduml
