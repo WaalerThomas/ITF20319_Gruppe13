@@ -1,0 +1,21 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+:Omvisning er over;
+:Åpnes mulighet for brukeromtale;
+:Trykker "Gi omtale";
+:Gir stjerner og skriver tilbakemelding;
+:Trykker "Send";
+if (sending gått gjennom?) then (Nei)
+    #pink:Feilmelding;
+    stop
+else (Ja)
+endif
+
+:Tilbakemelding lagres i database;
+:Notifiserer guide om omtale;
+:Sendes tilbake til hovedside;
+stop
+
+@enduml

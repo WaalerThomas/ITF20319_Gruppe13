@@ -1,0 +1,28 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+:Trykker på en omvisning;
+:Velger antall billetter;
+:Trykker "Book";
+if (0 billetter oppgitt?) then (Ja)
+    #pink:Feilmelding;
+    stop
+(Nei) elseif (mer billetter enn tilgjengelig?) then (Ja)
+    #pink:Feilmelding;
+    stop
+else (Nei)
+endif
+
+repeat :Oppgir betalingsinformasjon;
+    :Tas til ekstern betalingsbehandler;
+repeat while (betaling godkjent?) is (Nei)
+->ja;
+
+:Registrer booking i database;
+:Endrer billett antall på omvisning;
+:Send godkjennelse på e-post;
+:Sendes til hovedsiden;
+stop
+
+@enduml

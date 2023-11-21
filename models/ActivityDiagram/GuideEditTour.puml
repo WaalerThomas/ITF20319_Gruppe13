@@ -1,0 +1,27 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+:Trykker "Mine omvisninger";
+:Velger en omvisning;
+:Trykker "Rediger";
+:Gjør endringer;
+:Trykker "Lagre endinger";
+if (endringer godkjent?) then (Nei)
+    #pink:Feilmelding;
+    stop
+else (Ja)
+endif
+
+fork
+    :Sendes til hovedsiden;
+fork again
+:Endringer lagres i database;
+if (har turister booket?) then (Ja)
+    :Melding om endringer sent til turister;
+else (Nei)
+endif
+end merge
+stop
+
+@enduml

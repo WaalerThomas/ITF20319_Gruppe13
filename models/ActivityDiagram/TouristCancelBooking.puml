@@ -1,0 +1,19 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+:Trykker "Booking Historikk";
+:Velger bookingen;
+:Trykker "Kanseller";
+if (refusjonstid utløpt?) then (Ja)
+    #pink:Feilmelding;
+    stop
+else (Nei)
+endif
+
+:Booking blir deaktivert;
+:Omvisning får tilbake plassene;
+:Tilbakebetaling prosess starter;
+stop
+
+@enduml

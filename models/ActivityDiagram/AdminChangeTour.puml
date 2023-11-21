@@ -1,0 +1,19 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+:Trykker "Oversikt over omvisninger";
+:Velger en omvisning;
+:Trykker "Rediger";
+
+repeat :Gjør endringer;
+    :Trykker "Lagre endinger";
+repeat while(endringer godkjent?) is (Nei)
+->Ja;
+
+:Lagre endinger i database;
+:Notifiser guide om endingene;
+
+stop
+
+@enduml

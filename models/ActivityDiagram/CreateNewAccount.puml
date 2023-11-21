@@ -2,15 +2,15 @@
 'https://plantuml.com/activity-diagram-beta
 
 start
-:Trykk på "Lag ny bruker";
-:Legg til nødvendig informasjon;
-:Trykk opprett bruker;
-if (bruker opprettet) then (ok)
-  :Trykk "Lagre";
-else (nei)
- :Feilmelding;
-  endif
+:Trykker "Lag ny bruker";
+:Legger til nødvendig informasjon;
+:Trykker "Opprett bruker";
+if (bruker opprettelse vellykket?) then (Ja)
+    :Brukerkonto lagres i databasen;
+    :Sendes til innlogging skjerm;
+else (Nei)
+    #pink:Feilmelding;
+endif
 
 stop
-
 @enduml

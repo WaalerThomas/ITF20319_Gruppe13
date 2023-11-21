@@ -1,0 +1,15 @@
+@startuml
+'Aktivitet: Guide skal legge til en omvisning
+
+start
+:Trykker "Legg til omvisning";
+
+repeat :Fyller ut informasjon;
+    :Trykker "Legg til";
+repeat while (alt fyllt ut riktig?) is (Nei)
+-> Ja;
+
+:Oppretter booking i database;
+
+stop
+@enduml
