@@ -19,7 +19,7 @@ class GuideTests {
     }
 
     @Test
-    /* Guide skal kunne opprette en omvisning */
+    /* Guide-bruker skal kunne lage innlegg til omvisningene sine */
     public void can_create_a_tour() {
         database.createTour("No-one", "TestTour", "TestLand", "TestBy", "TestBeskrivelse", "TestDate",
                 5000, 2500, 0, "TestMeetingPoint", 5);
@@ -28,7 +28,7 @@ class GuideTests {
     }
 
     @Test
-    /* Guide kan ha en oversikt over alle omvisninger de har opprettet */
+    /* Guide-bruker skal ha en oversikt over alle omvisninger de har opprettet */
     public void can_see_all_their_created_tours() {
         database.createUser("GeorgGuide");
         database.createUser("FredrikkFeilmann");
@@ -42,7 +42,7 @@ class GuideTests {
     }
 
     @Test
-    /* Guide bruker kan se hvor mange som har booket omvisningene sine */
+    /* Guide-bruker skal kunne se hvor mange som har booket omvisningene sine */
     public void can_see_how_many_has_booked_their_tours() {
         database.createUser("GeorgGuide");
         database.createUser("TuridTurist");
@@ -61,7 +61,7 @@ class GuideTests {
     }
 
     @Test
-    /* Guide bruker kan lage opp til flere omvisnigner og bruke dem samtidig */
+    /* Guide-bruker skal kunne opprette opp til flere omvisninger som kan være aktive samtidig */
     public void can_create_multiple_active_tours() {
         database.createUser("GeorgGuide");
         database.createTour("GeorgGuide", "Title", "Country", "City",

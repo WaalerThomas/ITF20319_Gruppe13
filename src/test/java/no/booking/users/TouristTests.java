@@ -19,7 +19,7 @@ class TouristTests {
     }
 
     @Test
-    /* Turist bruker kan ikke booke billetter når det ikke er nok billetter tilgjengelig */
+    /* Turist-bruker kan ikke booke billetter når det ikke er nok billetter tilgjengelig */
     public void can_not_book_a_full_tour() {
         Tour tourTest = new Tour("No-one", "TestTour", "TestLand", "TestBy", "TestBeskrivelse",
                 "TestDate", 5000, 2500, 0, "TestMeetingPoint", 5);
@@ -32,7 +32,7 @@ class TouristTests {
     }
 
     @Test
-    /* Turist-bruker skal kunne betale for en tjeneste */
+    /* Turist-bruker skal kunne booke en omvisning */
     public void can_book_a_tour() {
         Tour tourTest = new Tour("No-one", "TestTour", "TestLand", "TestBy", "TestBeskrivelse",
                 "TestDate", 5000, 2500, 0, "TestMeetingPoint", 5);
@@ -44,7 +44,7 @@ class TouristTests {
     }
 
     @Test
-    /* Turist bruker skal ikke kunne booke en omvisning flere ganger */
+    /* Turist-bruker skal ikke kunne booke en omvisning flere ganger */
     public void can_not_book_the_same_tour_twice() {
         Tour tourTest = new Tour("No-one", "TestTour", "TestLand", "TestBy", "TestBeskrivelse",
                 "TestDate", 5000, 2500, 0, "TestMeetingPoint", 5);
@@ -57,7 +57,7 @@ class TouristTests {
     }
 
     @Test
-    /* Turist skal kunne se en liste over tilgjengelige omvisninger */
+    /* Turist-bruker skal kunne se en liste over tilgjengelige omvisninger */
     public void can_list_all_available_tours() {
         database.createTour("No-one", "TestTitle", "TestCountry", "TestCity", "TestDescption", "2023-10-10 17:00:00", 500, 250, 0, "TestMeetingpoint", 10);
         database.createTour("No-one", "TestTitle2", "TestCountry2", "TestCity2", "TestDescption2", "2023-10-10 18:00:00", 500, 250, 0, "TestMeetingpoint2", 10);
@@ -69,7 +69,7 @@ class TouristTests {
     }
 
     @Test
-    /* Turist skal kunne sjekke hvilke omvisninger de har booket */
+    /* Turist-bruker skal kunne se en liste over hvilke omvisninger de har booket */
     public void can_list_their_booked_tours() {
         database.createUser("TuridTurist");
         database.createUser("FredrikkFeilmann");

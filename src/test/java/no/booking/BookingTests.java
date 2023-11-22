@@ -41,7 +41,7 @@ public class BookingTests {
     }
 
     @Test
-    /* Turist bruker skal ikke kunne booke en omvisning med 0 billetter oppgitt */
+    /* Turist-bruker skal ikke kunne booke en omvisning med 0 billetter oppgitt */
     public void can_not_book_with_zero_ticket_amount_given() {
         FakeDatabase database = new FakeDatabase();
         Tour testTour = new Tour("GeorgGuide", "Title", "Country", "City",
